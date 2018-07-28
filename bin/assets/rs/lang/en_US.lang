@@ -1,0 +1,71 @@
+#Items
+item.itemGlassPanel.name=Glass Panel
+item.itemAluminium.name=Aluminium Ingot 
+item.itemAluminiumDust.name=Aluminium Dust
+item.itemAluminiumFrame.name=Aluminium Frame
+item.itemSilver.name=Silver
+item.itemSilverDust.name=Silver Dust
+item.itemMetalSiliconDust.name=Metallurgical Silicon Dust
+item.itemTrichlorosilane.name=Trichlorosilane
+item.itemHydrogenChloride.name=Hydrogen Chloride
+item.itemPhosphorus.name=Phosphorus
+item.itemBoron.name=Boron
+item.itemSaw.name=Saw
+item.itemMultiSiliconWaferLow.name=MultiC Silicon Wafer(Low)
+item.itemMultiWaferMed.name=MultiC Silicon Wafer(med)
+item.itemMultiSiliconWaferHigh.name=MultiC Silicon Wafer(High)
+item.itemMonoSiliconWaferVHigh.name=Mono Silicon Wafer(VHigh)
+item.itemMonoSiliconWaferVVHigh.name=MonoC Silicon Wafer(VVHigh)
+item.itemDopedMultiSiliconWaferMed.name=MultiC Silicon Wafer/Doped(Med)
+item.itemDopedMultiSiliconWaferHigh.name=MulticC Silicon Wafer/Doped(High)
+item.itemDopedMonoSiliconWaferVHigh.name=MonoC Silicon Wafer/Doped(VHigh)
+item.itemDopedMonoSiliconWaferVVHigh.name=MonoC Silicon Wafer/Doped(VVHigh)
+item.itemMetalSiliconLow.name=Metallurgical Silicon(Low)
+item.itemMetalSiliconMed.name=Metallurgical Silicon(Med)
+item.itemPolySiliconLow.name=PolyC Silicon(Low)
+item.itemPolySiliconMed.name=PolyC Silicon(Med)
+item.itemPolySiliconHigh.name=PolyC Silicon(High)
+item.itemMultiSiliconLow.name=MultiC Silicon Ingot(Low)
+item.itemMultiSiliconMed.name=MultiC Silicon Ingot(Med)
+item.itemMultiSiliconHigh.name=MultiC Silicon Ingot(High)
+item.itemMonoSiliconVHigh.name=MonoC Silicon Ingot(VHigh)
+item.itemMonoSiliconVVHigh.name=MonoC Silicon Ingot(VVHigh)
+item.itemMultiSolarCellLow.name=MultiC Solar Cell(Low)
+item.itemMultiSolarCellMed.name=MultiC Solar Cell(Med)
+item.itemMultiSolarCellHigh.name=MultiC Solar Cell(High)
+item.itemMonoSolarCellVHigh.name=MonoC Solar Cell(VHigh)
+item.itemMonoSolarCellVVHigh.name=MonoC Solar Cell(VVHigh)
+
+#Blocks
+tile.blockAluminium.name=Aluminium Block 
+tile.blockSilver.name=Silver Block
+tile.blockSolarPanelLow.name=Solar Panel(Low)
+tile.blockSolarPanelMed.name=Solar Panel(Med)
+tile.blockSolarPanelHigh.name=Solar Panel(High)
+tile.blockSolarPanelVHigh.name=Solar Panel(Vhigh)
+tile.blockSolarPanelVVHigh.name=Solar Panel(VVHigh)
+tile.blockAluminiumOre.name=Aluminium Ore
+tile.blockSilverOre.name=Silver Ore
+tile.blockPhosphorusOre.name=Phosphorus Ore
+tile.blockBoronOre.name=Boron Ore
+tile.blockQuartziteOre.name=Quartzite Ore
+tile.blockCleanSand.name=Clean Sand
+tile.blockSilicaSand.name=Silica Sand
+
+#Machines
+tile.blockWasher.name=Washer
+tile.blockCoalCrucible.name=Coal Crucible
+tile.blockIngotCrucible.name=Ingot Crucible
+tile.blockRodCrucible.name=Rod Crucible
+tile.blockFZRodCrucible.name=FZ Rod Crucible
+tile.blockEArcFurnace.name=Electric Arc Furnace
+tile.blockSPReactor.name=SP Reactor
+tile.blockUMGSiReactor.name=UMG-Si Reactor
+tile.blockDopingReactor.name=Doping Reactor
+tile.blockSawingMachine.name=Sawing Machine
+tile.blockApplier.name=Applier
+tile.blockAssembler.name=Assembler
+
+#CreativeTabs
+itemGroup.tabRealisticSolar=Realistic Solar
+itemGroup.tabRealisticSolarMachines=Realistic Solar Machines

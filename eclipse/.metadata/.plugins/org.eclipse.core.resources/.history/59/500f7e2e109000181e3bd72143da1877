@@ -1,0 +1,29 @@
+package com.daellhin.realisticsolar.items.meta.enums;
+
+public enum EnumItemDust {
+	AluminiumIngot(0, ""),
+	Boron(1, ""),
+	Phosphorus(0, ""),
+	siliver(0, ""),;
+	
+	private final int meta;
+	private final String name;
+	
+	private EnumItemSilicon(int meta, String name) {
+		this.meta = meta;
+		this.name = name; 
+	}
+	
+	public int getMeta() {
+		return this.meta;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+	
+	public static int count() {
+		return values().length;
+	}
+	
+}

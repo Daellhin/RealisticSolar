@@ -1,0 +1,14 @@
+package com.daellhin.realisticsolar.items;
+
+import com.daellhin.realisticsolar.creativetab.RealisticSolarCreativeTab;
+
+import net.minecraft.item.Item;
+
+public class ItemPhosphorus extends Item {
+	public ItemPhosphorus() {
+		this.setUnlocalizedName("itemPhosphorus");
+		this.setTextureName("rs:itemPhosphorus");
+		this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
+	}
+
+}

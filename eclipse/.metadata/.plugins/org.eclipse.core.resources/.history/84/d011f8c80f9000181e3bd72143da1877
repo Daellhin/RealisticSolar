@@ -1,0 +1,5 @@
+package com.daellhin.realisticsolar.items.meta.enums;
+
+public enum EnumItemDust {
+
+}

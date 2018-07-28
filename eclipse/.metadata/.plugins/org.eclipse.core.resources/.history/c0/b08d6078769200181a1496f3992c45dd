@@ -1,0 +1,5 @@
+package com.daellhin.realisticsolar.tile;
+
+public abstract class TileBasicMachine {
+
+}

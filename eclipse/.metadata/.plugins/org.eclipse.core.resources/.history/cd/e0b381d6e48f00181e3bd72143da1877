@@ -1,0 +1,14 @@
+package com.daellhin.realisticsolar.items;
+
+import com.daellhin.realisticsolar.creativetab.RealisticSolarCreativeTab;
+
+import net.minecraft.item.Item;
+
+public class ItemHydrogenChloride extends Item {
+	public ItemHydrogenChloride() {
+		this.setUnlocalizedName("itemHydrogenChloride");
+		this.setTextureName("rs:itemHydrogenChloride");
+		this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
+	}
+
+}

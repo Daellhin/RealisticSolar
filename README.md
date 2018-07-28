@@ -1,2 +1,0 @@
-# RealisticSolar
-Mod for minecraft

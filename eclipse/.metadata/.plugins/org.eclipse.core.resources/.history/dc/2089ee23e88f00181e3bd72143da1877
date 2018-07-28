@@ -1,0 +1,15 @@
+package com.daellhin.realisticsolar.items;
+
+import com.daellhin.realisticsolar.creativetab.RealisticSolarCreativeTab;
+import com.daellhin.realisticsolar.lib.ModInfo;
+
+import net.minecraft.item.Item;
+
+public class ItemAluminium extends Item {
+	public ItemAluminium() {
+		this.setUnlocalizedName("itemAluminium");
+		this.setTextureName(ModInfo.MOD_ID + ":" + this.getUnlocalizedName());
+		this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
+	}
+
+}

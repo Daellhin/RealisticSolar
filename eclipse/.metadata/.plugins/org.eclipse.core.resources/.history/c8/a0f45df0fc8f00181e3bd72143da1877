@@ -1,0 +1,31 @@
+package com.daellhin.realisticsolar.blocks.meta.enums;
+
+public enum EnumBlockOre {
+	aluminiumOre(0, "blockAluminiumOre"), 
+	silverOre(1, "blockSilverOre"),
+	phosphorusOre(2, "blockPhosphorusOre"),
+	boronOre(3, "blockBoronOre"),
+	quartziteOre(4, "quartziteOre");
+	
+	private final int meta;
+	private final String name;
+	
+	private EnumBlockOre(int meta, String name) {
+		this.meta = meta;
+		this.name = name;
+			
+	}
+	
+	public int getMeta() {
+		return meta;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public static int count() {
+		return values().length;
+	}
+
+}

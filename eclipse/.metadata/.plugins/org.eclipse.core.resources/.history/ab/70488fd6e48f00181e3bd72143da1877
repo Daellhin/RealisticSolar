@@ -1,0 +1,14 @@
+package com.daellhin.realisticsolar.items;
+
+import com.daellhin.realisticsolar.creativetab.RealisticSolarCreativeTab;
+
+import net.minecraft.item.Item;
+
+public class ItemBoron extends Item {
+	public ItemBoron() {
+		this.setUnlocalizedName("itemBoron");
+		this.setTextureName("rs:itemBoron");
+		this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
+	}
+
+}

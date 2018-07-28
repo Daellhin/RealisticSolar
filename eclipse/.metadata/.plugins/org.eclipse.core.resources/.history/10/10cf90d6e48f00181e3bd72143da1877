@@ -1,0 +1,14 @@
+package com.daellhin.realisticsolar.items;
+
+import com.daellhin.realisticsolar.creativetab.RealisticSolarCreativeTab;
+
+import net.minecraft.item.Item;
+
+public class ItemGlassPanel extends Item {
+	public ItemGlassPanel() {
+		this.setUnlocalizedName("itemGlassPanel");
+		this.setTextureName("rs:itemGlassPanel");
+		this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
+	}
+
+}
