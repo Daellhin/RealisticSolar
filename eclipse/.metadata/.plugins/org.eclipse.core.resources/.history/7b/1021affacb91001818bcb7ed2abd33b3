@@ -1,5 +1,0 @@
-package com.daellhin.realisticsolar.gui;
-
-public class GuiDopingReactor extends GuiRealisticSolar{
-
-}
