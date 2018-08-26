@@ -5,6 +5,7 @@ import com.daellhin.realisticsolar.blocks.machines.RealisticSolarBlocksMachines;
 import com.daellhin.realisticsolar.blocks.meta.RealisticSolarMetaBlocks;
 import com.daellhin.realisticsolar.crafting.RealisticSolarCrafting;
 import com.daellhin.realisticsolar.gen.OreGeneration;
+import com.daellhin.realisticsolar.gui.GuiHandler;
 import com.daellhin.realisticsolar.items.RealisticSolarItems;
 import com.daellhin.realisticsolar.items.meta.RealisticSolarMetaItems;
 import com.daellhin.realisticsolar.tile.RealisticSolarTiles;
@@ -38,6 +39,7 @@ public class CommonProxy {
 	public void PostInit(FMLPostInitializationEvent event) {
 		LogHelper.info("Initializing OreGen");
 		GameRegistry.registerWorldGenerator(new OreGeneration(), 0);
+		
 		
 	}
 

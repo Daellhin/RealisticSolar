@@ -1,5 +1,7 @@
 package com.daellhin.realisticsolar.tile;
 
+import com.daellhin.realisticsolar.tile.base.Tile;
+
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;

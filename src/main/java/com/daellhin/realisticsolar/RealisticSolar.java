@@ -1,5 +1,6 @@
 package com.daellhin.realisticsolar;
 
+import com.daellhin.realisticsolar.gui.GuiHandler;
 import com.daellhin.realisticsolar.lib.ModInfo;
 import com.daellhin.realisticsolar.proxy.CommonProxy;
 
@@ -28,6 +29,7 @@ public class RealisticSolar {
 	
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler()); //Load the GUI handler
 		proxy.Init(event);
 		
 	}

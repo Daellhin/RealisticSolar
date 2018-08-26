@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.tile;
+package com.daellhin.realisticsolar.tile.base;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
