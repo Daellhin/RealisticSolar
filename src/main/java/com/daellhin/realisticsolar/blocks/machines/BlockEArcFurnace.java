@@ -7,18 +7,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 public class BlockEArcFurnace extends Block {
-	public BlockEArcFurnace(Material material) {
-		super(material);
-		this.setBlockName("blockEArcFurnace");
-		this.setBlockTextureName(ModInfo.MOD_ID + ":" + this.getUnlocalizedName().substring(5));
-		this.setCreativeTab(RealisticSolarCreativeTab.tabRSM);
-		
-		this.setHardness(2.0F);
-		//this.setResistance();
-		this.setHarvestLevel("pickaxe", 2 );
-		this.setLightLevel(0);
-		this.setLightOpacity(16);
-		this.setStepSound(this.soundTypeMetal);
-	}
+    public BlockEArcFurnace(Material material) {
+	super(material);
+	this.setBlockName("blockEArcFurnace");
+	this.setBlockTextureName(ModInfo.MOD_ID + ":" + this.getUnlocalizedName().substring(5));
+	this.setCreativeTab(RealisticSolarCreativeTab.tabRSM);
+
+	this.setHardness(2.0F);
+	// this.setResistance();
+	this.setHarvestLevel("pickaxe", 2);
+	this.setLightLevel(0);
+	this.setLightOpacity(16);
+	this.setStepSound(Block.soundTypeMetal);
+    }
 
 }

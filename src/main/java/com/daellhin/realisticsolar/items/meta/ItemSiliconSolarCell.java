@@ -14,48 +14,47 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemSiliconSolarCell extends Item {
-	protected IIcon[] icons;
-	
-	public ItemSiliconSolarCell() {
-		this.setUnlocalizedName("itemSiliconSolarCell");
-		this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
-		this.setHasSubtypes(true);
-		this.setMaxDamage(0);
-		
+    protected IIcon[] icons;
+
+    public ItemSiliconSolarCell() {
+	this.setUnlocalizedName("itemSiliconSolarCell");
+	this.setCreativeTab(RealisticSolarCreativeTab.tabRS);
+	this.setHasSubtypes(true);
+	this.setMaxDamage(0);
+
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+	int metadata = stack.getItemDamage();
+	EnumItemSiliconSolarCell en = EnumItemSiliconSolarCell.values()[metadata];
+	return "item." + en.getName();
+
+    }
+
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
+	for (EnumItemSiliconSolarCell en : EnumItemSiliconSolarCell.values()) {
+	    list.add(new ItemStack(item, 1, en.getMeta()));
 	}
-	
-	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		int metadata = stack.getItemDamage();
-		EnumItemSiliconSolarCell en = EnumItemSiliconSolarCell.values()[metadata];
-		return "item." + en.getName();
-		
+    }
+
+    @Override
+    public void registerIcons(IIconRegister reg) {
+	icons = new IIcon[EnumItemSiliconSolarCell.count()];
+
+	for (EnumItemSiliconSolarCell en : EnumItemSiliconSolarCell.values()) {
+	    icons[en.getMeta()] = reg.registerIcon(ModInfo.MOD_ID + ":" + en.getName());
 	}
-	
-	@Override 
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for(EnumItemSiliconSolarCell en : EnumItemSiliconSolarCell.values()) {
-			list.add(new ItemStack(item, 1, en.getMeta()));
-		}
+    }
+
+    @Override
+    public IIcon getIconFromDamage(int meta) {
+	if (meta >= 0 && meta < EnumItemSilicon.count()) {
+	    return icons[meta];
+	} else {
+	    return null;
 	}
-	
-	@Override
-	public void registerIcons(IIconRegister reg) {
-		icons = new IIcon[EnumItemSiliconSolarCell.count()];
-		
-		for(EnumItemSiliconSolarCell en: EnumItemSiliconSolarCell.values()) {
-			icons[en.getMeta()] = reg.registerIcon(ModInfo.MOD_ID + ":" + en.getName());
-		}
-	}
-	
-	@Override
-	public IIcon getIconFromDamage(int meta) {
-		if(meta >= 0 && meta < EnumItemSilicon.count()) {
-			return icons[meta];
-		}
-		else {
-			return null;
-		}
-	}
-	
+    }
+
 }

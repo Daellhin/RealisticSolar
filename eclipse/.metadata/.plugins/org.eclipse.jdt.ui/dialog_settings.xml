@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
+	<item value="690" key="clean_up_selection_dialog.preferred_height"/>
 	<item value="3" key="TypeHierarchyViewPart.orientation"/>
+	<item value="681" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_x"/>
 	<item value="false" key="TypeHierarchyViewPart.linkeditors"/>
+	<item value="65" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_y"/>
+	<item value="40" key="org.eclipse.jdt.ui.codeformatter.line_wrapping_tab_page.preview_line_width"/>
+	<item value="0" key="org.eclipse.jdt.uiformatter_page.modify_dialog_tab_page.last_focus_index"/>
 	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
+	<item value="00..0.0.100.0.0.0.0.0.0.0.0.0..00.0.0.0.0.0.0.0.0.0.0..00.0.0.0.0.0..00.0.0.0..00.0.0.0...10.0..00.00..0..000.0.0.0.0.0.0.0.0.0...00.0..0.." key="org.eclipse.jdt.uiformatter_page.preference_tree_expansion"/>
+	<item value="845" key="clean_up_selection_dialog.preferred_width"/>
+	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
+	<item value="870" key="clean_up_save_particpant_modify_dialog.preferred_x"/>
+	<item value="179" key="clean_up_save_particpant_modify_dialog.preferred_y"/>
+	<item value="522" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_left_width"/>
+	<item value="845" key="clean_up_save_particpant_modify_dialog.preferred_width"/>
+	<item value="588" key="clean_up_save_particpant_modify_dialog.preferred_height"/>
+	<item value="1223" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_width"/>
+	<item value="760" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_height"/>
+	<item value="0" key="org.eclipse.jdt.uiformatter_page.preference_scroll_position"/>
+	<item value="244" key="org.eclipse.jdt.uiformatter_page.last_focus_index"/>
+	<item value="0" key="clean_up_selection_dialog.preferred_y"/>
+	<item value="660" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_rigth_width"/>
+	<item value="538" key="clean_up_selection_dialog.preferred_x"/>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
 		<item value="false" key="renameSubpackages"/>
 		<item value="false" key="updateQualifiedNames"/>

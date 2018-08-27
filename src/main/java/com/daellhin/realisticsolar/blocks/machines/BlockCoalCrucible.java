@@ -7,18 +7,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 public class BlockCoalCrucible extends Block {
-	public BlockCoalCrucible (Material material) {
-		super(material);
-		this.setBlockName("blockCoalCrucible");
-		this.setBlockTextureName(ModInfo.MOD_ID + ":" + this.getUnlocalizedName().substring(5));
-		this.setCreativeTab(RealisticSolarCreativeTab.tabRSM);
-		
-		this.setHardness(2.0F);
-		//this.setResistance();
-		this.setHarvestLevel("pickaxe", 2 );
-		this.setLightLevel(0);
-		this.setLightOpacity(16);
-		this.setStepSound(this.soundTypeStone);
-	}
+    public BlockCoalCrucible(Material material) {
+	super(material);
+	this.setBlockName("blockCoalCrucible");
+	this.setBlockTextureName(ModInfo.MOD_ID + ":" + this.getUnlocalizedName().substring(5));
+	this.setCreativeTab(RealisticSolarCreativeTab.tabRSM);
+
+	this.setHardness(2.0F);
+	// this.setResistance();
+	this.setHarvestLevel("pickaxe", 2);
+	this.setLightLevel(0);
+	this.setLightOpacity(16);
+	this.setStepSound(Block.soundTypeStone);
+    }
 
 }
