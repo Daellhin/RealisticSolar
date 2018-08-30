@@ -1,5 +1,9 @@
 #
+<<<<<<< HEAD
 #Sun Aug 19 10:23:29 CEST 2018
+=======
+#Sat Jun 23 18:49:19 CEST 2018
+>>>>>>> parent of d2f8920... Upload1
 org.eclipse.jdt.core.compiler.debug.localVariable=generate
 org.eclipse.jdt.core.compiler.compliance=1.6
 org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve

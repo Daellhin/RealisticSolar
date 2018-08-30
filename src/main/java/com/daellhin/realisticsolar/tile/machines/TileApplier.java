@@ -1,65 +1,63 @@
 package com.daellhin.realisticsolar.tile.machines;
 
 import com.daellhin.realisticsolar.crafting.MachineRecipes.ApplierRecipes;
+import com.daellhin.realisticsolar.items.meta.RealisticSolarMetaItems;
 import com.daellhin.realisticsolar.tile.base.TileThreeSlotMachine;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class TileApplier extends TileThreeSlotMachine {
-    private static final int MAX_BUFFER = 16;
-    private static final int PROCESS_TIME = 200;
-    private static final Block BUFFER_BLOCK = Blocks.cobblestone;
+    private static final int PROCESS_TIME = 10;
+    private static final Item BUFFER_ITEM1 = RealisticSolarMetaItems.ItemIngot;
+    private static final int METADATA1 = 1;
     public int buffer = 0;
     private int processTimeRemaining;
     public int timeSpentProcessing;
+    private String inventoryName = "applier";
+    private String name;
 
     @Override
     public void updateEntity() {
 	boolean shouldMarkDirty = false;
-	ItemStack slotStone = getStackInSlot(1);
+	ItemStack slotB = getStackInSlot(1);
 
-	// Check for stone in buffer and fill from itemstack in bottom slot
-	if (slotStone != null && slotStone.getItem() == Item.getItemFromBlock(TileApplier.BUFFER_BLOCK)
-		&& buffer < TileApplier.MAX_BUFFER) {
-	    this.buffer += TileApplier.MAX_BUFFER; // 1 cobblestone = 1 full tank
-	    slotStone.stackSize--;
-	    shouldMarkDirty = true;
-
-	    if (slotStone.stackSize == 0) {
-		slotStone = null;
-		this.setInventorySlotContents(1, null);
+	// Check for bufferItem in bufferSlot and set buffer to 1 = true
+	if (slotB != null && buffer == 0) {
+	    if (slotB.getItem() == TileApplier.BUFFER_ITEM1 && slotB.getItemDamage() == METADATA1) {
+		this.buffer = 1;
 		shouldMarkDirty = true;
+
+		if (slotB.stackSize == 0) {
+		    slotB = null;
+		    this.setInventorySlotContents(1, null);
+		    shouldMarkDirty = true;
+		}
 	    }
+	} else {
+	    this.buffer = 0;
+
 	}
 
-	// Decrement the time before the item is processed, and increment the time spent
-	// processing it
 	if (this.processTimeRemaining > 0 && this.canProcess()) {
 	    this.processTimeRemaining--;
 	    this.timeSpentProcessing++;
 	}
 
-	// Check for inventory contents and process any items
-	if (!worldObj.isRemote && this.canProcess() && this.buffer >= 1 && this.processTimeRemaining == 0) {
-	    this.processItem();
-	    this.processTimeRemaining = TileApplier.PROCESS_TIME;
-	    this.timeSpentProcessing = 0;
+	if (!worldObj.isRemote && this.canProcess()) {
+	    if (this.timeSpentProcessing == PROCESS_TIME) {
+		this.processTimeRemaining = 0;
+		this.timeSpentProcessing = 0;
+		this.processItem();
+	    } else if (this.buffer == 1 && this.processTimeRemaining == 0) {
+		this.processTimeRemaining = TileApplier.PROCESS_TIME;
+	    }
 	}
 
 	if (shouldMarkDirty) {
 	    this.markDirty();
 	}
-    }
 
-    public int getStoneScaled(int scaled) {
-	return this.buffer * scaled / TileApplier.MAX_BUFFER;
-    }
-
-    public int getProgressScaled(int scaled) {
-	return this.timeSpentProcessing * scaled / TileApplier.PROCESS_TIME;
     }
 
     /**
@@ -68,18 +66,23 @@ public class TileApplier extends TileThreeSlotMachine {
      */
     @Override
     protected boolean canProcess() {
-	if (this.slot[0] == null || this.buffer == 0) {
+	if (this.slots[0] == null) {
 	    return false;
 	} else {
-	    ItemStack itemstack = ApplierRecipes.processing().getProcessResult(this.slot[0]);
-	    if (itemstack == null)
+	    ItemStack itemstack = ApplierRecipes.processing().getProcessResult(this.slots[0]);
+	    if (itemstack == null) {
 		return false;
-	    if (this.slot[2] == null)
+	    }
+	    if (buffer == 0) {
+		return false;
+	    }
+
+	    if (this.slots[2] == null)
 		return true;
-	    if (!this.slot[2].isItemEqual(itemstack))
+	    if (!this.slots[2].isItemEqual(itemstack))
 		return false;
-	    int result = slot[2].stackSize + itemstack.stackSize;
-	    return result <= getInventoryStackLimit() && result <= this.slot[2].getMaxStackSize();
+	    int result = slots[2].stackSize + itemstack.stackSize;
+	    return result <= getInventoryStackLimit() && result <= this.slots[2].getMaxStackSize();
 	}
     }
 
@@ -89,24 +92,47 @@ public class TileApplier extends TileThreeSlotMachine {
      */
     @Override
     public void processItem() {
-	this.processTimeRemaining = TileApplier.PROCESS_TIME;
+	ItemStack itemstack = ApplierRecipes.processing().getProcessResult(this.slots[0]);
 
-	if (this.canProcess()) {
-	    ItemStack itemstack = ApplierRecipes.processing().getProcessResult(this.slot[0]);
-
-	    if (this.slot[2] == null) {
-		this.slot[2] = itemstack.copy();
-	    } else if (this.slot[2].getItem() == itemstack.getItem()) {
-		this.slot[2].stackSize += itemstack.stackSize;
-	    }
-
-	    this.slot[0].stackSize--;
-	    this.buffer--;
-
-	    if (this.slot[0].stackSize <= 0) {
-		this.slot[0] = null;
-	    }
+	if (this.slots[2] == null) {
+	    this.slots[2] = itemstack.copy();
+	} else if (this.slots[2].getItem() == itemstack.getItem()) {
+	    this.slots[2].stackSize += itemstack.stackSize;
 	}
+
+	this.slots[0].stackSize--;
+	getStackInSlot(1).stackSize--;
+
+	if (this.slots[0].stackSize <= 0) {
+	    this.slots[0] = null;
+	}
+
     }
 
+    // sets the InventoryName
+    @Override
+    public String getInventoryName() {
+	return this.hasCustomInventoryName() ? this.name : "container." + inventoryName;
+    }
+
+    @Override
+    public int getProgressScaled(int scaled) {
+	return this.timeSpentProcessing * scaled / TileApplier.PROCESS_TIME;
+    }
+
+    public static Item getBufferItem(int n) {
+	switch (n) {
+	case 1:
+	    return BUFFER_ITEM1;
+	}
+	return null;
+    }
+
+    public static int getBufferItemMetadata(int n) {
+	switch (n) {
+	case 1:
+	    return METADATA1;
+	}
+	return 0;
+    }
 }

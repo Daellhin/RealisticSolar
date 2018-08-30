@@ -3,25 +3,60 @@ package com.daellhin.realisticsolar.tile.base;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
 
 public abstract class TileThreeSlotMachine extends Tile implements ISidedInventory {
-    protected ItemStack[] slot = new ItemStack[3];
+    protected ItemStack[] slots = new ItemStack[3];
     private String customName;
 
     @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+	super.readFromNBT(nbt);
+	NBTTagList list = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+	slots = new ItemStack[getSizeInventory()];
+
+	for (int i = 0; i < list.tagCount(); ++i) {
+	    NBTTagCompound comp = list.getCompoundTagAt(i);
+	    int j = comp.getByte("Slot") & 255;
+	    if (j >= 0 && j < slots.length) {
+		slots[j] = ItemStack.loadItemStackFromNBT(comp);
+	    }
+	}
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound nbt) {
+	super.writeToNBT(nbt);
+	NBTTagList list = new NBTTagList();
+
+	for (int i = 0; i < slots.length; ++i) {
+	    if (slots[i] != null) {
+		NBTTagCompound comp = new NBTTagCompound();
+		comp.setByte("Slot", (byte) i);
+		slots[i].writeToNBT(comp);
+		list.appendTag(comp);
+	    }
+	}
+
+	nbt.setTag("Items", list);
+    }
+
+    @Override
     public ItemStack decrStackSize(int i, int j) {
-	if (this.slot[i] != null) {
+	if (this.slots[i] != null) {
 	    ItemStack itemStack;
 
-	    if (this.slot[i].stackSize <= j) {
-		itemStack = this.slot[i];
-		this.slot[i] = null;
+	    if (this.slots[i].stackSize <= j) {
+		itemStack = this.slots[i];
+		this.slots[i] = null;
 		return itemStack;
 	    } else {
-		itemStack = this.slot[i].splitStack(j);
+		itemStack = this.slots[i].splitStack(j);
 
-		if (this.slot[i].stackSize == 0) {
-		    this.slot[i] = null;
+		if (this.slots[i].stackSize == 0) {
+		    this.slots[i] = null;
 		    this.setInventorySlotContents(i, null);
 		}
 
@@ -32,16 +67,20 @@ public abstract class TileThreeSlotMachine extends Tile implements ISidedInvento
 	return null;
     }
 
+    public int getProgressScaled(int scaled) {
+	return 0;
+    }
+
     @Override
     public ItemStack getStackInSlot(int i) {
-	return this.slot[i];
+	return this.slots[i];
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
-	if (this.slot[i] != null) {
-	    ItemStack itemStack = this.slot[i];
-	    this.slot[i] = null;
+	if (this.slots[i] != null) {
+	    ItemStack itemStack = this.slots[i];
+	    this.slots[i] = null;
 	    return itemStack;
 	}
 
@@ -60,7 +99,7 @@ public abstract class TileThreeSlotMachine extends Tile implements ISidedInvento
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
-	this.slot[i] = itemStack;
+	this.slots[i] = itemStack;
 
 	if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit()) {
 	    itemStack.stackSize = this.getInventoryStackLimit();
@@ -84,7 +123,7 @@ public abstract class TileThreeSlotMachine extends Tile implements ISidedInvento
 
     @Override
     public String getInventoryName() {
-	return this.hasCustomInventoryName() ? this.customName : "container.threeSlotMachine";
+	return this.hasCustomInventoryName() ? this.customName : customName;
     }
 
     @Override
@@ -99,7 +138,7 @@ public abstract class TileThreeSlotMachine extends Tile implements ISidedInvento
 
     @Override
     public int getSizeInventory() {
-	return this.slot.length;
+	return this.slots.length;
     }
 
     @Override

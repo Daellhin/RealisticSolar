@@ -8,11 +8,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ContainerWasher extends Container {
@@ -101,7 +99,11 @@ public class ContainerWasher extends Container {
 		    if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 			return null;
 		    }
-		} else if (itemstack1.getItem() == Item.getItemFromBlock(Blocks.cobblestone)) {
+		} else if (itemstack1.getItem() == TileWasher.getBufferItem(1)) {
+		    if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+			return null;
+		    }
+		} else if (itemstack1.getItem() == TileWasher.getBufferItem(2)) {
 		    if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
 			return null;
 		    }

@@ -1,54 +1,43 @@
 package com.daellhin.realisticsolar.gui.machines;
 
+import org.lwjgl.opengl.GL11;
+
 import com.daellhin.realisticsolar.gui.container.ContainerApplier;
 import com.daellhin.realisticsolar.tile.machines.TileApplier;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiApplier extends GuiContainer {
-    private final ResourceLocation texture = new ResourceLocation("rs:textures/gui/threeSlotMachine.png");
-
+    private final ResourceLocation GuiTexture = new ResourceLocation("rs:textures/gui/threeSlotMachine.png");
     private TileApplier applier;
-
-    private static final int LEFT_INDENT_STONE = 57;
-    private static final int TOP_INDENT_STONE = 37;
-    private static final int LEFT_INDENT_TEXTURE_STONE = 176;
-    private static final int TEXTURE_WIDTH_STONE = 14;
-    private static final int TEXTURE_HEIGHT_STONE = 14;
-
-    private static final int LEFT_INDENT_PROGRESS = 79;
-    private static final int TOP_INDENT_PROGRESS = 35;
-    private static final int LEFT_INDENT_TEXTURE_PROGRESS = 176;
-    private static final int TOP_INDENT_TEXTURE_PROGRESS = 14;
-    private static final int TEXTURE_HEIGHT_PROGRESS = 17;
 
     public GuiApplier(InventoryPlayer inventoryPlayer, TileApplier applier) {
 	super(new ContainerApplier(inventoryPlayer, applier));
-
 	this.applier = applier;
+    }
 
-	this.xSize = 176;
-	this.ySize = 166;
+    @Override
+    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+	String string = this.applier.hasCustomInventoryName() ? this.applier.getInventoryName() : I18n.format(this.applier.getInventoryName(), new Object[0]);
+	this.fontRendererObj.drawString(string, this.xSize / 2 - this.fontRendererObj.getStringWidth(string), 6, 4210752);
+	this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 94, 4210752);
+	this.fontRendererObj.drawString(String.valueOf(this.applier.getProgressScaled(50) * 2) + "%", 84, this.ySize - 133, 4210752);
+	this.fontRendererObj.drawString(GuiScript.Arrow(applier), 75, this.ySize - 126, 4210752);
+
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-	// Draw the gui screen
-	Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
-	drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-	/*
-	 * //Stone bar int i = (int) this.washer.getStoneScaled(14);
-	 * drawTexturedModalRect(guiLeft+LEFT_INDENT_STONE,
-	 * guiTop+TOP_INDENT_STONE+TEXTURE_HEIGHT_STONE-i, LEFT_INDENT_TEXTURE_STONE,
-	 * TEXTURE_HEIGHT_STONE-i, TEXTURE_WIDTH_STONE, i);
-	 * 
-	 * //Progress bar int i1 = this.washer.getProgressScaled(24);
-	 * this.drawTexturedModalRect(guiLeft + LEFT_INDENT_PROGRESS, guiTop +
-	 * TOP_INDENT_PROGRESS, LEFT_INDENT_TEXTURE_PROGRESS,
-	 * TOP_INDENT_TEXTURE_PROGRESS, i1 + 1, TEXTURE_HEIGHT_PROGRESS);
-	 */
+	Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTexture);
+	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+	int x = (width - xSize) / 2;
+	int y = (height - ySize) / 2;
+	drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+
     }
 }

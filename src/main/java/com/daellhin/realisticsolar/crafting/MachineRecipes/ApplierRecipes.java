@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.daellhin.realisticsolar.items.meta.RealisticSolarMetaItems;
+
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -20,16 +20,21 @@ public class ApplierRecipes {
     }
 
     public ApplierRecipes() {
-	this.addBlockRecipe(Blocks.gold_ore, new ItemStack(Items.gold_ingot));
+	this.addItemRecipe(new ItemStack(RealisticSolarMetaItems.ItemSiliconWafer, 1, 5), new ItemStack(RealisticSolarMetaItems.ItemSiliconSolarCell, 1, 1));
+	this.addItemRecipe(new ItemStack(RealisticSolarMetaItems.ItemSiliconWafer, 1, 6), new ItemStack(RealisticSolarMetaItems.ItemSiliconSolarCell, 1, 2));
+	this.addItemRecipe(new ItemStack(RealisticSolarMetaItems.ItemSiliconWafer, 1, 7), new ItemStack(RealisticSolarMetaItems.ItemSiliconSolarCell, 1, 3));
+	this.addItemRecipe(new ItemStack(RealisticSolarMetaItems.ItemSiliconWafer, 1, 8), new ItemStack(RealisticSolarMetaItems.ItemSiliconSolarCell, 1, 4));
 
     }
 
+    // this.addBlockRecipe(Input, new ItemStack(Output));
     public void addBlockRecipe(Block input, ItemStack output) {
-	this.addItemRecipe(Item.getItemFromBlock(input), output);
+	this.addRecipeToList(new ItemStack(Item.getItemFromBlock(input), 1, 32767), output);
     }
 
-    public void addItemRecipe(Item input, ItemStack output) {
-	this.addRecipeToList(new ItemStack(input, 1, 32767), output);
+    // this.addItemRecipe(new ItemStack(Input), new ItemStack(Output));
+    public void addItemRecipe(ItemStack input, ItemStack output) {
+	this.addRecipeToList(input, output);
     }
 
     public void addRecipeToList(ItemStack input, ItemStack output) {
@@ -52,8 +57,7 @@ public class ApplierRecipes {
     }
 
     private boolean isItemDamaged(ItemStack input, ItemStack output) {
-	return output.getItem() == input.getItem()
-		&& (output.getItemDamage() == 32767 || output.getItemDamage() == input.getItemDamage());
+	return output.getItem() == input.getItem() && (output.getItemDamage() == 32767 || output.getItemDamage() == input.getItemDamage());
     }
 
     public Map<ItemStack, ItemStack> getRecipeList() {

@@ -1,7 +1,6 @@
 package com.daellhin.realisticsolar.blocks.machines;
 
 import com.daellhin.realisticsolar.RealisticSolar;
-import com.daellhin.realisticsolar.blocks.base.ContainerBlock;
 import com.daellhin.realisticsolar.creativetab.RealisticSolarCreativeTab;
 import com.daellhin.realisticsolar.gui.GuiHandler;
 import com.daellhin.realisticsolar.lib.ModInfo;
@@ -9,12 +8,13 @@ import com.daellhin.realisticsolar.tile.machines.TileApplier;
 
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockApplier extends ContainerBlock {
+public class BlockApplier extends BlockContainer {
     public BlockApplier(Material material) {
 	super(material);
 	this.setBlockName("blockApplier");

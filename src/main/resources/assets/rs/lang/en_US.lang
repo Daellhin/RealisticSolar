@@ -69,3 +69,8 @@ tile.blockAssembler.name=Assembler
 #CreativeTabs
 itemGroup.tabRealisticSolar=Realistic Solar
 itemGroup.tabRealisticSolarMachines=Realistic Solar Machines
+
+
+#Gui
+container.washer=Washer
+container.applier=Applier

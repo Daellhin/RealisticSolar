@@ -6,24 +6,28 @@ import com.daellhin.realisticsolar.tile.base.TileThreeSlotMachine;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class TileWasher extends TileThreeSlotMachine {
     private static final int MAX_BUFFER = 16;
     private static final int PROCESS_TIME = 150;
-    private static final Item BUFFER_ITEM = Items.water_bucket;
+    private static final Item BUFFER_ITEM1 = Items.water_bucket;
+    private static final Item BUFFER_ITEM2 = Items.potionitem;
     public int buffer = 0;
-    private int processTimeRemaining;
-    public int timeSpentProcessing;
+    private int processTimeRemaining = 0;
+    public int timeSpentProcessing = 0;
+    private String inventoryName = "washer";
+    private String name;
 
     @Override
     public void updateEntity() {
 	boolean shouldMarkDirty = false;
-	ItemStack slotB = getStackInSlot(1);// slotB = bottom slot
+	ItemStack slotB = getStackInSlot(1);
 
 	// Check for bufferBlock in bufferSlot and fill buffer
-	if (slotB != null && buffer < TileWasher.MAX_BUFFER) {
-	    if (slotB.getItem() == TileWasher.BUFFER_ITEM) {
-		this.buffer += TileWasher.MAX_BUFFER; // 1 block = 1 full buffer
+	if (slotB != null && buffer == 0) {
+	    if (slotB.getItem() == TileWasher.BUFFER_ITEM1 || slotB.getItem() == TileWasher.BUFFER_ITEM2) {
+		this.buffer += TileWasher.MAX_BUFFER;
 		slotB.stackSize--;
 		shouldMarkDirty = true;
 
@@ -35,31 +39,29 @@ public class TileWasher extends TileThreeSlotMachine {
 	    }
 	}
 
-	// Decrement the time before the item is processed, and increment the time spent
-	// processing it
 	if (this.processTimeRemaining > 0 && this.canProcess()) {
 	    this.processTimeRemaining--;
 	    this.timeSpentProcessing++;
 	}
 
-	// Check for inventory contents and process any items
-	if (!worldObj.isRemote && this.canProcess() && this.buffer >= 1 && this.processTimeRemaining == 0) {
-	    this.processItem();
-	    this.processTimeRemaining = TileWasher.PROCESS_TIME;
-	    this.timeSpentProcessing = 0;
+	if (!worldObj.isRemote && this.canProcess()) {
+	    if (this.timeSpentProcessing == PROCESS_TIME) {
+		this.processTimeRemaining = 0;
+		this.timeSpentProcessing = 0;
+		this.processItem();
+	    } else if (this.buffer >= 1 && this.processTimeRemaining == 0) {
+		this.processTimeRemaining = TileWasher.PROCESS_TIME;
+	    }
 	}
 
 	if (shouldMarkDirty) {
 	    this.markDirty();
 	}
+
     }
 
-    public int getStoneScaled(int scaled) {
+    public int getBufferScaled(int scaled) {
 	return this.buffer * scaled / TileWasher.MAX_BUFFER;
-    }
-
-    public int getProgressScaled(int scaled) {
-	return this.timeSpentProcessing * scaled / TileWasher.PROCESS_TIME;
     }
 
     /**
@@ -68,18 +70,20 @@ public class TileWasher extends TileThreeSlotMachine {
      */
     @Override
     protected boolean canProcess() {
-	if (this.slot[0] == null || this.buffer == 0) {
+	if (this.slots[0] == null || this.buffer == 0) {
 	    return false;
+
 	} else {
-	    ItemStack itemstack = WasherRecipes.processing().getProcessResult(this.slot[0]);
-	    if (itemstack == null)
+	    ItemStack itemstack = WasherRecipes.processing().getProcessResult(this.slots[0]);
+	    if (itemstack == null) {
 		return false;
-	    if (this.slot[2] == null)
+	    }
+	    if (this.slots[2] == null)
 		return true;
-	    if (!this.slot[2].isItemEqual(itemstack))
+	    if (!this.slots[2].isItemEqual(itemstack))
 		return false;
-	    int result = slot[2].stackSize + itemstack.stackSize;
-	    return result <= getInventoryStackLimit() && result <= this.slot[2].getMaxStackSize();
+	    int result = slots[2].stackSize + itemstack.stackSize;
+	    return result <= getInventoryStackLimit() && result <= this.slots[2].getMaxStackSize();
 	}
     }
 
@@ -89,23 +93,54 @@ public class TileWasher extends TileThreeSlotMachine {
      */
     @Override
     public void processItem() {
-	this.processTimeRemaining = TileWasher.PROCESS_TIME;
+	ItemStack itemstack = WasherRecipes.processing().getProcessResult(this.slots[0]);
 
-	if (this.canProcess()) {
-	    ItemStack itemstack = WasherRecipes.processing().getProcessResult(this.slot[0]);
-
-	    if (this.slot[2] == null) {
-		this.slot[2] = itemstack.copy();
-	    } else if (this.slot[2].getItem() == itemstack.getItem()) {
-		this.slot[2].stackSize += itemstack.stackSize;
-	    }
-
-	    this.slot[0].stackSize--;
-	    this.buffer--;
-
-	    if (this.slot[0].stackSize <= 0) {
-		this.slot[0] = null;
-	    }
+	if (this.slots[2] == null) {
+	    this.slots[2] = itemstack.copy();
+	} else if (this.slots[2].getItem() == itemstack.getItem()) {
+	    this.slots[2].stackSize += itemstack.stackSize;
 	}
+
+	this.slots[0].stackSize--;
+	this.buffer--;
+
+	if (this.slots[0].stackSize <= 0) {
+	    this.slots[0] = null;
+	}
+
+    }
+
+    // sets the InventoryName
+    @Override
+    public String getInventoryName() {
+	return this.hasCustomInventoryName() ? this.name : "container." + inventoryName;
+    }
+
+    @Override
+    public int getProgressScaled(int scaled) {
+	return this.timeSpentProcessing * scaled / TileWasher.PROCESS_TIME;
+    }
+
+    public static Item getBufferItem(int n) {
+	switch (n) {
+	case 1:
+	    return BUFFER_ITEM1;
+	case 2:
+	    return BUFFER_ITEM2;
+	}
+	return null;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTags) {
+	super.readFromNBT(nbtTags);
+	buffer = (int) nbtTags.getDouble("buffer");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound nbtTags) {
+	super.writeToNBT(nbtTags);
+	nbtTags.setDouble("buffer", buffer);
+
     }
 }
