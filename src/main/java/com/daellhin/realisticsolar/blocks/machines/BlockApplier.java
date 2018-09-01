@@ -32,12 +32,11 @@ public class BlockApplier extends BlockContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int var2) {
-	return new TileApplier();
+	return new TileApplier(0, 0);
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
-	    float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 	FMLNetworkHandler.openGui(player, RealisticSolar.instance, GuiHandler.GUIID_APPLIER, world, x, y, z);
 	return true;
     }

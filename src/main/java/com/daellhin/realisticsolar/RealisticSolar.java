@@ -12,6 +12,12 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
+/**
+ * Main Class of Realistic Solar
+ *
+ * @author Daellhin
+ *
+ */
 @Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_Name, version = ModInfo.MOD_ID)
 public class RealisticSolar {
 

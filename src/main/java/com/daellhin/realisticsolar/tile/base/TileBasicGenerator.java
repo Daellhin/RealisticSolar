@@ -69,28 +69,16 @@ public abstract class TileBasicGenerator extends Tile implements IEnergyHandler,
 
 		TileEntity tile = worldObj.getTileEntity(targetX, targetY, targetZ);
 		if (tile instanceof IEnergyHandler) {
-		    int maxExtract = storage.getMaxExtract(); // Gets the maximum amount of energy that can be extracted
-							      // in 1 tick
-		    int maxAvaliable = storage.extractEnergy(maxExtract, true); // Simulates extracting all the energy
-										// to see how much is available to be
-										// extracted
-		    int energyTransfered = ((IEnergyHandler) tile)
-			    .receiveEnergy(ForgeDirection.getOrientation(i).getOpposite(), maxAvaliable, false); // Sends
-														 // "maxAvailable"
-														 // to
-														 // the
-														 // target
-														 // tile
-														 // and
-														 // records
-														 // how
-														 // much
-														 // energy
-														 // was
-														 // accepted
-
-		    storage.extractEnergy(energyTransfered, false); // Extract the transferred energy from the internal
-								    // storage
+		    // Gets the maximum amount of energy that can be extracted in 1 tick
+		    int maxExtract = storage.getMaxExtract();
+		    // Simulates extracting all the energy to see how much is available to be
+		    // extracted
+		    int maxAvaliable = storage.extractEnergy(maxExtract, true);
+		    // Sends "maxAvailable" to the target tile and records how much energy was
+		    // accepted
+		    int energyTransfered = ((IEnergyHandler) tile).receiveEnergy(ForgeDirection.getOrientation(i).getOpposite(), maxAvaliable, false);
+		    // Extract the transferred energy from the internal storage
+		    storage.extractEnergy(energyTransfered, false);
 		}
 	    }
 	}

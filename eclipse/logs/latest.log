@@ -1,107 +1,39 @@
-[14:10:23] [main/INFO]: Setting user: Player552
-[14:10:25] [Client thread/INFO]: LWJGL Version: 2.9.1
-[14:10:35] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Not Enough Items, FMLFileResourcePack:Realistic Solar, FMLFileResourcePack:Mekanism, FMLFileResourcePack:MekanismGenerators, FMLFileResourcePack:Waila, FMLFileResourcePack:Waila Harvestability, FMLFileResourcePack:Forge Microblocks, FMLFileResourcePack:Forge Multipart, FMLFileResourcePack:Minecraft Multipart Plugin
-[14:10:39] [Sound Library Loader/INFO]: Sound engine started
-[14:10:41] [Client thread/INFO]: Created: 32x32 textures/blocks-atlas
-[14:10:41] [Client thread/INFO]: Created: 16x16 textures/items-atlas
-[14:10:43] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Not Enough Items, FMLFileResourcePack:Realistic Solar, FMLFileResourcePack:Mekanism, FMLFileResourcePack:MekanismGenerators, FMLFileResourcePack:Waila, FMLFileResourcePack:Waila Harvestability, FMLFileResourcePack:Forge Microblocks, FMLFileResourcePack:Forge Multipart, FMLFileResourcePack:Minecraft Multipart Plugin
-[14:10:45] [Client thread/INFO]: Created: 2048x2048 textures/blocks-atlas
-[14:10:45] [Client thread/INFO]: Created: 512x256 textures/items-atlas
-[14:10:46] [Sound Library Loader/INFO]: Sound engine started
-[14:14:22] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
-[14:14:22] [Server thread/INFO]: Generating keypair
-[14:14:22] [Server thread/INFO]: Preparing start region for level 0
-[14:14:23] [Server thread/INFO]: Changing view distance to 2, from 10
-[14:14:24] [Server thread/INFO]: Player552[local:E:b5844050] logged in with entity id 137 at (-35.32083771976573, 69.0, 54.69999998807907)
-[14:14:24] [Server thread/INFO]: Player552 joined the game
-[14:14:27] [Server thread/INFO]: Saving and pausing game...
-[14:14:27] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
-[14:14:27] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
-[14:14:27] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
-[14:14:56] [Server thread/INFO]: Player552 has just earned the achievement [Taking Inventory]
-[14:14:56] [Client thread/INFO]: [CHAT] Player552 has just earned the achievement [Taking Inventory]
-[14:17:38] [Client thread/INFO]: [CHAT] That player cannot be found
-[14:17:52] [Client thread/INFO]: [CHAT] 'minecraft:strength' is not a valid number
-[14:18:24] [Client thread/INFO]: [CHAT] /effect <player> <effect> [seconds] [amplifier]
-[14:18:52] [Client thread/INFO]: [CHAT] 'speed' is not a valid number
-[14:20:21] [Client thread/INFO]: [CHAT] 'minecraft:night_vision' is not a valid number
-[14:20:31] [Client thread/INFO]: [CHAT] 'minecraft:night_vision' is not a valid number
-[14:21:08] [Server thread/INFO]: [Player552: Given Jump Boost (ID 8) * 255 to Player552 for 1000 seconds]
-[14:21:08] [Client thread/INFO]: [CHAT] Given Jump Boost (ID 8) * 255 to Player552 for 1000 seconds
-[14:21:25] [Server thread/INFO]: [Player552: Set own game mode to Survival Mode]
-[14:21:25] [Client thread/INFO]: [CHAT] Your game mode has been updated
-[14:22:18] [Server thread/INFO]: [Player552: Given Speed (ID 1) * 1 to Player552 for 10 seconds]
-[14:22:18] [Client thread/INFO]: [CHAT] Given Speed (ID 1) * 1 to Player552 for 10 seconds
-[14:22:37] [Client thread/INFO]: [CHAT] --- Showing help page 1 of 5 (/help <page>) ---
-[14:22:37] [Client thread/INFO]: [CHAT] /achievement give <stat_name> [player]
-[14:22:37] [Client thread/INFO]: [CHAT] /clear <player> [item] [data]
-[14:22:37] [Client thread/INFO]: [CHAT] /debug <start|stop>
-[14:22:37] [Client thread/INFO]: [CHAT] /defaultgamemode <mode>
-[14:22:37] [Client thread/INFO]: [CHAT] /difficulty <new difficulty>
-[14:22:37] [Client thread/INFO]: [CHAT] /dumphandlers
-[14:22:37] [Client thread/INFO]: [CHAT] /effect <player> <effect> [seconds] [amplifier]
-[14:22:37] [Client thread/INFO]: [CHAT] Tip: Use the <tab> key while typing a command to auto-complete the command or its arguments
-[14:23:06] [Client thread/INFO]: [CHAT] --- Showing help page 5 of 5 (/help <page>) ---
-[14:23:06] [Client thread/INFO]: [CHAT] /testforblock <x> <y> <z> <TileName> [dataValue] [dataTag]
-[14:23:06] [Client thread/INFO]: [CHAT] /time <set|add> <value>
-[14:23:06] [Client thread/INFO]: [CHAT] /toggledownfall
-[14:23:06] [Client thread/INFO]: [CHAT] /tp [target player] <destination player> OR /tp [target player] <x> <y> <z>
-[14:23:06] [Client thread/INFO]: [CHAT] /weather <clear|rain|thunder> [duration in seconds]
-[14:23:06] [Client thread/INFO]: [CHAT] /mk <parameters>
-[14:23:06] [Client thread/INFO]: [CHAT] /xp <amount> [player] OR /xp <amount>L [player]
-[14:23:12] [Client thread/INFO]: [CHAT] --- Showing help page 2 of 5 (/help <page>) ---
-[14:23:12] [Client thread/INFO]: [CHAT] /enchant <player> <enchantment ID> [level]
-[14:23:12] [Client thread/INFO]: [CHAT] Use /forge <subcommand>. Subcommands are tps, track
-[14:23:12] [Client thread/INFO]: [CHAT] /gamemode <mode> [player]
-[14:23:12] [Client thread/INFO]: [CHAT] /gamerule <rule name> <value> OR /gamerule <rule name>
-[14:23:12] [Client thread/INFO]: [CHAT] /give <player> <item> [amount] [data] [dataTag]
-[14:23:12] [Client thread/INFO]: [CHAT] /help [page|command name]
-[14:23:12] [Client thread/INFO]: [CHAT] /kill
-[14:23:20] [Client thread/INFO]: [CHAT] --- Showing help page 3 of 5 (/help <page>) ---
-[14:23:20] [Client thread/INFO]: [CHAT] /me <action ...>
-[14:23:20] [Client thread/INFO]: [CHAT] /playsound <sound> <player> [x] [y] [z] [volume] [pitch] [minimumVolume]
-[14:23:20] [Client thread/INFO]: [CHAT] /publish
-[14:23:20] [Client thread/INFO]: [CHAT] /say <message ...>
-[14:23:20] [Client thread/INFO]: [CHAT] /scoreboard <objectives|players|teams>
-[14:23:20] [Client thread/INFO]: [CHAT] /seed
-[14:23:20] [Client thread/INFO]: [CHAT] /setblock <x> <y> <z> <TileName> [dataValue] [oldBlockHandling] [dataTag]
-[14:23:31] [Client thread/INFO]: [CHAT] --- Showing help page 4 of 5 (/help <page>) ---
-[14:23:31] [Client thread/INFO]: [CHAT] /setworldspawn OR /setworldspawn <x> <y> <z>
-[14:23:31] [Client thread/INFO]: [CHAT] /spawnpoint OR /spawnpoint <player> OR /spawnpoint <player> <x> <y> <z>
-[14:23:31] [Client thread/INFO]: [CHAT] /spreadplayers <x> <z> <spreadDistance> <maxRange> <respectTeams true|false> <player ...>
-[14:23:31] [Client thread/INFO]: [CHAT] /summon <EntityName> [x] [y] [z] [dataTag]
-[14:23:31] [Client thread/INFO]: [CHAT] /tell <player> <private message ...>
-[14:23:31] [Client thread/INFO]: [CHAT] /tellraw <player> <raw json message>
-[14:23:31] [Client thread/INFO]: [CHAT] /testfor <player>
-[14:23:54] [Server thread/INFO]: [Player552: Given Speed (ID 1) * 1 to Player552 for 100 seconds]
-[14:23:54] [Client thread/INFO]: [CHAT] Given Speed (ID 1) * 1 to Player552 for 100 seconds
-[14:24:13] [Server thread/INFO]: [Player552: Given Speed (ID 1) * 100 to Player552 for 100 seconds]
-[14:24:13] [Client thread/INFO]: [CHAT] Given Speed (ID 1) * 100 to Player552 for 100 seconds
-[14:24:45] [Server thread/INFO]: [Player552: Set own game mode to Creative Mode]
-[14:24:45] [Client thread/INFO]: [CHAT] Your game mode has been updated
-[14:26:02] [Server thread/INFO]: Player552 fell out of the world
-[14:26:02] [Client thread/INFO]: [CHAT] Player552 fell out of the world
-[14:26:02] [Client thread/INFO]: [CHAT] Ouch! That looked like it hurt
-[14:26:10] [Server thread/INFO]: [Player552: Set the time to 0]
-[14:26:10] [Client thread/INFO]: [CHAT] Set the time to 0
-[14:26:34] [Server thread/INFO]: [Player552: Given Night Vision (ID 16) * 10 to Player552 for 200 seconds]
-[14:26:34] [Client thread/INFO]: [CHAT] Given Night Vision (ID 16) * 10 to Player552 for 200 seconds
-[14:27:04] [Client thread/INFO]: [CHAT] The number you have entered (50000000) is too big, it must be at most 255
-[14:27:11] [Server thread/INFO]: [Player552: Given Speed (ID 1) * 255 to Player552 for 100 seconds]
-[14:27:11] [Client thread/INFO]: [CHAT] Given Speed (ID 1) * 255 to Player552 for 100 seconds
-[14:27:32] [Server thread/INFO]: Saving and pausing game...
-[14:27:32] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
-[14:27:32] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
-[14:27:32] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
-[14:27:41] [Server thread/INFO]: Changing view distance to 6, from 2
-[14:28:56] [Server thread/INFO]: Saving and pausing game...
-[14:28:56] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
-[14:28:56] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
-[14:28:56] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
-[14:28:57] [Server thread/INFO]: Stopping server
-[14:28:57] [Server thread/INFO]: Saving players
-[14:28:57] [Server thread/INFO]: Saving worlds
-[14:28:57] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
-[14:28:57] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
-[14:28:57] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
-[14:28:58] [Client thread/INFO]: Stopping!
+[15:55:38] [main/INFO]: Setting user: Player527
+[15:55:40] [Client thread/INFO]: LWJGL Version: 2.9.1
+[15:55:53] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Not Enough Items, FMLFileResourcePack:Realistic Solar, FMLFileResourcePack:EnderCore, FMLFileResourcePack:Ender IO, FMLFileResourcePack:Mekanism, FMLFileResourcePack:MekanismGenerators, FMLFileResourcePack:Waila, FMLFileResourcePack:Waila Harvestability, FMLFileResourcePack:Forge Microblocks, FMLFileResourcePack:Forge Multipart, FMLFileResourcePack:Minecraft Multipart Plugin
+[15:55:59] [Sound Library Loader/INFO]: Sound engine started
+[15:56:01] [Client thread/INFO]: Created: 32x32 textures/blocks-atlas
+[15:56:01] [Client thread/INFO]: Created: 16x16 textures/items-atlas
+[15:56:04] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Not Enough Items, FMLFileResourcePack:Realistic Solar, FMLFileResourcePack:EnderCore, FMLFileResourcePack:Ender IO, FMLFileResourcePack:Mekanism, FMLFileResourcePack:MekanismGenerators, FMLFileResourcePack:Waila, FMLFileResourcePack:Waila Harvestability, FMLFileResourcePack:Forge Microblocks, FMLFileResourcePack:Forge Multipart, FMLFileResourcePack:Minecraft Multipart Plugin
+[15:56:07] [Client thread/INFO]: Created: 2048x2048 textures/blocks-atlas
+[15:56:07] [Client thread/INFO]: Created: 512x512 textures/items-atlas
+[15:56:08] [Sound Library Loader/INFO]: Sound engine started
+[15:59:28] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[15:59:28] [Server thread/INFO]: Generating keypair
+[15:59:29] [Server thread/INFO]: Preparing start region for level 0
+[15:59:29] [Server thread/WARN]: Skipping BlockEntity with id rs.tilewasher
+[15:59:29] [Server thread/WARN]: Skipping BlockEntity with id rs.tileSolarPanel
+[15:59:30] [Server thread/INFO]: Changing view distance to 6, from 10
+[15:59:30] [Server thread/INFO]: Player527[local:E:77bd0603] logged in with entity id 177 at (-30.125850389800714, 69.0, 52.93987022615362)
+[15:59:30] [Server thread/INFO]: Player527 joined the game
+[15:59:34] [Server thread/INFO]: Saving and pausing game...
+[15:59:34] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
+[15:59:34] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
+[15:59:34] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
+[15:59:47] [Server thread/INFO]: Player527 has just earned the achievement [Taking Inventory]
+[15:59:47] [Client thread/INFO]: [CHAT] Player527 has just earned the achievement [Taking Inventory]
+[16:01:14] [Server thread/INFO]: [Player527: Set the time to 0]
+[16:01:15] [Client thread/INFO]: [CHAT] Set the time to 0
+[16:01:19] [Server thread/INFO]: [Player527: Changing to clear weather]
+[16:01:19] [Client thread/INFO]: [CHAT] Changing to clear weather
+[16:02:23] [Server thread/INFO]: Saving and pausing game...
+[16:02:23] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
+[16:02:23] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
+[16:02:23] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
+[16:02:24] [Server thread/INFO]: Stopping server
+[16:02:24] [Server thread/INFO]: Saving players
+[16:02:24] [Server thread/INFO]: Saving worlds
+[16:02:24] [Server thread/INFO]: Saving chunks for level 'Test World'/Overworld
+[16:02:24] [Server thread/INFO]: Saving chunks for level 'Test World'/Nether
+[16:02:24] [Server thread/INFO]: Saving chunks for level 'Test World'/The End
+[16:02:25] [Client thread/INFO]: Stopping!

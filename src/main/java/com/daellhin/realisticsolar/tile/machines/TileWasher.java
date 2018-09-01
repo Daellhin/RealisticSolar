@@ -7,6 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileWasher extends TileThreeSlotMachine {
     private static final int MAX_BUFFER = 16;
@@ -18,6 +19,12 @@ public class TileWasher extends TileThreeSlotMachine {
     public int timeSpentProcessing = 0;
     private String inventoryName = "washer";
     private String name;
+    private boolean canUse;
+
+    public TileWasher(int used, int buffer) {
+	super(used, buffer);
+
+    }
 
     @Override
     public void updateEntity() {
@@ -142,5 +149,19 @@ public class TileWasher extends TileThreeSlotMachine {
 	super.writeToNBT(nbtTags);
 	nbtTags.setDouble("buffer", buffer);
 
+    }
+
+    @Override
+    protected void used() {
+	this.canUse = true;
+
+	if (this.canUse) {
+	    storage.modifyEnergyStored(used);
+	}
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from) {
+	return true;
     }
 }

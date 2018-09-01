@@ -40,7 +40,7 @@ public class BlockWasher extends BlockContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int var2) {
-	return new TileWasher();
+	return new TileWasher(0, 100);
     }
 
     @Override

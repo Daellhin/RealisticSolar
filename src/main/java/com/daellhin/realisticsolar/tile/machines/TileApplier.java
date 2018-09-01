@@ -8,6 +8,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class TileApplier extends TileThreeSlotMachine {
+    public TileApplier(int used, int buffer) {
+	super(used, buffer);
+	// TODO Auto-generated constructor stub
+    }
+
     private static final int PROCESS_TIME = 10;
     private static final Item BUFFER_ITEM1 = RealisticSolarMetaItems.ItemIngot;
     private static final int METADATA1 = 1;
@@ -134,5 +139,11 @@ public class TileApplier extends TileThreeSlotMachine {
 	    return METADATA1;
 	}
 	return 0;
+    }
+
+    @Override
+    protected void used() {
+	// TODO Auto-generated method stub
+
     }
 }

@@ -78,26 +78,32 @@ public class BlockSolarPanel extends Block implements ITileEntityProvider {
 	int maxGen3 = 100;
 	int maxGen4 = 200;
 
+	int buffer0 = 10;
+	int buffer1 = 20;
+	int buffer2 = 50;
+	int buffer3 = 100;
+	int buffer4 = 200;
+
 	switch (meta) {
 	case 0:
 	    maxGen = maxGen0;
-	    buffer = maxGen0;
+	    buffer = buffer0;
 	    break;
 	case 1:
 	    maxGen = maxGen1;
-	    buffer = maxGen1;
+	    buffer = buffer1;
 	    break;
 	case 2:
 	    maxGen = maxGen2;
-	    buffer = maxGen2;
+	    buffer = buffer2;
 	    break;
 	case 3:
 	    maxGen = maxGen3;
-	    buffer = maxGen3;
+	    buffer = buffer3;
 	    break;
 	case 4:
 	    maxGen = maxGen4;
-	    buffer = maxGen4;
+	    buffer = buffer4;
 	    break;
 	}
 	return new TileSolarPanel(maxGen, buffer);

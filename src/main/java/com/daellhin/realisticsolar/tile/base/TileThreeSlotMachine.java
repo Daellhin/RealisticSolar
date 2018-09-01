@@ -7,7 +7,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 
-public abstract class TileThreeSlotMachine extends Tile implements ISidedInventory {
+public abstract class TileThreeSlotMachine extends TileBasicConsumer implements ISidedInventory {
+    public TileThreeSlotMachine(int used, int buffer) {
+	super(used, buffer);
+	// TODO Auto-generated constructor stub
+    }
+
     protected ItemStack[] slots = new ItemStack[3];
     private String customName;
 
