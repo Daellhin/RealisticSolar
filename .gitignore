@@ -1,0 +1,12 @@
+#Folders
+.gradle/
+.settings/
+bin/
+build/
+eclipse/
+gradle/
+
+#Files
+build.bat
+gradlew.bat
+

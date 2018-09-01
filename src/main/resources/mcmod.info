@@ -1,0 +1,14 @@
+[
+{
+	"modid": "rs",
+	"name": "Realistic Solar",
+	"description": "A mod for minecraft 1.7.10 that aims to add realistic solar panel production and energy generation.",
+	"version": "0.0.1",
+	"credits": "",
+	"mcversion": "1.7.10",
+	"authors": ["Daellhin"],
+	"dependencies": [
+	"mod_MinecraftForge"
+	]
+}
+]
