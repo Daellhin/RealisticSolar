@@ -103,10 +103,6 @@ public class ContainerWasher extends Container {
 		    if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
 			return null;
 		    }
-		} else if (itemstack1.getItem() == TileWasher.getBufferItem(2)) {
-		    if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
-			return null;
-		    }
 		} else if (index >= 3 && index < 30) {
 		    if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
 			return null;

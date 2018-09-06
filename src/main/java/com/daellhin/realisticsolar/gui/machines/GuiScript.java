@@ -14,7 +14,7 @@ public class GuiScript {
 	else if(i1*2 > 60) {Progress = "----";}
 	else if(i1*2 > 45) {Progress = "---";}
 	else if(i1*2 > 30) {Progress = "--";}
-	else if(i1*2 > 15) {  Progress = "-";}
+	else if(i1*2 > 15) {Progress = "-";}
 	
 	return Progress;
     }

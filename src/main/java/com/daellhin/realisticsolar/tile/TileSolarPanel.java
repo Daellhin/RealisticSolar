@@ -13,10 +13,23 @@ public class TileSolarPanel extends TileBasicGenerator {
 
     @Override
     protected void generate() {
-	this.canGenerate = true;
+	if (worldObj.canBlockSeeTheSky(this.xCoord, this.yCoord + 1, this.zCoord)) {
+	    this.canGenerate = true;
+	} else {
+	    this.canGenerate = false;
+	}
 
 	if (this.canGenerate) {
-	    storage.modifyEnergyStored(generated);
+	    int h;
+	    int i = this.worldObj.getBlockLightValue(this.xCoord, this.yCoord + 1, this.zCoord);
+	    if (i == 15) {
+		storage.modifyEnergyStored(generated);
+	    } else if (i > 9) {
+		storage.modifyEnergyStored((generated * i) / 15);
+	    } else {
+		storage.modifyEnergyStored((generated * i) / 1000);
+	    }
+
 	}
     }
 

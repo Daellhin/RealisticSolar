@@ -3,6 +3,7 @@ package com.daellhin.realisticsolar.tile.machines;
 import com.daellhin.realisticsolar.crafting.MachineRecipes.WasherRecipes;
 import com.daellhin.realisticsolar.tile.base.TileThreeSlotMachine;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,8 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileWasher extends TileThreeSlotMachine {
     private static final int MAX_BUFFER = 16;
     private static final int PROCESS_TIME = 150;
-    private static final Item BUFFER_ITEM1 = Items.water_bucket;
-    private static final Item BUFFER_ITEM2 = Items.potionitem;
+    private static final Item BUFFER_ITEM = Items.potionitem;
     public int buffer = 0;
     private int processTimeRemaining = 0;
     public int timeSpentProcessing = 0;
@@ -26,23 +26,27 @@ public class TileWasher extends TileThreeSlotMachine {
 
     }
 
+    protected void addItemToInventory(Item item, EntityPlayer player) {
+	player.inventory.setInventorySlotContents(1, new ItemStack(item));
+
+    }
+
     @Override
     public void updateEntity() {
 	boolean shouldMarkDirty = false;
 	ItemStack slotB = getStackInSlot(1);
 
-	// Check for bufferBlock in bufferSlot and fill buffer
-	if (slotB != null && buffer == 0) {
-	    if (slotB.getItem() == TileWasher.BUFFER_ITEM1 || slotB.getItem() == TileWasher.BUFFER_ITEM2) {
-		this.buffer += TileWasher.MAX_BUFFER;
-		slotB.stackSize--;
-		shouldMarkDirty = true;
+	// Check for bufferItem in bufferSlot and fill buffer
 
-		if (slotB.stackSize == 0) {
-		    slotB = null;
-		    this.setInventorySlotContents(1, null);
-		    shouldMarkDirty = true;
-		}
+	if (slotB != null && slotB.getItem() == TileWasher.BUFFER_ITEM && buffer <= 12) {
+	    this.buffer += (TileWasher.MAX_BUFFER / 4);
+	    slotB.stackSize--;
+	    shouldMarkDirty = true;
+
+	    if (slotB.stackSize == 0) {
+		slotB = null;
+		this.setInventorySlotContents(1, null);
+		shouldMarkDirty = true;
 	    }
 	}
 
@@ -131,9 +135,7 @@ public class TileWasher extends TileThreeSlotMachine {
     public static Item getBufferItem(int n) {
 	switch (n) {
 	case 1:
-	    return BUFFER_ITEM1;
-	case 2:
-	    return BUFFER_ITEM2;
+	    return BUFFER_ITEM;
 	}
 	return null;
     }
