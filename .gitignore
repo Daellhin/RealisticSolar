@@ -1,12 +1,16 @@
-#Folders
-.gradle/
-.settings/
+# Folders
 bin/
 build/
-eclipse/
 gradle/
+eclipse/
+run/
+.gradle/
 
-#Files
-build.bat
-gradlew.bat
+# Files
+*.txt
+*.bat
+*.launch
+*.settings
+*.properties
+gradlew
 

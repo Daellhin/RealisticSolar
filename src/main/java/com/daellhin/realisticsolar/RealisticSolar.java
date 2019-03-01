@@ -1,53 +1,37 @@
 package com.daellhin.realisticsolar;
 
-import com.daellhin.realisticsolar.gui.GuiHandler;
-import com.daellhin.realisticsolar.lib.ModInfo;
-import com.daellhin.realisticsolar.proxy.CommonProxy;
-import com.daellhin.realisticsolar.utils.LogHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-/**
- * Main Class of Realistic Solar
- *
- * @author Daellhin
- *
- */
-@Mod(modid = ModInfo.MOD_ID, name = ModInfo.MOD_Name, version = ModInfo.MOD_ID)
+@Mod("realisticsolar")
 public class RealisticSolar {
+	public static RealisticSolar instance;
+	public static final String modid = "realisticsolar";
+	private static final Logger logger =LogManager.getLogger(modid);
+	
+	public RealisticSolar() {
+		instance = this;
+				
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 
-    @Mod.Instance
-    public static RealisticSolar instance = new RealisticSolar();
-
-    @SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
-    public static CommonProxy proxy;
-
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-	proxy.preInit(event);
-	LogHelper.info("PreInitialization Complete");
-
-    }
-
-    @Mod.EventHandler
-    public void Init(FMLInitializationEvent event) {
-	NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-	LogHelper.info("Gui Loaded");
-	proxy.Init(event);
-	LogHelper.info("Initialization Complete");
-
-    }
-
-    @Mod.EventHandler
-    public void PostInit(FMLPostInitializationEvent event) {
-	proxy.PostInit(event);
-	LogHelper.info("PostInitialization Complete");
-
-    }
-
+		MinecraftForge.EVENT_BUS.register(this);
+		
+	}
+	
+	private void setup(final FMLCommonSetupEvent event) {
+		logger.info("Setup method registerd");
+		
+	}
+	
+	private void clientRegistries(final FMLClientSetupEvent event) {
+		logger.info("ClientRegistries method registerd");
+	
+	}
 }

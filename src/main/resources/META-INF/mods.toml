@@ -1,0 +1,31 @@
+modLoader="javafml" #mandatory
+
+loaderVersion="[25,)" #mandatory (25 is current forge version)
+
+[[mods]] #mandatory
+
+modId="realisticsolar" #mandatory
+
+version="0.1" #mandatory
+
+displayName="Realistic Solar" #mandatory
+
+authors="Daellhin" #optional
+
+description='''
+This is a long form description of the mod. You can write whatever you want here
+'''
+
+[[dependencies.realisticsolar]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[25,)" #mandatory
+    ordering="NONE" #mandatory
+    side="BOTH" #mandatory
+
+[[dependencies.realisticsolar]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"
