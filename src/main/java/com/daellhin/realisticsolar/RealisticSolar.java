@@ -3,24 +3,39 @@ package com.daellhin.realisticsolar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.daellhin.realisticsolar.list.ItemList;
+import com.daellhin.realisticsolar.world.OreGeneration;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("realisticsolar")
+/**
+ * @author lorin
+ * 
+ * ToDo:
+ * 
+ * multiblocks
+ * forgeEnergy
+ * customModels
+ * GUIs
+ * crafting recipie's
+ * machines
+ * animations
+ * oreDictionary
+ * 
+ */
+@Mod(Reference.MODID)
+@Mod.EventBusSubscriber(modid = Reference.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+
 public class RealisticSolar {
 	public static RealisticSolar instance;
-	public static final String modid = "realisticsolar";
-	private static final Logger logger =LogManager.getLogger(modid);
+	private static final Logger logger =LogManager.getLogger(Reference.MODID);
+	
+	public static final ItemGroup Item_Group = new ItemGroupRealisticSolar();
+	
 	
 	public RealisticSolar() {
 		instance = this;
@@ -33,31 +48,14 @@ public class RealisticSolar {
 	}
 	
 	private void setup(final FMLCommonSetupEvent event) {
+		OreGeneration.setupOreGeneration();
 		logger.info("Setup method registerd");
-		
+
 	}
-	
+		
 	private void clientRegistries(final FMLClientSetupEvent event) {
 		logger.info("ClientRegistries method registerd");
-	
+	 
 	}
-	
-	@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-	public static class RegistryEvents{
-		@SubscribeEvent
-		public static void registerItems(final RegistryEvent.Register<Item> event){
-			event.getRegistry().registerAll(
-			
-			ItemList.tutorial_item = new Item(new Item.Properties().group(ItemGroup.COMBAT)).setRegistryName(location("tutorial_item"))
-			);
-			
-			logger.info("Items registered");
-			
-		}
-		private static ResourceLocation location(String name) {
-			return new ResourceLocation(modid, name);
-			
-		}
-		
-	}
+
 }

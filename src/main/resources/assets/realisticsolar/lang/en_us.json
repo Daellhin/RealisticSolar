@@ -1,3 +1,9 @@
 {
-    "item.realisticsolar.tutorial_item": "Tutorial Item"
+    "item.realisticsolar.item_aluminium": "Aluminium Ingot",
+    
+	"block.realisticsolar.block_aluminium": "Aluminium Block",
+    "block.realisticsolar.block_aluminium_ore": "Aluminium Ore",
+    "block.realisticsolar.block_solar_panel": "Solar Panel",
+
+	"itemGroup.realisticsolar": "Realistic Solar"
 }
