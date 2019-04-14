@@ -4,6 +4,7 @@
 	"block.realisticsolar.block_aluminium": "Aluminium Block",
     "block.realisticsolar.block_aluminium_ore": "Aluminium Ore",
     "block.realisticsolar.block_solar_panel": "Solar Panel",
+    "block.realisticsolar.block_piramid": "Piramid",
 
 	"itemGroup.realisticsolar": "Realistic Solar"
 }

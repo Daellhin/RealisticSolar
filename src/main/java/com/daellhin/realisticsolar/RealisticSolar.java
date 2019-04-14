@@ -21,7 +21,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
  * forgeEnergy
  * customModels
  * GUIs
- * crafting recipie's
+ * crafting recipe's
  * machines
  * animations
  * oreDictionary
