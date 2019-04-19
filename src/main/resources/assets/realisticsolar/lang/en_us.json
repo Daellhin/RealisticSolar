@@ -6,5 +6,7 @@
     "block.realisticsolar.block_solar_panel": "Solar Panel",
     "block.realisticsolar.block_piramid": "Piramid",
 
-	"itemGroup.realisticsolar": "Realistic Solar"
+	"itemGroup.realisticsolar": "Realistic Solar",
+	
+	"solarpanel.chat.power": "Power"
 }

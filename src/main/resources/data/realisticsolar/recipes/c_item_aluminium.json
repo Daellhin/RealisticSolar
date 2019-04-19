@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "realisticsolar:block_aluminium"
+		}
+	],
+	"result": {
+		"item": "realisticsolar:item_aluminium",
+		"count": 9
+	}
+}

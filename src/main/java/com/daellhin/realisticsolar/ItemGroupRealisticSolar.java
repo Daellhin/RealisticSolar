@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class ItemGroupRealisticSolar extends ItemGroup{
 
 	public ItemGroupRealisticSolar() {
-		super(Reference.MODID);
+		super(RealisticSolar.MODID);
 
 	}
 

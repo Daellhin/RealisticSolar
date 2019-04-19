@@ -1,0 +1,7 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {"item": "realisticsolar:block_aluminium_ore"},
+	"result": "realisticsolar:item_aluminium",
+	"experience": 2.3,
+	"cookingtime": 200
+}

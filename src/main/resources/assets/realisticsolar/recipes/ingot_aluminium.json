@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    { "item": "realisticsolar:item_aluminium" }
-  ],
-  "result": {
-    "item": "realisticsolar:item_aluminium"
-  }
-}
