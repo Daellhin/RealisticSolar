@@ -13,7 +13,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /*TODO:
 	multiblocks,
-	models,
 	animations,
 	solar,
 	custom machines and crafting,
