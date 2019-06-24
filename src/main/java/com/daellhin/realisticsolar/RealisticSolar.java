@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import com.daellhin.realisticsolar.world.OreGeneration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -35,9 +34,7 @@ public class RealisticSolar {
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
-		
-		ConfigRealisticSolar.register(ModLoadingContext.get());
-		
+				
 	}
 	
 	private void commonSetup(final FMLCommonSetupEvent event) {
