@@ -1,7 +1,10 @@
 {
     "variants": {
-        "": [
-            { "model": "realisticsolar:block/block_solar_panel" }
-        ]
+		"facing=north": { "model": "realisticsolar:block/block_solar_panel" },
+		"facing=south": { "model": "realisticsolar:block/block_solar_panel", "y": 180 },
+		"facing=west": { "model": "realisticsolar:block/block_solar_panel", "y": 270 },
+		"facing=east": { "model": "realisticsolar:block/block_solar_panel", "y": 90 },
+		"facing=up": { "model": "realisticsolar:block/block_solar_panel", "x": -90 },
+		"facing=down": { "model": "realisticsolar:block/block_solar_panel", "x": 90 }
     }
 }

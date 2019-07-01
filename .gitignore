@@ -1,15 +1,29 @@
-# Folders
-bin/
-build/
-gradle/
-eclipse/
-run/
-.gradle/
-
-# Files
-*.txt
-*.bat
+# eclipse
+bin
 *.launch
-*.settings
-*.properties
-gradlew
+.settings
+.metadata
+.classpath
+.project
+.gitignore
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+gradle
+build
+.gradle
+
+# forge
+*.txt
+
+# other
+eclipse
+run
+
+

@@ -6,7 +6,9 @@
     "AAA"
   ],
   "key": {
-    "A": {"item": "realisticsolar:item_aluminium"}
+    "A": {
+    	"item": "realisticsolar:item_aluminium"
+    }
   },
   "result": {
     "item": "realisticsolar:block_aluminium",
