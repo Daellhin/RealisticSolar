@@ -1,28 +1,17 @@
-# eclipse
+# IDE
 bin
-*.launch
 .settings
-.metadata
-
-# idea
-out
-*.ipr
-*.iws
-*.iml
-.idea
+*.launch
+.classpath
+.project
 
 # gradle
-gradle
 build
 .gradle
+gradle
 
-# forge
-*.txt
-
-# other
-eclipse
+# minecraft
 run
 
 
-.classpath
-.project
+
