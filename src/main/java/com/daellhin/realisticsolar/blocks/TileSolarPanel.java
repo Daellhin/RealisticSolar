@@ -5,6 +5,8 @@ import static com.daellhin.realisticsolar.blocks.ModBlocks.BLOCKSOLARPANEL_TILE;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -20,6 +22,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -27,29 +31,61 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
-	
+    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+    
+    private int counter;
+    
     public TileSolarPanel() {
 		super(BLOCKSOLARPANEL_TILE);
 	}
 
-	@Override
-	public void tick() {
-	}
+    @Override
+    public void tick() {
+        if (counter > 0) {
+            counter--;
+            if (counter <= 0) {
+                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(1000));
+            }
+        } else {
+            handler.ifPresent(h -> {
+                ItemStack stack = h.getStackInSlot(0);
+                if (stack.getItem() == Items.DIAMOND) {
+                    h.extractItem(0, 1, false);
+                    counter = 20;
+                }
+            });
+        }
+    }
 	
 	@Override
     public void read(CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
         handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
+        CompoundNBT energyTag = tag.getCompound("energy");
+        energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
+        
+        counter = tag.getInt("counter");
         super.read(tag);
     }
+	
     @Override
     public CompoundNBT write(CompoundNBT tag) {
         handler.ifPresent(h -> {
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
             tag.put("inv", compound);
         });
+        energy.ifPresent(h -> {
+            CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
+            tag.put("energy", compound);
+        });
+        tag.putInt("counter", counter);
         return super.write(tag);
     }
+    
+    private IEnergyStorage createEnergy() {
+        return new CustomEnergyStorage(100000, 0);
+    }
+    
     private IItemHandler createHandler() {
         return new ItemStackHandler(1) {
             @Override
@@ -71,6 +107,9 @@ public class TileSolarPanel extends TileEntity implements ITickableTileEntity, I
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return handler.cast();
+        }
+        if (cap == CapabilityEnergy.ENERGY) {
+            return energy.cast();
         }
         return super.getCapability(cap, side);
     }
