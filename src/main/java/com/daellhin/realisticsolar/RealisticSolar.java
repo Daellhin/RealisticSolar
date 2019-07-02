@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import com.daellhin.realisticsolar.blocks.BlockAluminium;
 import com.daellhin.realisticsolar.blocks.BlockSolarPanel;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
+import com.daellhin.realisticsolar.blocks.SolarPanelContainer;
+import com.daellhin.realisticsolar.blocks.TileSolarPanel;
 import com.daellhin.realisticsolar.items.ItemAluminium;
 import com.daellhin.realisticsolar.setup.ClientProxy;
 import com.daellhin.realisticsolar.setup.IProxy;
@@ -13,8 +15,12 @@ import com.daellhin.realisticsolar.setup.ModSetup;
 import com.daellhin.realisticsolar.setup.ServerProxy;
 
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -63,6 +69,19 @@ public class RealisticSolar {
         	event.getRegistry().register(new BlockItem(ModBlocks.BLOCKALUMINIUM, properties).setRegistryName("block_aluminium"));
         	event.getRegistry().register(new BlockItem(ModBlocks.BLOCKSOLARPANEL, properties).setRegistryName("block_solar_panel"));
         	event.getRegistry().register(new ItemAluminium());
+        }
+        
+        @SubscribeEvent
+        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
+            event.getRegistry().register(TileEntityType.Builder.create(TileSolarPanel::new, ModBlocks.BLOCKSOLARPANEL).build(null).setRegistryName("block_solar_panel"));
+        }
+        
+        @SubscribeEvent
+        public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
+            event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                return new SolarPanelContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
+            }).setRegistryName("block_solar_panel"));
         }
     }
 }

@@ -3,9 +3,6 @@ bin
 *.launch
 .settings
 .metadata
-.classpath
-.project
-.gitignore
 
 # idea
 out
@@ -27,3 +24,5 @@ eclipse
 run
 
 
+.classpath
+.project
