@@ -2,11 +2,15 @@ package com.daellhin.realisticsolar.blocks;
 
 import static com.daellhin.realisticsolar.blocks.ModBlocks.BLOCKSOLARPANEL_TILE;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.daellhin.realisticsolar.Config;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -14,6 +18,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -41,22 +46,64 @@ public class TileSolarPanel extends TileEntity implements ITickableTileEntity, I
 
     @Override
     public void tick() {
-        if (counter > 0) {
-            counter--;
-            if (counter <= 0) {
-                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(1000));
-            }
-        } else {
-            handler.ifPresent(h -> {
-                ItemStack stack = h.getStackInSlot(0);
-                if (stack.getItem() == Items.DIAMOND) {
-                    h.extractItem(0, 1, false);
-                    counter = 20;
+    	if (!world.isRemote) {
+	    	if (counter > 0) {
+	            counter--;
+	            if (counter <= 0) {
+	                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(Config.SOLARPANEL_GENERATE.get()));
+	            }
+	            markDirty();
+	           
+	        } 
+	    	if(counter <= 0) {
+	            handler.ifPresent(h -> {
+	                ItemStack stack = h.getStackInSlot(0);
+	                if (stack.getItem() == Items.DIAMOND) {
+	                    h.extractItem(0, 1, false);
+	                    counter = Config.SOLARPANEL_TICKS.get();
+	                    markDirty(); 
+	                }
+	            });
+	        }
+	    	
+	        BlockState blockState = world.getBlockState(pos);
+	        if (blockState.get(BlockStateProperties.POWERED) != counter > 0) {
+	            world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, counter > 0), 3);
+	        }
+	        
+	        sendOutPower();   
+    	}
+    }
+    
+    private void sendOutPower() {
+        energy.ifPresent(energy -> {
+            AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
+            if (capacity.get() > 0) {
+                for (Direction direction : Direction.values()) {
+                    TileEntity te = world.getTileEntity(pos.offset(direction));
+                    if (te != null) {
+                        boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
+                                    if (handler.canReceive()) {
+                                        int received = handler.receiveEnergy(Math.min(capacity.get(), Config.SOLARPANEL_SEND.get()), false);
+                                        capacity.addAndGet(-received);
+                                        ((CustomEnergyStorage) energy).consumeEnergy(received);
+                                        markDirty();
+                                        return capacity.get() > 0;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                        ).orElse(true);
+                        if (!doContinue) {
+                            return;
+                        }
+                    }
                 }
-            });
-        }
+            }
+        });
     }
 	
+	@SuppressWarnings("unchecked")
 	@Override
     public void read(CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
@@ -68,7 +115,8 @@ public class TileSolarPanel extends TileEntity implements ITickableTileEntity, I
         super.read(tag);
     }
 	
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public CompoundNBT write(CompoundNBT tag) {
         handler.ifPresent(h -> {
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
@@ -83,11 +131,16 @@ public class TileSolarPanel extends TileEntity implements ITickableTileEntity, I
     }
     
     private IEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(100000, 0);
+        return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), 0);
     }
     
     private IItemHandler createHandler() {
         return new ItemStackHandler(1) {
+        	 @Override
+             protected void onContentsChanged(int slot) {
+                 markDirty();
+             }
+        	 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return stack.getItem() == Items.DIAMOND;

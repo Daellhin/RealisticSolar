@@ -27,7 +27,7 @@ public class BlockSolarPanel extends Block{
 		super(Properties.create(Material.IRON)
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
-			.lightValue(0)
+			.lightValue(5)
 		);
 		setRegistryName("block_solar_panel");	
 	}
@@ -38,7 +38,14 @@ public class BlockSolarPanel extends Block{
 	}
 	
 	
-    @Nullable
+	
+    @SuppressWarnings("deprecation")
+	@Override
+	public int getLightValue(BlockState state) {
+		return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
+	}
+
+	@Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileSolarPanel();
@@ -70,7 +77,7 @@ public class BlockSolarPanel extends Block{
 	
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-	    builder.add(BlockStateProperties.FACING);
+	    builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
 	}
 
 }
