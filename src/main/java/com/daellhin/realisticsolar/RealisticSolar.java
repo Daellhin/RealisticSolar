@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.daellhin.realisticsolar.blocks.BlockAluminium;
 import com.daellhin.realisticsolar.blocks.BlockSolarPanel;
+import com.daellhin.realisticsolar.blocks.CustomModel;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.blocks.SolarPanelContainer;
 import com.daellhin.realisticsolar.blocks.TileSolarPanel;
@@ -68,6 +69,7 @@ public class RealisticSolar {
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
             event.getRegistry().register(new BlockAluminium());
             event.getRegistry().register(new BlockSolarPanel());
+            event.getRegistry().register(new CustomModel());
 
         }
         
@@ -77,6 +79,7 @@ public class RealisticSolar {
             
         	event.getRegistry().register(new BlockItem(ModBlocks.BLOCKALUMINIUM, properties).setRegistryName("block_aluminium"));
         	event.getRegistry().register(new BlockItem(ModBlocks.BLOCKSOLARPANEL, properties).setRegistryName("block_solar_panel"));
+        	event.getRegistry().register(new BlockItem(ModBlocks.CUSTOMMODEL, properties).setRegistryName("custom_model"));
         	event.getRegistry().register(new ItemAluminium());
         }
         

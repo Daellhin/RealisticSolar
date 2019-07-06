@@ -11,6 +11,9 @@ public class ModBlocks {
     @ObjectHolder(RealisticSolar.MODID + ":block_aluminium")
     public static BlockAluminium BLOCKALUMINIUM;
     
+    @ObjectHolder(RealisticSolar.MODID + ":custom_model")
+    public static CustomModel CUSTOMMODEL;
+    
     @ObjectHolder(RealisticSolar.MODID + ":block_solar_panel")
     public static BlockSolarPanel BLOCKSOLARPANEL;
     
@@ -19,5 +22,9 @@ public class ModBlocks {
     
     @ObjectHolder(RealisticSolar.MODID + ":block_solar_panel")
     public static ContainerType<SolarPanelContainer> BLOCKSOLARPANEL_CONTAINER;
+    
+    
+    
+    
 
 }

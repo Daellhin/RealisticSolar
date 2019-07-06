@@ -5,6 +5,7 @@
     //"_comment": "Blocks",
 	"block.realisticsolar.block_aluminium": "Aluminium Block",
 	"block.realisticsolar.block_solar_panel": "Solar Panel",
+	"block.realisticsolar.custom_model": "Custom Model",
 	
 	//"_comment": "Creative Tabs",
 	"itemGroup.rs_itemgroup1": "Realistic Solar"
