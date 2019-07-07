@@ -1,6 +1,4 @@
-package com.daellhin.realisticsolar.blocks;
-
-import static com.daellhin.realisticsolar.blocks.ModBlocks.BLOCKSOLARPANEL_TILE;
+package com.daellhin.realisticsolar.blocks.solarpanel;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,15 +31,16 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import static com.daellhin.realisticsolar.blocks.ModBlocks.SOLARPANEL_TILE;
 
-public class TileSolarPanel extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class SolarPanelTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
     
     private int counter;
     
-    public TileSolarPanel() {
-		super(BLOCKSOLARPANEL_TILE);
+    public SolarPanelTile() {
+		super(SOLARPANEL_TILE);
 	}
 
     @Override

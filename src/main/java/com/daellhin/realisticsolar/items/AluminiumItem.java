@@ -4,11 +4,11 @@ import com.daellhin.realisticsolar.RealisticSolar;
 
 import net.minecraft.item.Item;
 
-public class ItemAluminium extends Item {
-    public ItemAluminium() {
+public class AluminiumItem extends Item {
+    public AluminiumItem() {
         super(new Item.Properties()
                 .maxStackSize(64)
                 .group(RealisticSolar.setup.itemGroup));
-        setRegistryName("item_aluminium");
+        setRegistryName("aluminium_item");
     }
 }

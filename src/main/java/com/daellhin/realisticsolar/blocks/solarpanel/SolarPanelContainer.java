@@ -1,7 +1,6 @@
-package com.daellhin.realisticsolar.blocks;
+package com.daellhin.realisticsolar.blocks.solarpanel;
 
-import static com.daellhin.realisticsolar.blocks.ModBlocks.BLOCKSOLARPANEL_CONTAINER;
-
+import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +21,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import static com.daellhin.realisticsolar.blocks.ModBlocks.SOLARPANEL_CONTAINER;
+
 public class SolarPanelContainer extends Container {
 
     private TileEntity tileEntity;
@@ -29,7 +30,7 @@ public class SolarPanelContainer extends Container {
     private IItemHandler playerInventory;
 
     public SolarPanelContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(BLOCKSOLARPANEL_CONTAINER, windowId);
+        super(SOLARPANEL_CONTAINER, windowId);
         tileEntity = world.getTileEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -59,7 +60,8 @@ public class SolarPanelContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.BLOCKSOLARPANEL);
+        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SOLARPANEL_BLOCK);
+        
     }
 
 

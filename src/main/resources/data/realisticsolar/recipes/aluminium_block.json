@@ -7,11 +7,11 @@
   ],
   "key": {
     "A": {
-    	"item": "realisticsolar:item_aluminium"
+    	"item": "realisticsolar:aluminium_item"
     }
   },
   "result": {
-    "item": "realisticsolar:block_aluminium",
+    "item": "realisticsolar:aluminium_block",
     "count": 1
   }
 }

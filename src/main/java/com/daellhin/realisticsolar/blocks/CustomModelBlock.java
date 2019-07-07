@@ -17,15 +17,15 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class CustomModel extends Block {
+public class CustomModelBlock extends Block {
     protected static final VoxelShape IRON_CHEST_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);	
-	public CustomModel() {
+	public CustomModelBlock() {
 		super(Properties.create(Material.IRON)
 		.sound(SoundType.METAL)
 		.hardnessAndResistance(2.0f)
 		.lightValue(0)
 	);
-	setRegistryName("custom_model");	
+	setRegistryName("custom_model_block");	
 		
 	}
 	

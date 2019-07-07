@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks;
+package com.daellhin.realisticsolar.blocks.solarpanel;
 
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.mojang.blaze3d.platform.GlStateManager;

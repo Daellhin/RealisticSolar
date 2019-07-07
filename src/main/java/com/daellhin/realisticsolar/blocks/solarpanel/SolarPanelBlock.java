@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks;
+package com.daellhin.realisticsolar.blocks.solarpanel;
 
 import javax.annotation.Nullable;
 
@@ -22,14 +22,14 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class BlockSolarPanel extends Block{
-	public BlockSolarPanel(){
+public class SolarPanelBlock extends Block{
+	public SolarPanelBlock(){
 		super(Properties.create(Material.IRON)
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
 			.lightValue(5)
 		);
-		setRegistryName("block_solar_panel");	
+		setRegistryName("solar_panel_block");	
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class BlockSolarPanel extends Block{
 	@Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TileSolarPanel();
+        return new SolarPanelTile();
     }
 	
     @Override

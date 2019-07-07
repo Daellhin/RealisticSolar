@@ -4,13 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
-public class BlockAluminium extends Block {
-	public BlockAluminium(){
+public class AluminiumBlock extends Block {
+	public AluminiumBlock(){
 		super(Properties.create(Material.IRON)
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
 			.lightValue(0)
 		);
-		setRegistryName("block_aluminium");	
+		setRegistryName("aluminium_block");	
 	}
 }

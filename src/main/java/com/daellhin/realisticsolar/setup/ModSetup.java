@@ -10,7 +10,7 @@ public class ModSetup {
     public ItemGroup itemGroup = new ItemGroup("rs_itemgroup1") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModBlocks.BLOCKALUMINIUM);
+            return new ItemStack(ModBlocks.ALUMINIUM_BLOCK);
         }
     };
     

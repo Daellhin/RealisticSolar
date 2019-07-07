@@ -3,13 +3,14 @@ package com.daellhin.realisticsolar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.daellhin.realisticsolar.blocks.BlockAluminium;
-import com.daellhin.realisticsolar.blocks.BlockSolarPanel;
-import com.daellhin.realisticsolar.blocks.CustomModel;
+import com.daellhin.realisticsolar.blocks.AluminiumBlock;
+import com.daellhin.realisticsolar.blocks.AluminiumOreBlock;
+import com.daellhin.realisticsolar.blocks.CustomModelBlock;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
-import com.daellhin.realisticsolar.blocks.SolarPanelContainer;
-import com.daellhin.realisticsolar.blocks.TileSolarPanel;
-import com.daellhin.realisticsolar.items.ItemAluminium;
+import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
+import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelContainer;
+import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
+import com.daellhin.realisticsolar.items.AluminiumItem;
 import com.daellhin.realisticsolar.setup.ClientProxy;
 import com.daellhin.realisticsolar.setup.IProxy;
 import com.daellhin.realisticsolar.setup.ModSetup;
@@ -67,9 +68,10 @@ public class RealisticSolar {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            event.getRegistry().register(new BlockAluminium());
-            event.getRegistry().register(new BlockSolarPanel());
-            event.getRegistry().register(new CustomModel());
+            event.getRegistry().register(new AluminiumBlock());
+            event.getRegistry().register(new SolarPanelBlock());
+            event.getRegistry().register(new CustomModelBlock());
+            event.getRegistry().register(new AluminiumOreBlock());
 
         }
         
@@ -77,15 +79,20 @@ public class RealisticSolar {
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             Item.Properties properties = new Item.Properties().group(setup.itemGroup);
             
-        	event.getRegistry().register(new BlockItem(ModBlocks.BLOCKALUMINIUM, properties).setRegistryName("block_aluminium"));
-        	event.getRegistry().register(new BlockItem(ModBlocks.BLOCKSOLARPANEL, properties).setRegistryName("block_solar_panel"));
-        	event.getRegistry().register(new BlockItem(ModBlocks.CUSTOMMODEL, properties).setRegistryName("custom_model"));
-        	event.getRegistry().register(new ItemAluminium());
+            //blockItems
+        	event.getRegistry().register(new BlockItem(ModBlocks.ALUMINIUM_BLOCK, properties).setRegistryName("aluminium_block"));
+        	event.getRegistry().register(new BlockItem(ModBlocks.SOLARPANEL_BLOCK, properties).setRegistryName("solar_panel_block"));
+        	event.getRegistry().register(new BlockItem(ModBlocks.CUSTOMMODEL_BLOCK, properties).setRegistryName("custom_model_block"));
+        	event.getRegistry().register(new BlockItem(ModBlocks.ALUMINIUMORE_BLOCK, properties).setRegistryName("aluminium_ore_block"));
+        	
+        	//items
+        	event.getRegistry().register(new AluminiumItem());
+        	
         }
         
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.create(TileSolarPanel::new, ModBlocks.BLOCKSOLARPANEL).build(null).setRegistryName("block_solar_panel"));
+            event.getRegistry().register(TileEntityType.Builder.create(SolarPanelTile::new, ModBlocks.SOLARPANEL_BLOCK).build(null).setRegistryName("solar_panel_block"));
         }
         
         @SubscribeEvent
@@ -93,7 +100,7 @@ public class RealisticSolar {
             event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 return new SolarPanelContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
-            }).setRegistryName("block_solar_panel"));
+            }).setRegistryName("solar_panel_block"));
         }
     }
 }

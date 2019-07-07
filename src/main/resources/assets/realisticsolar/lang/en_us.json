@@ -1,11 +1,11 @@
 {
     //"_comment": "Items",
-    "item.realisticsolar.item_aluminium": "Aluminium Ingot",
+    "item.realisticsolar.aluminium_item": "Aluminium Ingot",
     
     //"_comment": "Blocks",
-	"block.realisticsolar.block_aluminium": "Aluminium Block",
-	"block.realisticsolar.block_solar_panel": "Solar Panel",
-	"block.realisticsolar.custom_model": "Custom Model",
+	"block.realisticsolar.aluminium_block": "Aluminium Block",
+	"block.realisticsolar.solar_panel_block": "Solar Panel",
+	"block.realisticsolar.custom_model_block": "Custom Model",
 	
 	//"_comment": "Creative Tabs",
 	"itemGroup.rs_itemgroup1": "Realistic Solar"
