@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.solarpanel;
+package com.daellhin.realisticsolar.blocks.arcfurance;
 
 import javax.annotation.Nullable;
 
@@ -22,10 +22,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class SolarPanelBlock extends Block{
-	public static final String RegName = "solar_panel_block";
-	
-	public SolarPanelBlock(){
+public class ArcFurnaceBlock extends Block{
+	public static final String RegName = "arc_furnace_block";
+
+	public ArcFurnaceBlock(){
 		super(Properties.create(Material.IRON)
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
@@ -50,7 +50,7 @@ public class SolarPanelBlock extends Block{
 	@Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new SolarPanelTile();
+        return new ArcFurnaceTile();
     }
 	
     @Override

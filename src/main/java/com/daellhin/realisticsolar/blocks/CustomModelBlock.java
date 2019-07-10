@@ -18,6 +18,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class CustomModelBlock extends Block {
+	public static final String RegName = "custom_model_block";
+
     protected static final VoxelShape IRON_CHEST_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);	
 	public CustomModelBlock() {
 		super(Properties.create(Material.IRON)
@@ -25,7 +27,7 @@ public class CustomModelBlock extends Block {
 		.hardnessAndResistance(2.0f)
 		.lightValue(0)
 	);
-	setRegistryName("custom_model_block");	
+	setRegistryName(RegName);	
 		
 	}
 	

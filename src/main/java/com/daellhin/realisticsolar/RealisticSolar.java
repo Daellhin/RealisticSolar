@@ -7,6 +7,9 @@ import com.daellhin.realisticsolar.blocks.AluminiumBlock;
 import com.daellhin.realisticsolar.blocks.AluminiumOreBlock;
 import com.daellhin.realisticsolar.blocks.CustomModelBlock;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
+import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceBlock;
+import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceContainer;
+import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelContainer;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
@@ -58,7 +61,7 @@ public class RealisticSolar {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        setup.init();
+    	setup.init();
         proxy.init();
     }
 
@@ -68,11 +71,13 @@ public class RealisticSolar {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            event.getRegistry().register(new AluminiumBlock());
-            event.getRegistry().register(new SolarPanelBlock());
-            event.getRegistry().register(new CustomModelBlock());
-            event.getRegistry().register(new AluminiumOreBlock());
-
+            event.getRegistry().registerAll(
+            		new AluminiumBlock(),
+	            new SolarPanelBlock(),
+	            new CustomModelBlock(),
+	            new AluminiumOreBlock(),
+	            new ArcFurnaceBlock()
+	        );
         }
         
         @SubscribeEvent
@@ -80,10 +85,13 @@ public class RealisticSolar {
             Item.Properties properties = new Item.Properties().group(setup.itemGroup);
             
             //blockItems
-        	event.getRegistry().register(new BlockItem(ModBlocks.ALUMINIUM_BLOCK, properties).setRegistryName("aluminium_block"));
-        	event.getRegistry().register(new BlockItem(ModBlocks.SOLARPANEL_BLOCK, properties).setRegistryName("solar_panel_block"));
-        	event.getRegistry().register(new BlockItem(ModBlocks.CUSTOMMODEL_BLOCK, properties).setRegistryName("custom_model_block"));
-        	event.getRegistry().register(new BlockItem(ModBlocks.ALUMINIUMORE_BLOCK, properties).setRegistryName("aluminium_ore_block"));
+        	event.getRegistry().registerAll(
+        			new BlockItem(ModBlocks.ALUMINIUM_BLOCK, properties).setRegistryName(AluminiumBlock.RegName),
+        			new BlockItem(ModBlocks.SOLARPANEL_BLOCK, properties).setRegistryName(SolarPanelBlock.RegName),
+        			new BlockItem(ModBlocks.CUSTOMMODEL_BLOCK, properties).setRegistryName(CustomModelBlock.RegName),
+        			new BlockItem(ModBlocks.ALUMINIUMORE_BLOCK, properties).setRegistryName(AluminiumOreBlock.RegName),
+        			new BlockItem(ModBlocks.ARCFURNACE_BLOCK, properties).setRegistryName(ArcFurnaceBlock.RegName)
+        	);
         	
         	//items
         	event.getRegistry().register(new AluminiumItem());
@@ -92,15 +100,26 @@ public class RealisticSolar {
         
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.create(SolarPanelTile::new, ModBlocks.SOLARPANEL_BLOCK).build(null).setRegistryName("solar_panel_block"));
+            event.getRegistry().registerAll(
+            	TileEntityType.Builder.create(SolarPanelTile::new, ModBlocks.SOLARPANEL_BLOCK).build(null).setRegistryName(SolarPanelBlock.RegName),
+            	TileEntityType.Builder.create(ArcFurnaceTile::new, ModBlocks.ARCFURNACE_BLOCK).build(null).setRegistryName(ArcFurnaceBlock.RegName)
+            );
         }
         
         @SubscribeEvent
         public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
-            event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
-                BlockPos pos = data.readBlockPos();
-                return new SolarPanelContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
-            }).setRegistryName("solar_panel_block"));
+            event.getRegistry().registerAll(
+            	IForgeContainerType.create((windowId, inv, data) -> {
+            		BlockPos pos = data.readBlockPos();
+                	return new SolarPanelContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
+            	}).setRegistryName(SolarPanelBlock.RegName),
+            
+            	IForgeContainerType.create((windowId, inv, data) -> {
+            		BlockPos pos = data.readBlockPos();
+            		return new ArcFurnaceContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
+            	}).setRegistryName(ArcFurnaceBlock.RegName)
+            );
         }
     }
+    
 }
