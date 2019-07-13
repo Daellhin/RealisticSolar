@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer>{
 	
-    private ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/basic_gui.png");
+    private ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/solar_panel_gui.png");
     
     public SolarPanelScreen(SolarPanelContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);

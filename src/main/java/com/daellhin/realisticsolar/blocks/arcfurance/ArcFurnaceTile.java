@@ -1,11 +1,15 @@
 package com.daellhin.realisticsolar.blocks.arcfurance;
 
+import static com.daellhin.realisticsolar.blocks.ModBlocks.ARCFURNACE_TILE;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.daellhin.realisticsolar.Config;
+import com.daellhin.realisticsolar.recipe.CustomRecipe;
+import com.daellhin.realisticsolar.recipe.CustomRecipeRegistry;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
 
 import net.minecraft.block.BlockState;
@@ -14,7 +18,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -28,137 +31,183 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-
-import static com.daellhin.realisticsolar.blocks.ModBlocks.ARCFURNACE_TILE;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
+    public static final int INPUT_SLOTS = 3; 
+    public static final int OUTPUT_SLOTS = 3;
+    public static final int SIZE = INPUT_SLOTS + OUTPUT_SLOTS;
+    
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
     
-    private int counter;
+    private int progress = 0; 
+
+    private int clientProgress = -1;
+    private int clientEnergy = -1;
     
     public ArcFurnaceTile() {
 		super(ARCFURNACE_TILE);
 	}
-
+     
     @Override
     public void tick() {
     	if (!world.isRemote) {
-	    	if (counter > 0) {
-	            counter--;
-	            if (counter <= 0) {
-	                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(Config.SOLARPANEL_GENERATE.get()));
-	            }
-	            markDirty();
-	           
-	        } 
-	    	if(counter <= 0) {
-	            handler.ifPresent(h -> {
-	                ItemStack stack = h.getStackInSlot(0);
-	                if (stack.getItem() == Items.DIAMOND) {
-	                    h.extractItem(0, 1, false);
-	                    counter = Config.SOLARPANEL_TICKS.get();
-	                    markDirty(); 
-	                }
-	            });
-	        }
-	    	
-	        BlockState blockState = world.getBlockState(pos);
-	        if (blockState.get(BlockStateProperties.POWERED) != counter > 0) {
-	            world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, counter > 0), 3);
-	        }
-	        
-	        sendOutPower();   
-    	}
+    		energy.ifPresent(energy -> {
+                AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
+                if (capacity.get() < 0) {
+                	return;
+                }
+                if (progress > 0 ) {
+                	capacity.addAndGet(-20);
+                	progress--;
+                	if (progress <= 0) {
+                        attemptSmelt();
+                    }
+                    markDirty();
+                } else {
+                    startSmelt();
+                }               
+    		});
+        }
+    	BlockState blockState = world.getBlockState(pos);
+        if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
+            world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);
+        }
+                
     }
     
-    private void sendOutPower() {
-        energy.ifPresent(energy -> {
-            AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
-            if (capacity.get() > 0) {
-                for (Direction direction : Direction.values()) {
-                    TileEntity te = world.getTileEntity(pos.offset(direction));
-                    if (te != null) {
-                        boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
-                                    if (handler.canReceive()) {
-                                        int received = handler.receiveEnergy(Math.min(capacity.get(), Config.SOLARPANEL_SEND.get()), false);
-                                        capacity.addAndGet(-received);
-                                        ((CustomEnergyStorage) energy).consumeEnergy(received);
-                                        markDirty();
-                                        return capacity.get() > 0;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                        ).orElse(true);
-                        if (!doContinue) {
-                            return;
-                        }
-                    }
+    private boolean insertOutput(ItemStack output, boolean simulate) {
+        for (int i = 0 ; i < OUTPUT_SLOTS ; i++) {
+            ItemStack remaining = outputHandler.insertItem(i, output, simulate);
+            if (remaining.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void startSmelt() {
+    	for (int i = 0 ; i < INPUT_SLOTS ; i++) {
+            ItemStack result = getResult(inputHandler.getStackInSlot(i));
+            if (!result.isEmpty()) {
+                if (insertOutput(result.copy(), true)) {
+                    progress = 40;
+                    markDirty();
+                    return;
                 }
             }
-        });
+        }
     }
-	
-	@SuppressWarnings("unchecked")
-	@Override
-    public void read(CompoundNBT tag) {
-        CompoundNBT invTag = tag.getCompound("inv");
-        handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
-        CompoundNBT energyTag = tag.getCompound("energy");
-        energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
-        
-        counter = tag.getInt("counter");
-        super.read(tag);
+
+    private void attemptSmelt() {
+        for (int i = 0 ; i < INPUT_SLOTS ; i++) {
+            ItemStack result = getResult(inputHandler.getStackInSlot(i));
+            if (!result.isEmpty()) {
+                // This copy is very important!(
+                if (insertOutput(result.copy(), false)) {
+                    inputHandler.extractItem(i, 1, false);
+                    break;
+                }
+            }
+        }
     }
-	
+
+    private ItemStack getResult(ItemStack stackInSlot) {
+        // @todo Make a cache for this! Both our own CustomRecipeRegistry.getRecipe() and
+        // getSmeltingResult() loop over all recipes. This is very slow!
+        CustomRecipe recipe = CustomRecipeRegistry.getRecipe(stackInSlot);
+        if (recipe != null) {
+            return recipe.getOutput();
+        }
+        // @todo 1.13
+        //return FurnaceRecipes.instance().getSmeltingResult(stackInSlot);
+        return ItemStack.EMPTY;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public int getClientProgress() {
+        return clientProgress;
+    }
+
+    public void setClientProgress(int clientProgress) {
+        this.clientProgress = clientProgress;
+    }
+
+    public int getClientEnergy() {
+        return clientEnergy;
+    }
+
+    public void setClientEnergy(int clientEnergy) {
+        this.clientEnergy = clientEnergy;
+    }
+
+    private ItemStackHandler inputHandler = new ItemStackHandler(INPUT_SLOTS) {
+
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {          
+            return true;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+        	ArcFurnaceTile.this.markDirty();
+        }
+    };
+
+    private ItemStackHandler outputHandler = new ItemStackHandler(OUTPUT_SLOTS) {
+        @Override
+        protected void onContentsChanged(int slot) {
+        	ArcFurnaceTile.this.markDirty();
+        }
+    };
+
+    private CombinedInvWrapper combinedHandler = new CombinedInvWrapper(inputHandler, outputHandler);
+
     @SuppressWarnings("unchecked")
 	@Override
-    public CompoundNBT write(CompoundNBT tag) {
-        handler.ifPresent(h -> {
-            CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
-            tag.put("inv", compound);
-        });
+    public void read(CompoundNBT tag) {
+        inputHandler.deserializeNBT((CompoundNBT) tag.get("itemsIn"));
+        outputHandler.deserializeNBT((CompoundNBT) tag.get("itemsOut"));
+        CompoundNBT energyTag = tag.getCompound("energy");
+        energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
+        progress = tag.getInt("progress");
+        super.read(tag);
+    }
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    public CompoundNBT write(CompoundNBT tag) {   
+        tag.put("itemsIn", inputHandler.serializeNBT());
+        tag.put("itemsOut", outputHandler.serializeNBT());
         energy.ifPresent(h -> {
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
             tag.put("energy", compound);
         });
-        tag.putInt("counter", counter);
+        tag.putInt("progress", progress);
         return super.write(tag);
     }
-    
-    private IEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), 0);
-    }
-    
-    private IItemHandler createHandler() {
-        return new ItemStackHandler(1) {
-        	 @Override
-             protected void onContentsChanged(int slot) {
-                 markDirty();
-             }
-        	 
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == Items.DIAMOND;
-            }
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != Items.DIAMOND) {
-                    return stack;
-                }
-                return super.insertItem(slot, stack, simulate);
-            }
-        };
-    }
-    @Nonnull
+
+    @SuppressWarnings("unchecked")
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return handler.cast();
+        	if (side == null) {
+                return LazyOptional.of(() -> (T) combinedHandler);
+            } 
+            else if (side == Direction.UP) {
+                return LazyOptional.of(() -> (T) inputHandler);
+            } 
+            else {
+                return LazyOptional.of(() -> (T) outputHandler);
+            }
         }
         if (cap == CapabilityEnergy.ENERGY) {
             return energy.cast();
@@ -175,5 +224,9 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		return new ArcFurnaceContainer(i, world, pos, playerInventory, playerEntity);
 	}
+    private IEnergyStorage createEnergy() {
+        return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), Config.SOLARPANEL_SEND.get());
+    }
+
 	
 }

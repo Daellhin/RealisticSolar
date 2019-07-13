@@ -10,7 +10,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -24,22 +27,24 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ArcFurnaceBlock extends Block{
 	public static final String RegName = "arc_furnace_block";
+    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.values());	
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
 	public ArcFurnaceBlock(){
 		super(Properties.create(Material.IRON)
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
-			.lightValue(5)
+			.lightValue(5)			
 		);
 		setRegistryName(RegName);	
+		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
+
 	}
 
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
-	
-	
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -80,6 +85,11 @@ public class ArcFurnaceBlock extends Block{
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 	    builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
+	}
+	
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		 return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 
 }

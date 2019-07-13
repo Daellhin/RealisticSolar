@@ -17,8 +17,13 @@
               "source": "block_entity",
               "ops": [
                 {
-                  "source": "inv",
-                  "target": "BlockEntityTag.inv",
+                  "source": "itemsIn",
+                  "target": "BlockEntityTag.itemsIn",
+                  "op": "replace"
+                },
+                {
+                  "source": "itemsOut",
+                  "target": "BlockEntityTag.itemsOut",
                   "op": "replace"
                 },
                 {

@@ -129,10 +129,6 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity, I
         return super.write(tag);
     }
     
-    private IEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), 0);
-    }
-    
     private IItemHandler createHandler() {
         return new ItemStackHandler(1) {
         	 @Override
@@ -175,5 +171,10 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity, I
 	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		return new SolarPanelContainer(i, world, pos, playerInventory, playerEntity);
 	}
+   
+	private IEnergyStorage createEnergy() {
+        return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), Config.SOLARPANEL_SEND.get());
+    }
+    
 	
 }

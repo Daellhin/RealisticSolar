@@ -72,7 +72,7 @@ public class RealisticSolar {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
             event.getRegistry().registerAll(
-            		new AluminiumBlock(),
+            	new AluminiumBlock(),
 	            new SolarPanelBlock(),
 	            new CustomModelBlock(),
 	            new AluminiumOreBlock(),

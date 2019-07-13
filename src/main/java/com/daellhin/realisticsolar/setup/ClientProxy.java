@@ -16,7 +16,7 @@ public class ClientProxy implements IProxy {
     public void init() {
         ScreenManager.registerFactory(ModBlocks.SOLARPANEL_CONTAINER, SolarPanelScreen::new);
         ScreenManager.registerFactory(ModBlocks.ARCFURNACE_CONTAINER, ArcFurnaceScreen::new);
-        
+
     }
 
     @Override

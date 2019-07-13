@@ -56,18 +56,10 @@ public class SolarPanelContainer extends Container {
     public int getEnergy() {
         return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
-    
 
-    @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SOLARPANEL_BLOCK);
-        
-    }
-
-
-    private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
-            addSlot(new SlotItemHandler(handler, index, x, y));
+    private int addSlotRange(IItemHandler handler, int index, int x, int y, int horAmount, int dx) {
+        for (int i = 0 ; i < horAmount ; i++) {
+        	addSlot(new SlotItemHandler(handler, index, x, y));
             x += dx;
             index++;
         }
@@ -133,5 +125,9 @@ public class SolarPanelContainer extends Container {
         return itemstack;
     }
 
+    @Override
+    public boolean canInteractWith(PlayerEntity playerIn) {
+        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SOLARPANEL_BLOCK); 
+    }
 
 }
