@@ -1,10 +1,10 @@
 {
     "variants": {
-        "facing=north": { "model": "realisticsolar:block/custom_model_block" },
-		"facing=south": { "model": "realisticsolar:block/custom_model_block", "y": 180 },
-		"facing=west": { "model": "realisticsolar:block/custom_model_block", "y": 270 },
-		"facing=east": { "model": "realisticsolar:block/custom_model_block", "y": 90 },
-		"facing=up": { "model": "realisticsolar:block/custom_model_block" },
-		"facing=down": { "model": "realisticsolar:block/custom_model_block" }
+        "facing=north": { "model": "realisticsolar:block/custom_model" },
+		"facing=south": { "model": "realisticsolar:block/custom_model", "y": 180 },
+		"facing=west": { "model": "realisticsolar:block/custom_model", "y": 270 },
+		"facing=east": { "model": "realisticsolar:block/custom_model", "y": 90 },
+		"facing=up": { "model": "realisticsolar:block/custom_model" },
+		"facing=down": { "model": "realisticsolar:block/custom_model" }
     }
 }

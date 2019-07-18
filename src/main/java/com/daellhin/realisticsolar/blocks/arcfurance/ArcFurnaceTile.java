@@ -42,39 +42,42 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
     
     private int progress = 0; 
-
-    private int clientProgress = -1;
-    private int clientEnergy = -1;
+    
+    private boolean powered;
     
     public ArcFurnaceTile() {
 		super(ARCFURNACE_TILE);
 	}
-     
+
     @Override
     public void tick() {
     	if (!world.isRemote) {
-    		energy.ifPresent(energy -> {
+        	energy.ifPresent(energy -> {
                 AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
-                if (capacity.get() < 0) {
-                	return;
+                if (capacity.get() < Config.ARCFURNACE_USAGE.get()) {
+                    powered = false; 
+                    return;	
                 }
-                if (progress > 0 ) {
-                	capacity.addAndGet(-20);
-                	progress--;
-                	if (progress <= 0) {
-                        attemptSmelt();
-                    }
-                    markDirty();
-                } else {
-                    startSmelt();
-                }               
-    		});
-        }
-    	BlockState blockState = world.getBlockState(pos);
-        if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
-            world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);
-        }
-                
+                if (progress <= 0)  {
+	            	powered = false; 
+	            	startSmelt();
+	            }
+	            if (progress > 0) {
+	            	powered = true; 
+	            	capacity.addAndGet(-Config.ARCFURNACE_USAGE.get());
+	                progress--;
+	                if (progress <= 0) {
+	                    attemptSmelt();
+	                }
+	                markDirty();
+	            }
+        	});
+        	
+        	BlockState blockState = world.getBlockState(pos);
+            if (blockState.get(BlockStateProperties.POWERED) != powered) {
+                world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, powered), 3);
+            } 
+       }
     }
     
     private boolean insertOutput(ItemStack output, boolean simulate) {
@@ -92,7 +95,7 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
             ItemStack result = getResult(inputHandler.getStackInSlot(i));
             if (!result.isEmpty()) {
                 if (insertOutput(result.copy(), true)) {
-                    progress = 40;
+                    progress = Config.ARCFURNACE_TICKS.get();
                     markDirty();
                     return;
                 }
@@ -133,22 +136,6 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
         this.progress = progress;
     }
 
-    public int getClientProgress() {
-        return clientProgress;
-    }
-
-    public void setClientProgress(int clientProgress) {
-        this.clientProgress = clientProgress;
-    }
-
-    public int getClientEnergy() {
-        return clientEnergy;
-    }
-
-    public void setClientEnergy(int clientEnergy) {
-        this.clientEnergy = clientEnergy;
-    }
-
     private ItemStackHandler inputHandler = new ItemStackHandler(INPUT_SLOTS) {
 
         @Override
@@ -158,14 +145,14 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 
         @Override
         protected void onContentsChanged(int slot) {
-        	ArcFurnaceTile.this.markDirty();
+        	markDirty();
         }
     };
 
     private ItemStackHandler outputHandler = new ItemStackHandler(OUTPUT_SLOTS) {
         @Override
         protected void onContentsChanged(int slot) {
-        	ArcFurnaceTile.this.markDirty();
+        	markDirty();
         }
     };
 
@@ -225,8 +212,7 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 		return new ArcFurnaceContainer(i, world, pos, playerInventory, playerEntity);
 	}
     private IEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), Config.SOLARPANEL_SEND.get());
+        return new CustomEnergyStorage(Config.ARCFURNACE_MAXPOWER.get(), Config.ARCFURNACE_USAGE.get());
     }
 
-	
 }

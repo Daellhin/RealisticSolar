@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.solarpanel;
+package com.daellhin.realisticsolar.blocks.coalgenerator;
 
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -9,11 +9,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class SolarPanelScreen extends ContainerScreen<SolarPanelContainer>{
+public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>{
 	
-    private ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/solar_panel_gui.png");
+    private ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/coal_generator_gui.png");
     
-    public SolarPanelScreen(SolarPanelContainer container, PlayerInventory inv, ITextComponent name) {
+    public CoalGeneratorScreen(CoalGeneratorContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
     }
     

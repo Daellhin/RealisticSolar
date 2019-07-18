@@ -1,5 +1,7 @@
 package com.daellhin.realisticsolar.blocks.solarpanel;
 
+import static com.daellhin.realisticsolar.blocks.ModBlocks.SOLARPANEL_TILE;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
@@ -9,35 +11,27 @@ import com.daellhin.realisticsolar.Config;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.LightType;
+import net.minecraft.world.World;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
-import static com.daellhin.realisticsolar.blocks.ModBlocks.SOLARPANEL_TILE;
-
-public class SolarPanelTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
+public class SolarPanelTile extends TileEntity implements ITickableTileEntity {
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
+
+    public boolean theSunIsVisible;
     
-    private int counter;
+    private int counter; 
     
     public SolarPanelTile() {
 		super(SOLARPANEL_TILE);
@@ -46,32 +40,39 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity, I
     @Override
     public void tick() {
     	if (!world.isRemote) {
-	    	if (counter > 0) {
-	            counter--;
-	            if (counter <= 0) {
-	                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(Config.SOLARPANEL_GENERATE.get()));
-	            }
-	            markDirty();
-	           
-	        } 
-	    	if(counter <= 0) {
-	            handler.ifPresent(h -> {
-	                ItemStack stack = h.getStackInSlot(0);
-	                if (stack.getItem() == Items.DIAMOND) {
-	                    h.extractItem(0, 1, false);
-	                    counter = Config.SOLARPANEL_TICKS.get();
-	                    markDirty(); 
-	                }
-	            });
-	        }
-	    	
-	        BlockState blockState = world.getBlockState(pos);
-	        if (blockState.get(BlockStateProperties.POWERED) != counter > 0) {
-	            world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, counter > 0), 3);
+    		updateSunState();
+    		
+    		if(theSunIsVisible) {
+            	energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(Config.SOLARPANEL_GENERATE.get()));
+            	markDirty();
+		         
+    		}
+	        
+    		BlockState blockState = world.getBlockState(pos);
+	        if (blockState.get(BlockStateProperties.POWERED) != theSunIsVisible) {
+	            world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, theSunIsVisible), 3);
 	        }
 	        
-	        sendOutPower();   
+    		sendOutPower();  
     	}
+    }
+    private void updateSunState(){
+        this.theSunIsVisible = getSkyLight(this.getWorld(), this.pos.up()) > 0.0F;
+    }
+    
+    public static float getSkyLight(World world, BlockPos pos){
+
+
+        float sunBrightness = limit((float) Math.cos(world.getCelestialAngleRadians(1.0F)) * 2.0F + 0.2F, 0.0F, 1.0F);
+
+        if (!BiomeDictionary.hasType(world.getBiome(pos), BiomeDictionary.Type.SANDY)) {
+            sunBrightness *= (1.0F - world.getRainStrength(1.0F) * 5.0F / 16.0F);
+            sunBrightness *= (1.0F - world.getThunderStrength(1.0F) * 5.0F / 16.0F);
+
+            sunBrightness = limit(sunBrightness, 0.0F, 1.0F);
+        }
+
+        return world.getLightFor(LightType.SKY, pos) / 15.0F * sunBrightness;
     }
     
     private void sendOutPower() {
@@ -101,12 +102,11 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity, I
             }
         });
     }
+    
 	
 	@SuppressWarnings("unchecked")
 	@Override
     public void read(CompoundNBT tag) {
-        CompoundNBT invTag = tag.getCompound("inv");
-        handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
         CompoundNBT energyTag = tag.getCompound("energy");
         energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
         
@@ -117,10 +117,6 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity, I
     @SuppressWarnings("unchecked")
 	@Override
     public CompoundNBT write(CompoundNBT tag) {
-        handler.ifPresent(h -> {
-            CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
-            tag.put("inv", compound);
-        });
         energy.ifPresent(h -> {
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
             tag.put("energy", compound);
@@ -129,51 +125,32 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity, I
         return super.write(tag);
     }
     
-    private IItemHandler createHandler() {
-        return new ItemStackHandler(1) {
-        	 @Override
-             protected void onContentsChanged(int slot) {
-                 markDirty();
-             }
-        	 
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == Items.DIAMOND;
-            }
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != Items.DIAMOND) {
-                    return stack;
-                }
-                return super.insertItem(slot, stack, simulate);
-            }
-        };
-    }
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return handler.cast();
-        }
         if (cap == CapabilityEnergy.ENERGY) {
             return energy.cast();
         }
         return super.getCapability(cap, side);
     }
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName().getPath());
-	}
-	
-	@Override
-	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new SolarPanelContainer(i, world, pos, playerInventory, playerEntity);
-	}
    
 	private IEnergyStorage createEnergy() {
         return new CustomEnergyStorage(Config.SOLARPANEL_MAXPOWER.get(), Config.SOLARPANEL_SEND.get());
+    }
+	
+	public static float limit(float value, float min, float max)
+    {
+        if ((Float.isNaN(value)) || (value <= min))
+        {
+            return min;
+        }
+
+        if (value >= max)
+        {
+            return max;
+        }
+
+        return value;
     }
     
 	

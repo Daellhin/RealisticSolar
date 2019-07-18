@@ -3,7 +3,7 @@ package com.daellhin.realisticsolar.setup;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceScreen;
-import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelScreen;
+import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -14,9 +14,9 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init() {
-        ScreenManager.registerFactory(ModBlocks.SOLARPANEL_CONTAINER, SolarPanelScreen::new);
         ScreenManager.registerFactory(ModBlocks.ARCFURNACE_CONTAINER, ArcFurnaceScreen::new);
-
+        ScreenManager.registerFactory(ModBlocks.COALGENERATOR_CONTAINER, CoalGeneratorScreen::new);
+        
     }
 
     @Override

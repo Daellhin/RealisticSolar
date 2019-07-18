@@ -1,12 +1,12 @@
 {
     "parent": "block/cube_all",
     "textures": {
-       "up": "realisticsolar:block/solar_panel_top",
+       "up": "realisticsolar:block/machine_top",
 	   "down": "realisticsolar:block/machine_bottom",
        "south": "realisticsolar:block/machine_side",
-       "north": "realisticsolar:block/solar_panel_powered",
+       "north": "realisticsolar:block/coal_generator_powered",
        "west": "realisticsolar:block/machine_side",
        "east": "realisticsolar:block/machine_side",
-	   "particle": "realisticsolar:block/solar_panel_top"
+	   "particle": "realisticsolar:block/machine_top"
     }
 }

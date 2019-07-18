@@ -17,5 +17,9 @@ public class ModSetup {
     public void init() {
 		
 	}
+    
+    public ItemGroup getTab() {
+        return itemGroup;
+    }
 
 }

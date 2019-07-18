@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.solarpanel;
+package com.daellhin.realisticsolar.blocks.coalgenerator;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
@@ -21,16 +21,16 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-import static com.daellhin.realisticsolar.blocks.ModBlocks.SOLARPANEL_CONTAINER;
+import static com.daellhin.realisticsolar.blocks.ModBlocks.COALGENERATOR_CONTAINER;
 
-public class SolarPanelContainer extends Container {
+public class CoalGeneratorContainer extends Container {
 
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
-    public SolarPanelContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(SOLARPANEL_CONTAINER, windowId);
+    public CoalGeneratorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+        super(COALGENERATOR_CONTAINER, windowId);
         tileEntity = world.getTileEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -96,7 +96,7 @@ public class SolarPanelContainer extends Container {
                 }
                 slot.onSlotChange(stack, itemstack);
             } else {
-                if (stack.getItem() == Items.DIAMOND) {
+                if (stack.getItem() == Items.COAL || stack.getItem() == Items.COAL_BLOCK) {
                     if (!this.mergeItemStack(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -127,7 +127,7 @@ public class SolarPanelContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SOLARPANEL_BLOCK); 
+        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.COALGENERATOR_BLOCK); 
     }
 
 }

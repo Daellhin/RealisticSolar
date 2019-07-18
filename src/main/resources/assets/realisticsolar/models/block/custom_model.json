@@ -1,7 +1,7 @@
 {
     "parent": "block/block",
     "textures": {
-        "texture": "realisticsolar:block/custom_model_block",
+        "texture": "realisticsolar:block/custom_model",
         "particle": "realisticsolar:block/aluminium_block"
     },
     "elements": [

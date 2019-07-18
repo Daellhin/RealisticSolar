@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.arcfurance;
+package com.daellhin.realisticsolar.blocks.coalgenerator;
 
 import javax.annotation.Nullable;
 
@@ -24,16 +24,16 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ArcFurnaceBlock extends Block{
-	public static final String RegName = "arc_furnace_block";
+public class CoalGeneratorBlock extends Block{
+	public static final String RegName = "coal_generator_block";
     public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.values());	
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
-
-	public ArcFurnaceBlock(){
+	
+    public CoalGeneratorBlock(){
 		super(Properties.create(Material.IRON)
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
-			.lightValue(14)			
+			.lightValue(13)
 		);
 		setRegistryName(RegName);	
 		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
@@ -49,7 +49,7 @@ public class ArcFurnaceBlock extends Block{
 	@Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new ArcFurnaceTile();
+        return new CoalGeneratorTile();
     }
     
 	@Override
