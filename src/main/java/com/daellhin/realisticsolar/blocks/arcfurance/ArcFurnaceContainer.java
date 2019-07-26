@@ -37,7 +37,7 @@ public class ArcFurnaceContainer extends Container {
         layoutMachineInventorySlots();
         layoutPlayerInventorySlots();  
         
-        func_216958_a(new IntReferenceHolder() {
+        trackInt(new IntReferenceHolder() {
             @Override
             public int get() {
                 return getEnergy();

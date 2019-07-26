@@ -27,6 +27,6 @@ This mod is still in the early stages of developement.
 [[dependencies.realisticsolar]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.3]"
+    versionRange="[1.14.4]"
     ordering="NONE"
     side="BOTH"

@@ -1,7 +1,6 @@
 package com.daellhin.realisticsolar.setup;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
-
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

@@ -40,7 +40,7 @@ public class CoalGeneratorContainer extends Container {
         });
         layoutPlayerInventorySlots(10, 70);
         
-        func_216958_a(new IntReferenceHolder() {
+        trackInt (new IntReferenceHolder() {
             @Override
             public int get() {
                 return getEnergy();
@@ -51,6 +51,7 @@ public class CoalGeneratorContainer extends Container {
                 tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> ((CustomEnergyStorage)h).setEnergy(value));
             }
         });
+        
     }
 
     public int getEnergy() {

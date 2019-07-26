@@ -40,6 +40,9 @@ public class Config {
     public static ForgeConfigSpec.IntValue COALGENERATOR_RECEIVE;
     public static ForgeConfigSpec.IntValue ARCFURNACE_TICKS;
     
+    public static ForgeConfigSpec.IntValue ALUMINIUMORE_CHANCE;
+    public static ForgeConfigSpec.BooleanValue WORLDGEN_ENABLED;
+    
     static {
 
         COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);

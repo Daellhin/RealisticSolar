@@ -36,6 +36,7 @@ public class RealisticSolar {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+		OreGeneration.setupOreGeneration();
     	setup.init();
         proxy.init();
     }
