@@ -82,5 +82,5 @@ public class ArcFurnaceBlock extends Block{
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
-
+	
 }

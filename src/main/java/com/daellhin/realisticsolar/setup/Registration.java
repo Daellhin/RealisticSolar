@@ -3,7 +3,6 @@ package com.daellhin.realisticsolar.setup;
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.blocks.AluminiumBlock;
 import com.daellhin.realisticsolar.blocks.AluminiumOreBlock;
-import com.daellhin.realisticsolar.blocks.CustomModelBlock;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceBlock;
 import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceContainer;
@@ -33,7 +32,6 @@ public class Registration {
          event.getRegistry().registerAll(
          	new AluminiumBlock(),
             new SolarPanelBlock(),
-            new CustomModelBlock(),
             new AluminiumOreBlock(),
             new ArcFurnaceBlock(),
             new CoalGeneratorBlock()
@@ -48,7 +46,6 @@ public class Registration {
      	event.getRegistry().registerAll(
  			new BlockItem(ModBlocks.ALUMINIUM_BLOCK, properties).setRegistryName(AluminiumBlock.RegName),
  			new BlockItem(ModBlocks.SOLARPANEL_BLOCK, properties).setRegistryName(SolarPanelBlock.RegName),
- 			new BlockItem(ModBlocks.CUSTOMMODEL_BLOCK, properties).setRegistryName(CustomModelBlock.RegName),
  			new BlockItem(ModBlocks.ALUMINIUMORE_BLOCK, properties).setRegistryName(AluminiumOreBlock.RegName),
  			new BlockItem(ModBlocks.ARCFURNACE_BLOCK, properties).setRegistryName(ArcFurnaceBlock.RegName),
  			new BlockItem(ModBlocks.COALGENERATOR_BLOCK, properties).setRegistryName(CoalGeneratorBlock.RegName)
@@ -84,11 +81,4 @@ public class Registration {
          	
          );
      }
-     
-
-//     @SubscribeEvent
-//     public static void registerSounds(RegistryEvent.Register<SoundEvent> sounds) {
-//         ModSounds.init(sounds.getRegistry());
-//     }
-
 }

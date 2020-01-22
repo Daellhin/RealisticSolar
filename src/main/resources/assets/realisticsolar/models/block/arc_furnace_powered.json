@@ -1,12 +1,8 @@
 {
-    "parent": "block/cube_all",
+    "parent": "realisticsolar:block/machine_base",
     "textures": {
-       "up": "realisticsolar:block/machine_top",
-	   "down": "realisticsolar:block/machine_bottom",
-       "south": "realisticsolar:block/machine_side",
-       "north": "realisticsolar:block/arc_furnace_powered",
-       "west": "realisticsolar:block/machine_side",
-       "east": "realisticsolar:block/machine_side",
-	   "particle": "realisticsolar:block/machine_top"
+       "front": "realisticsolar:block/arc_furnace_powered",
+       "side": "realisticsolar:block/machine_powered",
+	   "particle": "realisticsolar:block/arc_furnace_idle"
     }
 }

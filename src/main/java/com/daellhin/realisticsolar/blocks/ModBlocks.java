@@ -21,9 +21,6 @@ public class ModBlocks {
 	@ObjectHolder(RealisticSolar.MODID + ":" + AluminiumOreBlock.RegName)
 	public static AluminiumOreBlock ALUMINIUMORE_BLOCK;
 
-	@ObjectHolder(RealisticSolar.MODID + ":" + CustomModelBlock.RegName)
-	public static CustomModelBlock CUSTOMMODEL_BLOCK;
-
 	// solar panel
 	@ObjectHolder(RealisticSolar.MODID + ":" + SolarPanelBlock.RegName)
 	public static SolarPanelBlock SOLARPANEL_BLOCK;
