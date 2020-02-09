@@ -91,37 +91,35 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     }
 
     private void startSmelt() {
-    	for (int i = 0 ; i < INPUT_SLOTS ; i++) {
-            ItemStack result = getResult(inputHandler.getStackInSlot(i));
-            if (!result.isEmpty()) {
-                if (insertOutput(result.copy(), true)) {
-                    progress = Config.ARCFURNACE_TICKS.get();
-                    markDirty();
-                    return;
-                }
+        ItemStack result = getResult();
+        if (!result.isEmpty()) {
+            if (insertOutput(result.copy(), true)) {
+                progress = Config.ARCFURNACE_TICKS.get();
+                markDirty();
+                return;
             }
         }
     }
 
     private void attemptSmelt() {
-        for (int i = 0 ; i < INPUT_SLOTS ; i++) {
-            ItemStack result = getResult(inputHandler.getStackInSlot(i));
-            if (!result.isEmpty()) {
-                // This copy is very important!(
-                if (insertOutput(result.copy(), false)) {
-                    inputHandler.extractItem(i, 1, false);
-                    break;
-                }
+        ItemStack result = getResult();
+        if (!result.isEmpty()) {
+            // This copy is very important!(
+            if (insertOutput(result.copy(), false)) {
+                inputHandler.extractItem(0, 1, false);
+                inputHandler.extractItem(1, 1, false);
+                inputHandler.extractItem(2, 1, false);
             }
         }
     }
+    
 
-    private ItemStack getResult(ItemStack stackInSlot) {
+    private ItemStack getResult() {
         // @todo Make a cache for this! Both our own CustomRecipeRegistry.getRecipe() and
         // getSmeltingResult() loop over all recipes. This is very slow!
-        CustomRecipe recipe = CustomRecipeRegistry.getRecipe(stackInSlot);
+        CustomRecipe recipe = CustomRecipeRegistry.getRecipe(new ItemStack[] {inputHandler.getStackInSlot(0),inputHandler.getStackInSlot(1),inputHandler.getStackInSlot(2)});
         if (recipe != null) {
-            return recipe.getOutput();
+            return recipe.getOutput(0);
         }
         // @todo 1.13
         //return FurnaceRecipes.instance().getSmeltingResult(stackInSlot);
@@ -137,7 +135,6 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     }
 
     private ItemStackHandler inputHandler = new ItemStackHandler(INPUT_SLOTS) {
-
         @Override
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {          
             return true;

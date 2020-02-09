@@ -36,9 +36,9 @@ public class CoalGeneratorContainer extends Container {
         this.playerInventory = new InvWrapper(playerInventory);
 
         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 64, 24));
+            addSlot(new SlotItemHandler(h, 0, 80, 20));
         });
-        layoutPlayerInventorySlots(10, 70);
+        layoutPlayerInventorySlots(8, 84);
         
         trackInt (new IntReferenceHolder() {
             @Override
@@ -80,8 +80,7 @@ public class CoalGeneratorContainer extends Container {
         addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
 
         // Hotbar
-        topRow += 58;
-        addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+        addSlotRange(playerInventory, 0, leftCol, topRow+58, 9, 18);
     }
     
     @Override

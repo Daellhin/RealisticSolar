@@ -1,12 +1,10 @@
 package com.daellhin.realisticsolar.recipe;
 
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public class CustomRecipeRegistry {
 
@@ -14,26 +12,36 @@ public class CustomRecipeRegistry {
     private static List<CustomRecipe> customRecipeList = new ArrayList<>();
 
     public static List<CustomRecipe> getCustomRecipeList() {
-        if (!isInit) {
-            init();
-            isInit = true;
-        }
-        return customRecipeList;
+	if (!isInit) {
+	    init();
+	    isInit = true;
+	}
+	return customRecipeList;
     }
 
     @Nullable
-    public static CustomRecipe getRecipe(ItemStack input) {
-        for (CustomRecipe recipe : getCustomRecipeList()) {
-            if (ItemStack.areItemsEqual(input, recipe.getInput())) {
-                return recipe;
-            }
-        }
-        return null;
+    public static CustomRecipe getRecipe(ItemStack[] inputs) {
+	for (CustomRecipe recipe : getCustomRecipeList()) {
+	    if (inputs.length == recipe.getILength()) {
+		boolean equal = true;
+		for (int i = 0; i < inputs.length && equal; i++) {
+		    if (!ItemStack.areItemsEqual(inputs[i], recipe.getInput(i))) {
+			equal = false;
+		    }
+		}
+		if (equal) {
+		    return recipe;
+		}
+	    }
+	}
+	return null;
     }
 
+    // order of items corresponds with the order of the slots
     private static void init() {
-        customRecipeList.add(new CustomRecipe(new ItemStack(Items.COAL), new ItemStack(Items.DIAMOND)));
-        customRecipeList.add(new CustomRecipe(new ItemStack(Items.GUNPOWDER), new ItemStack(Items.NETHER_STAR)));
-        customRecipeList.add(new CustomRecipe(new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.EMERALD)));
+	customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.WHEAT_SEEDS) },
+		new ItemStack[] { new ItemStack(Items.DIAMOND) }));
+	customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(Items.PUMPKIN_SEEDS) },
+		new ItemStack[] { new ItemStack(Items.EMERALD) }));
     }
 }

@@ -35,7 +35,7 @@ public class ArcFurnaceContainer extends Container {
         this.playerInventory = new InvWrapper(playerInventory);
         
         layoutMachineInventorySlots();
-        layoutPlayerInventorySlots();  
+        layoutPlayerInventorySlots(8,99);  
         
         trackInt(new IntReferenceHolder() {
             @Override
@@ -49,7 +49,7 @@ public class ArcFurnaceContainer extends Container {
             }
         });
     }
- 
+    
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
         for (int i = 0 ; i < amount ; i++) {
             addSlot(new SlotItemHandler(handler, index, x, y));
@@ -69,18 +69,21 @@ public class ArcFurnaceContainer extends Container {
     
     private void layoutMachineInventorySlots() {
         this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
-        	// Input 
-        	addSlotRange(itemHandler, 0, 19, 24, 3, 18);      	
+        	// Input  
+        	addSlot(new SlotItemHandler(itemHandler, 0, 24, 19));
+        	addSlot(new SlotItemHandler(itemHandler, 1, 24, 43));
+        	addSlot(new SlotItemHandler(itemHandler, 2, 24, 66));
             //Output
-        	addSlotRange(itemHandler, 3, 109, 24, 3, 18);
+            addSlot(new SlotItemHandler(itemHandler, 3, 134, 43));
         });
     }
     
-    private void layoutPlayerInventorySlots() {
+    private void layoutPlayerInventorySlots(int leftCol, int topRow) {
         // Player inventory
-        addSlotBox(playerInventory, 9, 10, 70, 9, 18, 3, 18);       
+        addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
         // Hotbar
-        addSlotRange(playerInventory, 0, 10, 70 + 58, 9, 18);
+        topRow += 58;
+        addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
     }
     
     @Override

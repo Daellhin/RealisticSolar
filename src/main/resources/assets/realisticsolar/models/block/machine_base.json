@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"base": "realisticsolar:block/machine_base"
 	},
@@ -254,5 +255,15 @@
 			"origin": [8, 8, 8],
 			"children": [13, 14, 15, 16, 17, 18, 19, 20]
 		}
-	]
+	],
+    "display": {
+		"firstperson_righthand": {
+			"rotation": [0, 135, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 135, 0],
+			"scale": [0.4, 0.4, 0.4]
+		}
+	}
 }

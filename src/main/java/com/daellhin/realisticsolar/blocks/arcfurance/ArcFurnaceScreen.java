@@ -10,11 +10,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer>{
-	
+    
     private ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/arc_furnace_gui.png");
     
     public ArcFurnaceScreen(ArcFurnaceContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
+        this.ySize = 181;
     }
     
 	@Override
@@ -26,7 +27,7 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer>{
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    	drawString(Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), 10, 10, 0xffffff);
+    	drawString(Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), 10, 0, 0xffffff);
     }
 
     @Override

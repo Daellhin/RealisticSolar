@@ -4,19 +4,24 @@ import net.minecraft.item.ItemStack;
 
 public class CustomRecipe {
 
-    private final ItemStack input;
-    private final ItemStack output;
+    private final ItemStack[] input;
+    private final ItemStack[] output;
 
-    public CustomRecipe(ItemStack input, ItemStack output) {
-        this.input = input;
-        this.output = output;
+    public CustomRecipe(ItemStack[] input, ItemStack[] output) {
+	this.input = input;
+	this.output = output;
     }
 
-    public ItemStack getInput() {
-        return input;
+    public ItemStack getInput(int index) {
+	return input[index];
     }
 
-    public ItemStack getOutput() {
-        return output;
+    public ItemStack getOutput(int index) {
+	return output[index];
+    }
+
+    // returns the input length
+    public int getILength() {
+	return input.length;
     }
 }
