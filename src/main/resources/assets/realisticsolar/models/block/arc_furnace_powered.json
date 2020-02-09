@@ -3,6 +3,6 @@
     "textures": {
        "front": "realisticsolar:block/arc_furnace_powered",
        "side": "realisticsolar:block/machine_powered",
-	   "particle": "realisticsolar:block/arc_furnace_idle"
+	   "particle": "realisticsolar:block/arc_furnace_powered"
     }
 }

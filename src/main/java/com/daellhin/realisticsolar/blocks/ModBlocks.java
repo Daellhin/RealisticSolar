@@ -1,9 +1,9 @@
 package com.daellhin.realisticsolar.blocks;
 
 import com.daellhin.realisticsolar.RealisticSolar;
-import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceBlock;
-import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceContainer;
-import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceTile;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceBlock;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceContainer;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;

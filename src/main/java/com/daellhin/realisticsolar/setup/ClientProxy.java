@@ -2,7 +2,7 @@ package com.daellhin.realisticsolar.setup;
 
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
-import com.daellhin.realisticsolar.blocks.arcfurance.ArcFurnaceScreen;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceScreen;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorScreen;
 
 import net.minecraft.client.Minecraft;

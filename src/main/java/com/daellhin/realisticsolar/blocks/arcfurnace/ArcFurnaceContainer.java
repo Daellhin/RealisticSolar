@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.arcfurance;
+package com.daellhin.realisticsolar.blocks.arcfurnace;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;

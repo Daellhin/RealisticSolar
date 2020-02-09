@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.arcfurance;
+package com.daellhin.realisticsolar.blocks.arcfurnace;
 
 import javax.annotation.Nullable;
 
