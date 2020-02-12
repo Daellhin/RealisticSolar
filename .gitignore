@@ -4,6 +4,7 @@ bin
 *.launch
 .classpath
 .project
+*.class
 
 # gradle
 build
