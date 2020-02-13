@@ -1,7 +1,6 @@
 package com.daellhin.realisticsolar.blocks.coalgenerator;
 
 import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -24,63 +23,59 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class CoalGeneratorBlock extends Block{
-	public static final String RegName = "coal_generator_block";
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.values());	
+public class CoalGeneratorBlock extends Block {
+
+    public static final String RegName = "coal_generator_block";
+    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.values());
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
-	
-    public CoalGeneratorBlock(){
-		super(Properties.create(Material.IRON)
-			.sound(SoundType.METAL)
-			.hardnessAndResistance(2.0f)
-			.lightValue(13)
-		);
-		setRegistryName(RegName);	
-		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
 
-	}
-	
+    public CoalGeneratorBlock() {
+	super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).lightValue(13));
+	setRegistryName(RegName);
+	setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
+    }
+
     @SuppressWarnings("deprecation")
-	@Override
-	public int getLightValue(BlockState state) {
-		return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
-	}
+    @Override
+    public int getLightValue(BlockState state) {
+	return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
+    }
 
-	@Nullable
+    @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new CoalGeneratorTile();
+	return new CoalGeneratorTile();
     }
-    
-	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if(!world.isRemote) {
-            TileEntity tileEntity = world.getTileEntity(pos);
-            if (tileEntity instanceof INamedContainerProvider) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-            } else {
-                throw new IllegalStateException("Our named container provider is missing!");
-            }
-        }		
-		return true;
-	}
 
-	public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
-	    return Direction.getFacingFromVector((float) (entity.posX - clickedBlock.getX()), (float) (entity.posY - clickedBlock.getY()), (float) (entity.posZ - clickedBlock.getZ()));
+    @Override
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	if (!world.isRemote) {
+	    TileEntity tileEntity = world.getTileEntity(pos);
+	    if (tileEntity instanceof INamedContainerProvider) {
+		NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+	    } else {
+		throw new IllegalStateException("Our named container provider is missing!");
+	    }
 	}
-	
-	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-	    builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
-	}
-	
-	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		 return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
-	}
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+	return true;
+    }
 
+    public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
+	return Direction.getFacingFromVector((float) (entity.posX - clickedBlock.getX()), (float) (entity.posY - clickedBlock.getY()), (float) (entity.posZ - clickedBlock.getZ()));
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+	return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+	return true;
+    }
 }

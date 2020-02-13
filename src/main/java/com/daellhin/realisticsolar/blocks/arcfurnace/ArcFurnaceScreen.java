@@ -18,6 +18,7 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
     final int ARROW_HEIGHT = 52;
     // coordinates of the energy bar
     final int ENERGY_GUI_X = 157;
+    final int ENERGY_GUI_Y = 18;
     final int ENERGY_GUI_Y_BOTTOM = 81;
     final int ENERGY_X = 176;
     final int ENERGY_Y_BOTTOM = 63;
@@ -42,8 +43,9 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-	this.font.drawString("Energy: " + tileEntity.getEnergy(), 10, 0, 0xffffff);
-	this.font.drawString("Progress: " + tileEntity.getProgress(), 100, 0, 0xffffff);
+	if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
+	    this.font.drawString("Power: " + tileEntity.getEnergy(), mouseX - guiLeft + 9, mouseY - guiTop - 7, 0xffffff);
+	}
     }
 
     @Override
@@ -58,6 +60,11 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 	this.blit(relX + ARROW_GUI_X, relY + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfTicksComplete() * ARROW_WIDTH), ARROW_HEIGHT);
 	// energy bar
 	int height = (int) (tileEntity.fractionOfEnergy() * ENERGY_HEIGHT);
-	this.blit(relX + ENERGY_GUI_X, relY + ENERGY_GUI_Y_BOTTOM-height, ENERGY_X, ENERGY_Y_BOTTOM-height, ENERGY_WIDTH, height);
+	this.blit(relX + ENERGY_GUI_X, relY + ENERGY_GUI_Y_BOTTOM - height, ENERGY_X, ENERGY_Y_BOTTOM - height, ENERGY_WIDTH, height);
+    }
+
+    // Returns true if the given x,y coordinates are within the given rectangle
+    public static boolean isInRect(int x, int y, int xSize, int ySize, int mouseX, int mouseY) {
+	return ((mouseX >= x && mouseX <= x + xSize) && (mouseY >= y && mouseY <= y + ySize));
     }
 }

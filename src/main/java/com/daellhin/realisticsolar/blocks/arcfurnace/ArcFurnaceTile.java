@@ -200,7 +200,7 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	return new CustomEnergyStorage(Config.ARCFURNACE_MAXPOWER.get(), Config.ARCFURNACE_USAGE.get());
     }
 
-    // TODO chage default state of arrow now a = 1 when idle
+    // TODO change default state of arrow now a = 1 when idle
     public double fractionOfTicksComplete() {
 	int reverseProgress = Config.ARCFURNACE_TICKS.get() - progress;
 	double a = reverseProgress / (double) Config.ARCFURNACE_TICKS.get();
@@ -208,15 +208,13 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	// System.out.println(a);
 	return a;
     }
-    
-    // TODO chage default state of arrow now a = 1 when idle
+
     public double fractionOfEnergy() {
 	double a = getEnergy() / (double) Config.ARCFURNACE_MAXPOWER.get();
 	a = MathHelper.clamp(a, 0.0, 1.0);
 	// System.out.println(a);
 	return a;
     }
-
 
     public int getProgress() {
 	return progress;
