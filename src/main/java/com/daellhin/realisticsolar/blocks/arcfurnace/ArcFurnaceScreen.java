@@ -18,9 +18,9 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
     final int ARROW_HEIGHT = 52;
     // coordinates of the energy bar
     final int ENERGY_GUI_X = 157;
-    final int ENERGY_GUI_Y = 19;
+    final int ENERGY_GUI_Y_BOTTOM = 81;
     final int ENERGY_X = 176;
-    final int ENERGY_Y = 0;
+    final int ENERGY_Y_BOTTOM = 63;
     final int ENERGY_WIDTH = 10;
     final int ENERGY_HEIGHT = 63;
     private ArcFurnaceTile tileEntity;
@@ -55,10 +55,9 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 	// gui background
 	this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
 	// progress arrow
-	this.blit(guiLeft + ARROW_GUI_X, guiTop + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfTicksComplete() * ARROW_WIDTH), ARROW_HEIGHT);
+	this.blit(relX + ARROW_GUI_X, relY + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfTicksComplete() * ARROW_WIDTH), ARROW_HEIGHT);
 	// energy bar
-	// TODO make a energy fraction function
-	// TODO change orientation of the energy bar
-	this.blit(guiLeft + ENERGY_GUI_X, guiTop + ENERGY_GUI_Y, ENERGY_X, ENERGY_Y, ENERGY_WIDTH, (int) (/* tileEntity.getEnergy() */ 0. * ENERGY_HEIGHT));
+	int height = (int) (tileEntity.fractionOfEnergy() * ENERGY_HEIGHT);
+	this.blit(relX + ENERGY_GUI_X, relY + ENERGY_GUI_Y_BOTTOM-height, ENERGY_X, ENERGY_Y_BOTTOM-height, ENERGY_WIDTH, height);
     }
 }
