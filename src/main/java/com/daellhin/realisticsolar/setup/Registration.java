@@ -13,7 +13,7 @@ import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
 import com.daellhin.realisticsolar.items.AluminiumItem;
-
+import com.daellhin.realisticsolar.items.book.BookItem;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -52,7 +52,10 @@ public class Registration {
      	);
      	
      	//items
-     	event.getRegistry().register(new AluminiumItem());
+     	event.getRegistry().registerAll(
+     			new AluminiumItem(), 
+     			new BookItem()
+     	);
      	
      }
      

@@ -1,6 +1,8 @@
 {
     //"_comment": "Items",
     "item.realisticsolar.aluminium_item": "Aluminium Ingot",
+    "item.realisticsolar.book_item": "Vademecum of Photovoltaics",
+    
     
     //"_comment": "Blocks",
 	"block.realisticsolar.aluminium_block": "Aluminium Block",
