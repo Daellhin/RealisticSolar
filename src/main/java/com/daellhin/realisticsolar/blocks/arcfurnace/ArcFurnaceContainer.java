@@ -2,7 +2,7 @@ package com.daellhin.realisticsolar.blocks.arcfurnace;
 
 import static com.daellhin.realisticsolar.blocks.ModBlocks.ARCFURNACE_CONTAINER;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
-import com.daellhin.realisticsolar.blocks.base.BaseInventoryContainer;
+import com.daellhin.realisticsolar.blocks.base.PlayerInventoryContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -16,7 +16,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ArcFurnaceContainer extends BaseInventoryContainer {
+public class ArcFurnaceContainer extends PlayerInventoryContainer {
 
     private ArcFurnaceTile tileEntity;
     private PlayerEntity playerEntity;

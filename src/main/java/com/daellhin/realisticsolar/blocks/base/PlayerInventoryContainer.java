@@ -7,9 +7,9 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public abstract class BaseInventoryContainer extends Container {
+public abstract class PlayerInventoryContainer extends Container {
 
-    public BaseInventoryContainer(@Nullable ContainerType<?> type, int id) {
+    public PlayerInventoryContainer(@Nullable ContainerType<?> type, int id) {
 	super(type, id);
     }
 

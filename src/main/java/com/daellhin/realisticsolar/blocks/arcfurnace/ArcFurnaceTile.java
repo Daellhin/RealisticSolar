@@ -110,14 +110,14 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     }
 
     private ItemStack getResult() {
-	// @todo Make a cache for this! Both our own CustomRecipeRegistry.getRecipe()
+	// TODO Make a cache for this! Both our own CustomRecipeRegistry.getRecipe()
 	// and
 	// getSmeltingResult() loop over all recipes. This is very slow!
 	CustomRecipe recipe = CustomRecipeRegistry.getRecipe(new ItemStack[] { inputHandler.getStackInSlot(0), inputHandler.getStackInSlot(1), inputHandler.getStackInSlot(2) });
 	if (recipe != null) {
 	    return recipe.getOutput(0);
 	}
-	// @todo 1.13
+	// TODO 1.13
 	// return FurnaceRecipes.instance().getSmeltingResult(stackInSlot);
 	return ItemStack.EMPTY;
     }
