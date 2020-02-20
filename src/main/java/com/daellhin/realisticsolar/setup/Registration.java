@@ -10,6 +10,10 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
+import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorBottomBlock;
+import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorContainer;
+import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
+import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTopBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
 import com.daellhin.realisticsolar.items.AluminiumItem;
@@ -34,7 +38,9 @@ public class Registration {
             new SolarPanelBlock(),
             new AluminiumOreBlock(),
             new ArcFurnaceBlock(),
-            new CoalGeneratorBlock()
+            new CoalGeneratorBlock(),
+            new SiemensReactorBottomBlock(),
+            new SiemensReactorTopBlock()
         );
      }
      
@@ -48,7 +54,9 @@ public class Registration {
  			new BlockItem(ModBlocks.SOLARPANEL_BLOCK, properties).setRegistryName(SolarPanelBlock.RegName),
  			new BlockItem(ModBlocks.ALUMINIUMORE_BLOCK, properties).setRegistryName(AluminiumOreBlock.RegName),
  			new BlockItem(ModBlocks.ARCFURNACE_BLOCK, properties).setRegistryName(ArcFurnaceBlock.RegName),
- 			new BlockItem(ModBlocks.COALGENERATOR_BLOCK, properties).setRegistryName(CoalGeneratorBlock.RegName)
+ 			new BlockItem(ModBlocks.COALGENERATOR_BLOCK, properties).setRegistryName(CoalGeneratorBlock.RegName),
+ 			new BlockItem(ModBlocks.SIEMENSREACTOR_BOTTOM_BLOCK, properties).setRegistryName(SiemensReactorBottomBlock.RegName),
+ 			new BlockItem(ModBlocks.SIEMENSREACTOR_TOP_BLOCK, properties).setRegistryName(SiemensReactorTopBlock.RegName)
      	);
      	
      	//items
@@ -64,7 +72,8 @@ public class Registration {
          event.getRegistry().registerAll(
          	TileEntityType.Builder.create(SolarPanelTile::new, ModBlocks.SOLARPANEL_BLOCK).build(null).setRegistryName(SolarPanelBlock.RegName),
          	TileEntityType.Builder.create(ArcFurnaceTile::new, ModBlocks.ARCFURNACE_BLOCK).build(null).setRegistryName(ArcFurnaceBlock.RegName),
-         	TileEntityType.Builder.create(CoalGeneratorTile::new, ModBlocks.COALGENERATOR_BLOCK).build(null).setRegistryName(CoalGeneratorBlock.RegName)
+         	TileEntityType.Builder.create(CoalGeneratorTile::new, ModBlocks.COALGENERATOR_BLOCK).build(null).setRegistryName(CoalGeneratorBlock.RegName),
+         	TileEntityType.Builder.create(SiemensReactorTile::new, ModBlocks.SIEMENSREACTOR_BOTTOM_BLOCK).build(null).setRegistryName(SiemensReactorBottomBlock.RegName)
          );
      }
      
@@ -80,7 +89,12 @@ public class Registration {
          	IForgeContainerType.create((windowId, inv, data) -> {
          		BlockPos pos = data.readBlockPos();
          		return new CoalGeneratorContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
-         	}).setRegistryName(CoalGeneratorBlock.RegName)
+         	}).setRegistryName(CoalGeneratorBlock.RegName),
+         	
+         	IForgeContainerType.create((windowId, inv, data) -> {
+     			BlockPos pos = data.readBlockPos();
+     			return new SiemensReactorContainer(windowId, RealisticSolar.proxy.getClientWorld(), pos, inv, RealisticSolar.proxy.getClientPlayer());
+         	}).setRegistryName(SiemensReactorBottomBlock.RegName)
          	
          );
      }
