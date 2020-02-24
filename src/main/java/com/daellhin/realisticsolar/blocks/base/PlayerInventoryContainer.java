@@ -7,6 +7,10 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+/**
+ * abstract class for containers that render the players inventory
+ *
+ */
 public abstract class PlayerInventoryContainer extends Container {
 
     public PlayerInventoryContainer(@Nullable ContainerType<?> type, int id) {
@@ -14,20 +18,20 @@ public abstract class PlayerInventoryContainer extends Container {
     }
 
     public int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
-            addSlot(new SlotItemHandler(handler, index, x, y));
-            x += dx;
-            index++;
-        }
-        return index;
+	for (int i = 0; i < amount; i++) {
+	    addSlot(new SlotItemHandler(handler, index, x, y));
+	    x += dx;
+	    index++;
+	}
+	return index;
     }
 
     public int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
-    	for (int j = 0 ; j < verAmount ; j++) {
-            index = addSlotRange(handler, index, x, y, horAmount, dx);
-            y += dy;
-        }
-        return index;
+	for (int j = 0; j < verAmount; j++) {
+	    index = addSlotRange(handler, index, x, y, horAmount, dx);
+	    y += dy;
+	}
+	return index;
     }
 
     public void layoutPlayerInventorySlots(IItemHandler playerInventory, int x, int y) {
@@ -42,5 +46,4 @@ public abstract class PlayerInventoryContainer extends Container {
     public boolean canInteractWith(PlayerEntity playerIn) {
 	return false;
     }
-
 }

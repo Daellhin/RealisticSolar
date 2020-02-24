@@ -9,6 +9,10 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+/**
+ * abstract class for tileEntitys that generate power
+ * 
+ */
 public abstract class GeneratorTile extends TileEntity {
 
     public GeneratorTile(TileEntityType<?> tileEntityTypeIn) {

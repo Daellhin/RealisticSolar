@@ -17,8 +17,13 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+/**
+ * abstract class for blocks with GUI, tileEntity, customModel and facing
+ * blockState
+ * 
+ */
 public abstract class MachineBlock extends Block {
-    // abstract class for blocks with GUI, tileEntity, customModel and facing blockState
+
     public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.values());
 
     public MachineBlock(Properties properties) {
@@ -46,11 +51,12 @@ public abstract class MachineBlock extends Block {
     public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
 	return Direction.getFacingFromVector((float) (entity.posX - clickedBlock.getX()), (float) (entity.posY - clickedBlock.getY()), (float) (entity.posZ - clickedBlock.getZ()));
     }
-    
+
     @Override
     public BlockRenderType getRenderType(BlockState state) {
 	return BlockRenderType.MODEL;
     }
+
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
 	return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
