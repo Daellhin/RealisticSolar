@@ -9,23 +9,23 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 
-    // coordinates of the arrow
-    final int ARROW_GUI_X = 44;
-    final int ARROW_GUI_Y = 23;
-    final int ARROW_X = 0;
-    final int ARROW_Y = 181;
-    final int ARROW_WIDTH = 86;
-    final int ARROW_HEIGHT = 52;
-    // coordinates of the energy bar
-    final int ENERGY_GUI_X = 157;
-    final int ENERGY_GUI_Y = 18;
-    final int ENERGY_GUI_Y_BOTTOM = 81;
-    final int ENERGY_X = 176;
-    final int ENERGY_Y_BOTTOM = 63;
-    final int ENERGY_WIDTH = 10;
-    final int ENERGY_HEIGHT = 63;
     private ArcFurnaceTile tileEntity;
     private ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/arc_furnace_gui.png");
+    // variables of the arrow
+    private final int ARROW_GUI_X = 44;
+    private final int ARROW_GUI_Y = 23;
+    private final int ARROW_X = 0;
+    private final int ARROW_Y = 181;
+    private final int ARROW_WIDTH = 86;
+    private final int ARROW_HEIGHT = 52;
+    // variables of the energy bar
+    private final int ENERGY_GUI_X = 157;
+    private final int ENERGY_GUI_Y = 18;
+    private final int ENERGY_GUI_Y_BOTTOM = 81;
+    private final int ENERGY_X = 176;
+    private final int ENERGY_Y_BOTTOM = 63;
+    private final int ENERGY_WIDTH = 10;
+    private final int ENERGY_HEIGHT = 62;
 
     public ArcFurnaceScreen(ArcFurnaceContainer container, PlayerInventory inv, ITextComponent name) {
 	super(container, inv, name);
@@ -54,7 +54,7 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 	this.minecraft.getTextureManager().bindTexture(GUI);
 	int relX = (this.width - this.xSize) / 2;
 	int relY = (this.height - this.ySize) / 2;
-	// gui background
+	// GUI background
 	this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
 	// progress arrow
 	this.blit(relX + ARROW_GUI_X, relY + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfTicksComplete() * ARROW_WIDTH), ARROW_HEIGHT);

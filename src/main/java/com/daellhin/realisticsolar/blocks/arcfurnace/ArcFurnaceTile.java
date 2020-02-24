@@ -37,9 +37,9 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     public static final int OUTPUT_SLOTS = 3;
     public static final int SIZE = INPUT_SLOTS + OUTPUT_SLOTS;
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-    // ticks still remaining before completion
-    private int progress;
+    private int progress; // ticks still remaining before completion
     private boolean powered;
+    private CustomRecipe currentRecipe;
 
     public ArcFurnaceTile() {
 	super(ARCFURNACE_TILE);
@@ -54,19 +54,29 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 		    powered = false;
 		    return;
 		}
-		if (progress <= 0) {
-		    powered = false;
-		    startSmelt();
-		}
-		if (progress > 0) {
-		    powered = true;
-		    capacity.addAndGet(10);
-		    energy.extractEnergy(Config.ARCFURNACE_USAGE.get(), false);
-		    progress--;
+		if (!isInputEmpty()) {
 		    if (progress <= 0) {
-			attemptSmelt();
+			powered = false;
+			currentRecipe = getRecipe();
+			if (currentRecipe != null) {
+			    startProcess(currentRecipe);
+			}
 		    }
-		    markDirty();
+		    else {
+			powered = true;
+			energy.extractEnergy(Config.ARCFURNACE_USAGE.get(), false);
+			if (progress - 1 <= 0) {
+			    attemptProcess(currentRecipe);
+			}
+			else {
+			    progress--;
+			}
+			markDirty();
+		    }
+		}
+		else {
+		    progress = 0;
+		    powered = false;
 		}
 	    });
 	    BlockState blockState = world.getBlockState(pos);
@@ -86,45 +96,41 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	return false;
     }
 
-    private void startSmelt() {
-	ItemStack result = getResult();
-	if (!result.isEmpty()) {
-	    if (insertOutput(result.copy(), true)) {
-		progress = Config.ARCFURNACE_TICKS.get();
-		markDirty();
-		return;
+    // returns false when all slots are not empty
+    private boolean isInputEmpty() {
+	for (int i = 0; i < 3; i++) {
+	    if (inputHandler.getStackInSlot(i).isEmpty()) {
+		return true;
 	    }
+	}
+	return false;
+    }
+
+    private void startProcess(CustomRecipe recipe) {
+	ItemStack output = recipe.getOutput(0);
+	if (insertOutput(output.copy(), true)) {
+	    System.out.println("correct");
+	    progress = Config.ARCFURNACE_TICKS.get();
+	    markDirty();
+	    return;
 	}
     }
 
-    private void attemptSmelt() {
-	ItemStack result = getResult();
-	if (!result.isEmpty()) {
-	    // This copy is very important!(
-	    if (insertOutput(result.copy(), false)) {
-		inputHandler.extractItem(0, 1, false);
-		inputHandler.extractItem(1, 1, false);
-		inputHandler.extractItem(2, 1, false);
-	    }
+    private void attemptProcess(CustomRecipe recipe) {
+	ItemStack output = recipe.getOutput(0);
+	if (insertOutput(output.copy(), false)) {
+	    inputHandler.extractItem(0, 1, false);
+	    inputHandler.extractItem(1, 1, false);
+	    inputHandler.extractItem(2, 1, false);
 	}
     }
 
-    private ItemStack getResult() {
-	// TODO Make a cache for this! Both our own CustomRecipeRegistry.getRecipe()
-	// and
-	// getSmeltingResult() loop over all recipes. This is very slow!
-	CustomRecipe recipe = CustomRecipeRegistry.getRecipe(new ItemStack[] { inputHandler.getStackInSlot(0), inputHandler.getStackInSlot(1), inputHandler.getStackInSlot(2) });
-	if (recipe != null) {
-	    return recipe.getOutput(0);
-	}
-	// TODO 1.13
-	// return FurnaceRecipes.instance().getSmeltingResult(stackInSlot);
-	return ItemStack.EMPTY;
+    private CustomRecipe getRecipe() {
+	return CustomRecipeRegistry.getRecipe(new ItemStack[] { inputHandler.getStackInSlot(0), inputHandler.getStackInSlot(1), inputHandler.getStackInSlot(2) });
     }
 
     private ItemStackHandler inputHandler = new ItemStackHandler(INPUT_SLOTS) {
 
-	// TODO make ouput slot only acept output
 	@Override
 	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
 	    return true;
@@ -138,11 +144,18 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     private ItemStackHandler outputHandler = new ItemStackHandler(OUTPUT_SLOTS) {
 
 	@Override
+	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+	    // TODO make the player unable to insert items
+	    return true;
+	}
+
+	@Override
 	protected void onContentsChanged(int slot) {
 	    markDirty();
 	}
     };
-    private CombinedInvWrapper combinedHandler = new CombinedInvWrapper(inputHandler, outputHandler);
+    private CombinedInvWrapper combinedHandler = new CombinedInvWrapper(inputHandler, outputHandler) {
+    };
 
     @SuppressWarnings("unchecked")
     @Override
@@ -174,9 +187,11 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 	    if (side == null) {
 		return LazyOptional.of(() -> (T) combinedHandler);
-	    } else if (side == Direction.UP) {
+	    }
+	    else if (side == Direction.UP) {
 		return LazyOptional.of(() -> (T) inputHandler);
-	    } else {
+	    }
+	    else {
 		return LazyOptional.of(() -> (T) outputHandler);
 	    }
 	}
@@ -200,20 +215,16 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	return new CustomEnergyStorage(Config.ARCFURNACE_MAXPOWER.get(), Config.ARCFURNACE_USAGE.get());
     }
 
-    // TODO change default state of arrow now a = 1 when idle
     public double fractionOfTicksComplete() {
+	if (progress == 0) {
+	    return 0;
+	}
 	int reverseProgress = Config.ARCFURNACE_TICKS.get() - progress;
-	double a = reverseProgress / (double) Config.ARCFURNACE_TICKS.get();
-	a = MathHelper.clamp(a, 0.0, 1.0);
-	// System.out.println(a);
-	return a;
+	return reverseProgress / (double) Config.ARCFURNACE_TICKS.get();
     }
 
     public double fractionOfEnergy() {
-	double a = getEnergy() / (double) Config.ARCFURNACE_MAXPOWER.get();
-	a = MathHelper.clamp(a, 0.0, 1.0);
-	// System.out.println(a);
-	return a;
+	return getEnergy() / (double) Config.ARCFURNACE_MAXPOWER.get();
     }
 
     public int getProgress() {

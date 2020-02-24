@@ -27,9 +27,24 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	this.tileEntity = (ArcFurnaceTile) world.getTileEntity(pos);
 	this.playerEntity = playerEntity;
 	this.playerInventory = new InvWrapper(playerInventory);
-	layoutMachineInventorySlots();
 	layoutPlayerInventorySlots(this.playerInventory, 8, 99);
-	// sync energy
+	layoutMachineInventorySlots();
+	syncEnergy();
+	syncProgress();
+    }
+    
+    private void layoutMachineInventorySlots() {
+	this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
+	    // Input
+	    addSlot(new SlotItemHandler(itemHandler, 0, 24, 19));
+	    addSlot(new SlotItemHandler(itemHandler, 1, 24, 43));
+	    addSlot(new SlotItemHandler(itemHandler, 2, 24, 66));
+	    // Output
+	    addSlot(new SlotItemHandler(itemHandler, 3, 134, 43));
+	});
+    }
+
+    private void syncEnergy() {
 	trackInt(new IntReferenceHolder() {
 
 	    @Override
@@ -42,7 +57,9 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 		tileEntity.setEnergy(energy);
 	    }
 	});
-	// sync progress
+    }
+
+    private void syncProgress() {
 	trackInt(new IntReferenceHolder() {
 
 	    @Override
@@ -54,17 +71,6 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	    public void set(int progress) {
 		tileEntity.setProgress(progress);
 	    }
-	});
-    }
-
-    private void layoutMachineInventorySlots() {
-	this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
-	    // Input
-	    addSlot(new SlotItemHandler(itemHandler, 0, 24, 19));
-	    addSlot(new SlotItemHandler(itemHandler, 1, 24, 43));
-	    addSlot(new SlotItemHandler(itemHandler, 2, 24, 66));
-	    // Output
-	    addSlot(new SlotItemHandler(itemHandler, 3, 134, 43));
 	});
     }
 
