@@ -1,5 +1,7 @@
 package com.daellhin.realisticsolar.blocks.arcfurnace;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -43,8 +45,10 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+	List<String> s = new ArrayList<>();
+	s.add("Power: " + tileEntity.getEnergy());
 	if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
-	    this.font.drawString("Power: " + tileEntity.getEnergy(), mouseX - guiLeft + 9, mouseY - guiTop - 7, 0xffffff);
+	    net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
 	}
     }
 
@@ -64,7 +68,7 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
     }
 
     // Returns true if the given x,y coordinates are within the given rectangle
-    public static boolean isInRect(int x, int y, int xSize, int ySize, int mouseX, int mouseY) {
+    private static boolean isInRect(int x, int y, int xSize, int ySize, int mouseX, int mouseY) {
 	return ((mouseX >= x && mouseX <= x + xSize) && (mouseY >= y && mouseY <= y + ySize));
     }
 }

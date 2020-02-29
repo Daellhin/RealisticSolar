@@ -13,28 +13,28 @@ import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTopBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
-
+import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class ModBlocks {
+public class ModBlocks {    	
 	@ObjectHolder(RealisticSolar.MODID + ":" + AluminiumBlock.RegName)
-	public static AluminiumBlock ALUMINIUM_BLOCK;
+	public static AluminiumBlock ALUMINIUM_BLOCK = new AluminiumBlock();
 	
 	@ObjectHolder(RealisticSolar.MODID + ":" + AluminiumOreBlock.RegName)
-	public static AluminiumOreBlock ALUMINIUMORE_BLOCK;
+	public static AluminiumOreBlock ALUMINIUMORE_BLOCK = new AluminiumOreBlock();
 
 	// solar panel
 	@ObjectHolder(RealisticSolar.MODID + ":" + SolarPanelBlock.RegName)
-	public static SolarPanelBlock SOLARPANEL_BLOCK;
+	public static SolarPanelBlock SOLARPANEL_BLOCK = new SolarPanelBlock();
 
 	@ObjectHolder(RealisticSolar.MODID + ":" + SolarPanelBlock.RegName)
 	public static TileEntityType<SolarPanelTile> SOLARPANEL_TILE;
 	
 	// arc furnace
 	@ObjectHolder(RealisticSolar.MODID + ":" + ArcFurnaceBlock.RegName)
-	public static ArcFurnaceBlock ARCFURNACE_BLOCK;
+	public static ArcFurnaceBlock ARCFURNACE_BLOCK = new ArcFurnaceBlock();
 	
 	@ObjectHolder(RealisticSolar.MODID + ":" + ArcFurnaceBlock.RegName)
 	public static TileEntityType<ArcFurnaceTile> ARCFURNACE_TILE;
@@ -44,7 +44,7 @@ public class ModBlocks {
 	
 	// coal generator
 	@ObjectHolder(RealisticSolar.MODID + ":" + CoalGeneratorBlock.RegName)
-	public static CoalGeneratorBlock COALGENERATOR_BLOCK;
+	public static CoalGeneratorBlock COALGENERATOR_BLOCK = new CoalGeneratorBlock();
 
 	@ObjectHolder(RealisticSolar.MODID + ":" + CoalGeneratorBlock.RegName)
 	public static TileEntityType<CoalGeneratorTile> COALGENERATOR_TILE;
@@ -54,15 +54,16 @@ public class ModBlocks {
 	
 	// siemens reactor
 	@ObjectHolder(RealisticSolar.MODID + ":" + SiemensReactorTopBlock.RegName)
-	public static SiemensReactorTopBlock SIEMENSREACTOR_TOP_BLOCK;
+	public static SiemensReactorTopBlock SIEMENSREACTOR_TOP_BLOCK = new SiemensReactorTopBlock();
 	
 	@ObjectHolder(RealisticSolar.MODID + ":" + SiemensReactorBottomBlock.RegName)
-	public static SiemensReactorBottomBlock SIEMENSREACTOR_BOTTOM_BLOCK;
+	public static SiemensReactorBottomBlock SIEMENSREACTOR_BOTTOM_BLOCK = new SiemensReactorBottomBlock();
 
 	@ObjectHolder(RealisticSolar.MODID + ":" + SiemensReactorBottomBlock.RegName)
 	public static TileEntityType<SiemensReactorTile> SIEMENSREACTOR_TILE;
 
 	@ObjectHolder(RealisticSolar.MODID + ":" + SiemensReactorBottomBlock.RegName)
 	public static ContainerType<SiemensReactorContainer> SIEMENSREACTOR_CONTAINER;
-	
+
+    	public static Block[] BLOCKS = {ALUMINIUM_BLOCK, ALUMINIUMORE_BLOCK, SOLARPANEL_BLOCK, ARCFURNACE_BLOCK, COALGENERATOR_BLOCK, SIEMENSREACTOR_TOP_BLOCK, SIEMENSREACTOR_BOTTOM_BLOCK};
 }

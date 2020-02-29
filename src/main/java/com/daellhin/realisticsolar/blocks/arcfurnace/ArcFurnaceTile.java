@@ -3,7 +3,6 @@ package com.daellhin.realisticsolar.blocks.arcfurnace;
 import static com.daellhin.realisticsolar.blocks.ModBlocks.ARCFURNACE_TILE;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.daellhin.realisticsolar.Config;
 import com.daellhin.realisticsolar.recipe.CustomRecipe;
 import com.daellhin.realisticsolar.recipe.CustomRecipeRegistry;
@@ -19,7 +18,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -49,29 +47,37 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
     public void tick() {
 	if (!world.isRemote) {
 	    energy.ifPresent(energy -> {
-		AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
-		if (capacity.get() < Config.ARCFURNACE_USAGE.get()) {
-		    powered = false;
-		    return;
-		}
 		if (!isInputEmpty()) {
+		    AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
+		    if (capacity.get() < Config.ARCFURNACE_USAGE.get()) {
+			powered = false;
+			return;
+		    }
 		    if (progress <= 0) {
 			powered = false;
 			currentRecipe = getRecipe();
 			if (currentRecipe != null) {
 			    startProcess(currentRecipe);
+			    powered = true;
 			}
 		    }
 		    else {
 			powered = true;
 			energy.extractEnergy(Config.ARCFURNACE_USAGE.get(), false);
 			if (progress - 1 <= 0) {
-			    attemptProcess(currentRecipe);
+			    if (currentRecipe == null) {
+				currentRecipe = getRecipe();
+			    }
+			    if (canProcess(currentRecipe)) {
+				doProcess(currentRecipe);
+				progress = 0;
+				markDirty();
+			    }
 			}
 			else {
 			    progress--;
+			    markDirty();
 			}
-			markDirty();
 		    }
 		}
 		else {
@@ -105,24 +111,27 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	}
 	return false;
     }
-
+    
     private void startProcess(CustomRecipe recipe) {
 	ItemStack output = recipe.getOutput(0);
 	if (insertOutput(output.copy(), true)) {
-	    System.out.println("correct");
 	    progress = Config.ARCFURNACE_TICKS.get();
 	    markDirty();
 	    return;
 	}
     }
 
-    private void attemptProcess(CustomRecipe recipe) {
+    private boolean canProcess(CustomRecipe recipe) {
 	ItemStack output = recipe.getOutput(0);
-	if (insertOutput(output.copy(), false)) {
-	    inputHandler.extractItem(0, 1, false);
-	    inputHandler.extractItem(1, 1, false);
-	    inputHandler.extractItem(2, 1, false);
-	}
+	return insertOutput(output.copy(), true);
+    }
+
+    private void doProcess(CustomRecipe recipe) {
+	ItemStack output = recipe.getOutput(0);
+	insertOutput(output.copy(), false);
+	inputHandler.extractItem(0, 1, false);
+	inputHandler.extractItem(1, 1, false);
+	inputHandler.extractItem(2, 1, false);
     }
 
     private CustomRecipe getRecipe() {
@@ -183,7 +192,7 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 	if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 	    if (side == null) {
 		return LazyOptional.of(() -> (T) combinedHandler);

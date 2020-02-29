@@ -1,16 +1,19 @@
 package com.daellhin.realisticsolar.items;
 
 import com.daellhin.realisticsolar.RealisticSolar;
-import net.minecraft.item.BookItem;
+import com.daellhin.realisticsolar.items.book.BookItem;
+import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class ModItems {
-    @ObjectHolder(RealisticSolar.MODID + ":aluminium_item")
-    public static AluminiumItem ALUMINIUMITEM;
+
+    public static Item.Properties properties = new Item.Properties().group(RealisticSolar.setup.getTab());
     
-    @ObjectHolder(RealisticSolar.MODID + ":book_item")
-    public static BookItem BOOKITEM;
+    @ObjectHolder(RealisticSolar.MODID + ":" + "aluminium_item")
+    public static Item ALUMINIUMITEM = new Item(properties).setRegistryName("aluminium_item");
     
+    @ObjectHolder(RealisticSolar.MODID + ":" + "book_item")
+    public static BookItem BOOKITEM = new BookItem();
     
-    
+    public static Item[] ITEMS = { ALUMINIUMITEM, BOOKITEM };
 }

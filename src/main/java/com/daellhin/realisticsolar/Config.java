@@ -27,7 +27,6 @@ public class Config {
     public static ForgeConfigSpec.IntValue COALGENERATOR_MAXPOWER;
     public static ForgeConfigSpec.IntValue COALGENERATOR_GENERATE;
     public static ForgeConfigSpec.IntValue COALGENERATOR_SEND;
-    public static ForgeConfigSpec.IntValue COALGENERATOR_TICKS;
     public static ForgeConfigSpec.IntValue ARCFURNACE_MAXPOWER;
     public static ForgeConfigSpec.IntValue ARCFURNACE_USAGE;
     public static ForgeConfigSpec.IntValue COALGENERATOR_RECEIVE;
@@ -65,7 +64,6 @@ public class Config {
 	COALGENERATOR_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Coal Generator").defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
 	COALGENERATOR_GENERATE = COMMON_BUILDER.comment("Power generation per tick").defineInRange("generate", 1000, 0, Integer.MAX_VALUE);
 	COALGENERATOR_SEND = COMMON_BUILDER.comment("Max power sent per tick").defineInRange("send", 100, 0, Integer.MAX_VALUE);
-	COALGENERATOR_TICKS = COMMON_BUILDER.comment("Ticks per piece of coal").defineInRange("ticks", 60, 0, Integer.MAX_VALUE);
 	COMMON_BUILDER.pop();
     }
 

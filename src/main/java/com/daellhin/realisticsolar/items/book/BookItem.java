@@ -32,7 +32,7 @@ public class BookItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-	tooltip.add(new StringTextComponent("Hanbook for RealisticSolar").applyTextStyle(TextFormatting.GRAY));
+	tooltip.add(new StringTextComponent("Handbook for RealisticSolar").applyTextStyle(TextFormatting.GRAY));
 	super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }
