@@ -1,7 +1,9 @@
 {
-    "variants": {
-        "": [
-            { "model": "realisticsolar:block/aluminium" }
-        ]
-    }
+	"variants": {
+		"": [
+			{
+				"model": "realisticsolar:block/aluminium"
+			}
+		]
+	}
 }

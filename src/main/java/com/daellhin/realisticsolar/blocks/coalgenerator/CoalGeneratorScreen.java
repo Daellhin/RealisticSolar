@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.client.config.GuiUtils;
 
 public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer> {
 
@@ -49,7 +50,7 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 	s.add("Power: " + tileEntity.getEnergy());
 	s.add("" + tileEntity.fractionOfTicksComplete());
 	if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
-	    net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
+	    GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
 	}
     }
 
@@ -64,7 +65,6 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 	// flame
 	this.blit(relX + FLAME_GUI_X, relY + FLAME_GUI_Y, FLAME_X, FLAME_Y, (int) (tileEntity.fractionOfTicksComplete() * FLAME_WIDTH), FLAME_HEIGHT);
 	// energy bars
-
 	int height = (int) (tileEntity.fractionOfEnergy() * ENERGY_HEIGHT);
 	this.blit(relX + ENERGY_GUI_X, relY + ENERGY_GUI_Y_BOTTOM - height, ENERGY_X, ENERGY_Y_BOTTOM - height, ENERGY_WIDTH, height);
     }

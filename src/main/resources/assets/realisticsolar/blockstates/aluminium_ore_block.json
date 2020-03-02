@@ -1,7 +1,9 @@
 {
-    "variants": {
-        "": [
-            { "model": "realisticsolar:block/aluminium_ore" }
-        ]
-    }
+	"variants": {
+		"": [
+			{
+				"model": "realisticsolar:block/aluminium_ore"
+			}
+		]
+	}
 }

@@ -7,18 +7,17 @@ import net.minecraft.item.ItemStack;
 public class ModSetup {
 
     public ItemGroup itemGroup = new ItemGroup("rs_itemgroup1") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModBlocks.ALUMINIUM_BLOCK);
-        }
-    };
-    
-    public void init() {
-		
+
+	@Override
+	public ItemStack createIcon() {
+	    return new ItemStack(ModBlocks.ALUMINIUM_BLOCK);
 	}
-    
-    public ItemGroup getTab() {
-        return itemGroup;
+    };
+
+    public void init() {
     }
 
+    public ItemGroup getTab() {
+	return itemGroup;
+    }
 }

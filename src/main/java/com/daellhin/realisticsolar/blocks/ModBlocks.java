@@ -7,6 +7,9 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
+import com.daellhin.realisticsolar.blocks.random.AluminiumBlock;
+import com.daellhin.realisticsolar.blocks.random.AluminiumOreBlock;
+import com.daellhin.realisticsolar.blocks.random.SilicaSandBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorBottomBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorContainer;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
@@ -18,12 +21,16 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class ModBlocks {    	
+public class ModBlocks {   
+    	// random
 	@ObjectHolder(RealisticSolar.MODID + ":" + AluminiumBlock.RegName)
 	public static AluminiumBlock ALUMINIUM_BLOCK = new AluminiumBlock();
 	
 	@ObjectHolder(RealisticSolar.MODID + ":" + AluminiumOreBlock.RegName)
 	public static AluminiumOreBlock ALUMINIUMORE_BLOCK = new AluminiumOreBlock();
+	
+	@ObjectHolder(RealisticSolar.MODID + ":" + SilicaSandBlock.RegName)
+	public static SilicaSandBlock SILICASAND_BLOCK = new SilicaSandBlock();
 
 	// solar panel
 	@ObjectHolder(RealisticSolar.MODID + ":" + SolarPanelBlock.RegName)
@@ -65,5 +72,5 @@ public class ModBlocks {
 	@ObjectHolder(RealisticSolar.MODID + ":" + SiemensReactorBottomBlock.RegName)
 	public static ContainerType<SiemensReactorContainer> SIEMENSREACTOR_CONTAINER;
 
-    	public static Block[] BLOCKS = {ALUMINIUM_BLOCK, ALUMINIUMORE_BLOCK, SOLARPANEL_BLOCK, ARCFURNACE_BLOCK, COALGENERATOR_BLOCK, SIEMENSREACTOR_TOP_BLOCK, SIEMENSREACTOR_BOTTOM_BLOCK};
+    	public static Block[] BLOCKS = {ALUMINIUM_BLOCK, ALUMINIUMORE_BLOCK, SOLARPANEL_BLOCK, ARCFURNACE_BLOCK, COALGENERATOR_BLOCK, SIEMENSREACTOR_TOP_BLOCK, SIEMENSREACTOR_BOTTOM_BLOCK, SILICASAND_BLOCK};
 }

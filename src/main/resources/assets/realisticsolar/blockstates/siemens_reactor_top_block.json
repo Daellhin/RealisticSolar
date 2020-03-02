@@ -1,7 +1,9 @@
 {
-    "variants": {
-        "": [
-            { "model": "realisticsolar:block/siemens_reactor_top" }
-        ]
-    }
+	"variants": {
+		"": [
+			{
+				"model": "realisticsolar:block/siemens_reactor_top"
+			}
+		]
+	}
 }

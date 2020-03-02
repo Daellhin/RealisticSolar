@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.items.book;
+package com.daellhin.realisticsolar.items.handbook;
 
 import java.util.List;
 import com.daellhin.realisticsolar.RealisticSolar;
@@ -14,11 +14,11 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class BookItem extends Item {
+public class HandBookItem extends Item {
 
-    public static final String RegName = "book_item";
+    public static final String RegName = "hand_book_item";
 
-    public BookItem() {
+    public HandBookItem() {
 	super(new Item.Properties().maxStackSize(1).group(RealisticSolar.setup.itemGroup));
 	setRegistryName(RegName);
     }
@@ -26,7 +26,7 @@ public class BookItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 	playerIn.openBook(playerIn.getHeldItem(handIn), handIn);
-	Minecraft.getInstance().displayGuiScreen(new BookScreen(new StringTextComponent("Hi")));
+	Minecraft.getInstance().displayGuiScreen(new HandBookScreen(new StringTextComponent("Hi")));
 	return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 

@@ -1,8 +1,8 @@
 {
-    "parent": "realisticsolar:block/machine_base",
-    "textures": {
-       "front": "realisticsolar:block/arc_furnace_powered",
-       "side": "realisticsolar:block/machine_powered",
-	   "particle": "realisticsolar:block/arc_furnace_powered"
-    }
+	"parent": "realisticsolar:block/machine_base",
+	"textures": {
+		"front": "realisticsolar:block/arc_furnace_powered",
+		"side": "realisticsolar:block/machine_powered",
+		"particle": "realisticsolar:block/arc_furnace_powered"
+	}
 }
