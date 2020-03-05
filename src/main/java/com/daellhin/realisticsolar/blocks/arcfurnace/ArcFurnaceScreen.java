@@ -23,12 +23,11 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
     private final int ARROW_HEIGHT = 52;
     // variables of the energy bar
     private final int ENERGY_GUI_X = 157;
-    private final int ENERGY_GUI_Y = 18;
-    private final int ENERGY_GUI_Y_BOTTOM = 81;
+    private final int ENERGY_GUI_Y = 19;
     private final int ENERGY_X = 176;
-    private final int ENERGY_Y_BOTTOM = 63;
+    private final int ENERGY_Y = 0;//
     private final int ENERGY_WIDTH = 10;
-    private final int ENERGY_HEIGHT = 62;
+    private final int ENERGY_HEIGHT = 63 + 1;
 
     public ArcFurnaceScreen(ArcFurnaceContainer container, PlayerInventory inv, ITextComponent name) {
 	super(container, inv, name);
@@ -47,7 +46,8 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 	List<String> s = new ArrayList<>();
-	s.add("Power: " + tileEntity.getEnergy());
+	s.add("Power: ");
+	s.add(">  " + tileEntity.getEnergy());
 	if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
 	    GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
 	}
@@ -65,7 +65,7 @@ public class ArcFurnaceScreen extends ContainerScreen<ArcFurnaceContainer> {
 	this.blit(relX + ARROW_GUI_X, relY + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfTicksComplete() * ARROW_WIDTH), ARROW_HEIGHT);
 	// energy bar
 	int height = (int) (tileEntity.fractionOfEnergy() * ENERGY_HEIGHT);
-	this.blit(relX + ENERGY_GUI_X, relY + ENERGY_GUI_Y_BOTTOM - height, ENERGY_X, ENERGY_Y_BOTTOM - height, ENERGY_WIDTH, height);
+	this.blit(relX + ENERGY_GUI_X, (relY + ENERGY_GUI_Y) + (ENERGY_HEIGHT - height), ENERGY_X, (ENERGY_Y + ENERGY_HEIGHT) - height, ENERGY_WIDTH, height);
     }
 
     // Returns true if the given x,y coordinates are within the given rectangle

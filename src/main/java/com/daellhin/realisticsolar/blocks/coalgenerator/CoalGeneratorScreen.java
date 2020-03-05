@@ -24,11 +24,10 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
     // variables of the energy bar
     private final int ENERGY_GUI_X = 157;
     private final int ENERGY_GUI_Y = 12;
-    private final int ENERGY_GUI_Y_BOTTOM = 73;
     private final int ENERGY_X = 176;
-    private final int ENERGY_Y_BOTTOM = 62;
+    private final int ENERGY_Y = 0;
     private final int ENERGY_WIDTH = 10;
-    private final int ENERGY_HEIGHT = 63;
+    private final int ENERGY_HEIGHT = 63 + 1;
 
     public CoalGeneratorScreen(CoalGeneratorContainer container, PlayerInventory inv, ITextComponent name) {
 	super(container, inv, name);
@@ -47,8 +46,10 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 	List<String> s = new ArrayList<>();
-	s.add("Power: " + tileEntity.getEnergy());
-	s.add("" + tileEntity.fractionOfTicksComplete());
+	s.add("Power: ");
+	s.add(">  " + tileEntity.getEnergy());
+	s.add("Fuel: ");
+	s.add(">  " + tileEntity.getProgress());
 	if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
 	    GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
 	}
@@ -63,10 +64,11 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 	// GUI background
 	this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
 	// flame
-	this.blit(relX + FLAME_GUI_X, relY + FLAME_GUI_Y, FLAME_X, FLAME_Y, (int) (tileEntity.fractionOfTicksComplete() * FLAME_WIDTH), FLAME_HEIGHT);
-	// energy bars
-	int height = (int) (tileEntity.fractionOfEnergy() * ENERGY_HEIGHT);
-	this.blit(relX + ENERGY_GUI_X, relY + ENERGY_GUI_Y_BOTTOM - height, ENERGY_X, ENERGY_Y_BOTTOM - height, ENERGY_WIDTH, height);
+	int flameHeight = (int) (tileEntity.fractionOfTicksComplete() * FLAME_HEIGHT);
+	this.blit(relX + FLAME_GUI_X, (relY + FLAME_GUI_Y) + (FLAME_HEIGHT - flameHeight), FLAME_X, (FLAME_Y + FLAME_HEIGHT) - flameHeight, FLAME_WIDTH, flameHeight);
+	// energy bar
+	int energyHeight = (int) (tileEntity.fractionOfEnergy() * ENERGY_HEIGHT);
+	this.blit(relX + ENERGY_GUI_X, (relY + ENERGY_GUI_Y) + (ENERGY_HEIGHT - energyHeight), ENERGY_X, (ENERGY_Y + ENERGY_HEIGHT) - energyHeight, ENERGY_WIDTH, energyHeight);
     }
 
     // Returns true if the given x,y coordinates are within the given rectangle

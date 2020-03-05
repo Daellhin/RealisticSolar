@@ -3,6 +3,8 @@ package com.daellhin.realisticsolar.recipe;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
+import com.daellhin.realisticsolar.blocks.ModBlocks;
+import com.daellhin.realisticsolar.items.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -39,9 +41,8 @@ public class CustomRecipeRegistry {
 
     // order of items corresponds with the order of the slots
     private static void init() {
-	customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.WHEAT_SEEDS) },
+	customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(ModItems.WOODCHIP_ITEM), new ItemStack(ModBlocks.SILICASAND_BLOCK), new ItemStack(Items.COAL) },
 		new ItemStack[] { new ItemStack(Items.DIAMOND) }));
-	customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(Items.PUMPKIN_SEEDS) },
-		new ItemStack[] { new ItemStack(Items.EMERALD) }));
+
     }
 }

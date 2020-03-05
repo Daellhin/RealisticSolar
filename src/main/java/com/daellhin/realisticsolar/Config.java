@@ -63,7 +63,7 @@ public class Config {
 	COMMON_BUILDER.comment("Coal Generator settings").push(SUBCATEGORY_COALGENERATOR);
 	COALGENERATOR_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Coal Generator").defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
 	COALGENERATOR_GENERATE = COMMON_BUILDER.comment("Power generation per tick").defineInRange("generate", 1000, 0, Integer.MAX_VALUE);
-	COALGENERATOR_SEND = COMMON_BUILDER.comment("Max power sent per tick").defineInRange("send", 100, 0, Integer.MAX_VALUE);
+	COALGENERATOR_SEND = COMMON_BUILDER.comment("Max power sent per tick").defineInRange("send", 1200, 0, Integer.MAX_VALUE);
 	COMMON_BUILDER.pop();
     }
 

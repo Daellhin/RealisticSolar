@@ -1,6 +1,7 @@
 package com.daellhin.realisticsolar.blocks.coalgenerator;
 
 import static com.daellhin.realisticsolar.blocks.ModBlocks.COALGENERATOR_TILE;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 import com.daellhin.realisticsolar.Config;
 import com.daellhin.realisticsolar.blocks.base.GeneratorTile;
@@ -43,27 +44,31 @@ public class CoalGeneratorTile extends GeneratorTile implements ITickableTileEnt
     public void tick() {
 	if (!world.isRemote) {
 	    energy.ifPresent(energy -> {
+		AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
 		if (progress > 0) {
-		    ((CustomEnergyStorage) energy).addEnergy(100);
+		    if (capacity.get() < Config.COALGENERATOR_MAXPOWER.get()) {
+			((CustomEnergyStorage) energy).addEnergy(Config.COALGENERATOR_GENERATE.get());
+		    }
 		    progress--;
 		    markDirty();
 		}
 		else {
-		    int index = findValidItem(inputHandler.getStackInSlot(0).getItem());
-		    if (index != -1) {
-			if (index > 2) {
+		    if (capacity.get() != Config.COALGENERATOR_MAXPOWER.get()) {
+			int index = findValidItem(inputHandler.getStackInSlot(0).getItem());
+			if (index != -1) {
+			    if (index < 2) {
 				progress = 100;
+			    }
+			    else {
+				progress = 1000;
+			    }
+			    inputHandler.extractItem(0, 1, false);
+			    powered = true;
+			    markDirty();
 			}
 			else {
-				progress = 1000;
+			    powered = false;
 			}
-			inputHandler.extractItem(0, 1, false);
-			powered = true;
-			markDirty();
-		    }
-		    else {
-			powered = false;
-			
 		    }
 		}
 	    });
@@ -151,6 +156,7 @@ public class CoalGeneratorTile extends GeneratorTile implements ITickableTileEnt
     private IEnergyStorage createEnergy() {
 	return new CustomEnergyStorage(Config.COALGENERATOR_MAXPOWER.get(), Config.COALGENERATOR_SEND.get());
     }
+
     public int getProgress() {
 	return progress;
     }
