@@ -1,4 +1,4 @@
-{
+	{
 	"parent": "realisticsolar:block/machine_base",
 	"textures": {
 		"front": "realisticsolar:block/arc_furnace_idle",
