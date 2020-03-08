@@ -13,6 +13,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 // The value here should match an entry in the META-INF/mods.toml file
+/* TODO
+ * JEI integration
+ * more fuctioning blocks
+ * more pages in the book
+ * more recipes
+ * multiblocks
+ * animations
+ * 
+ */
 @Mod("realisticsolar")
 public class RealisticSolar {
 

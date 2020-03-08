@@ -15,8 +15,11 @@ public class ModItems {
     @ObjectHolder(RealisticSolar.MODID + ":" + "wood_chip_item")
     public static Item WOODCHIP_ITEM = new Item(properties).setRegistryName("wood_chip_item");
     
+    @ObjectHolder(RealisticSolar.MODID + ":" + "metallurgical_silicon_item")
+    public static Item METALURGICAL_SILICON_ITEM = new Item(properties).setRegistryName("metallurgical_silicon_item");
+    
     @ObjectHolder(RealisticSolar.MODID + ":" + HandBookItem.RegName)
     public static HandBookItem HANDBOOK_ITEM = new HandBookItem();
     
-    public static Item[] ITEMS = {ALUMINIUM_ITEM, WOODCHIP_ITEM, HANDBOOK_ITEM};
+    public static Item[] ITEMS = {ALUMINIUM_ITEM, WOODCHIP_ITEM, HANDBOOK_ITEM, METALURGICAL_SILICON_ITEM};
 }

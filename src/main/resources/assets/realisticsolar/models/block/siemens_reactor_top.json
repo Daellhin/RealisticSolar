@@ -1,10 +1,9 @@
 {
 	"credit": "Made with Blockbench",
-		"parent": "block/block",
-	"texture_size": [64, 64],
+	"parent": "block/block",
 	"textures": {
-		"0": "realisticsolar:block/map2",
-		"1": "realisticsolar:block/map3",
+		"0": "realisticsolar:block/siemens_reactor_top",
+		"1": "realisticsolar:block/siemens_reactor_idle",
 		"particle": "realisticsolar:block/silica_sand"
 	},
 	"elements": [

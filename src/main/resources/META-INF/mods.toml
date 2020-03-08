@@ -20,7 +20,7 @@ This mod is still in the early stages of developement.
 [[dependencies.realisticsolar]]
     modId="forge"
     mandatory=true
-    versionRange="[26,)" 
+    versionRange="[28,)" 
     ordering="NONE"
     side="BOTH"
 

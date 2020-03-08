@@ -6,7 +6,6 @@ import com.daellhin.realisticsolar.items.handbook.page.BlockPage;
 import com.daellhin.realisticsolar.items.handbook.page.IntroPage;
 import com.daellhin.realisticsolar.items.handbook.page.Page;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -15,11 +14,12 @@ import net.minecraft.util.text.ITextComponent;
 public class HandBookScreen extends Screen {
 
     private static final ResourceLocation FULL = new ResourceLocation(RealisticSolar.MODID, "textures/gui/hand_book_gui.png");
-    private static final Page[] PAGES = Page.getPages();
-    private CustomButton buttonNextPage, buttonPreviousPage;
+    private static final Page[] PAGES = Page.createPages();
+    private CustomButton buttonNextPage;
+    private CustomButton buttonPreviousPage;
     private final int xSize = 280;
     private final int ySize = 180;
-    private int currentPage = 1;
+    private int currentPage = 0;
 
     public HandBookScreen(ITextComponent name) {
 	super(name);
@@ -62,20 +62,41 @@ public class HandBookScreen extends Screen {
 	if (PAGES[currentPage] instanceof IntroPage) {
 	    this.minecraft.getTextureManager().bindTexture(PAGES[currentPage].getImage());
 	    blit(relX + 28, relY + 18, (int) (71 * 1.2), (int) (17 * 1.2), 0, 0, 71, 17, 128, 128);
-	    drawSplitString(I18n.format(((IntroPage) PAGES[currentPage]).getTextLeft()), relX + 20, relY + 45, 110, 0.7f, 000000);
+	    drawScaledSplitString(((IntroPage) PAGES[currentPage]).getTextLeft(), relX + 20, relY + 45, 110, 0.7f, 000000);
+	    drawScaledSplitString(PAGES[currentPage].getTextRight(), relX + 160, relY + 30, 100, 0.7f, 000000);
 	}
 	if (PAGES[currentPage] instanceof BlockPage) {
 	    this.minecraft.getTextureManager().bindTexture(PAGES[currentPage].getImage());
-	    blit(relX + 28, relY + 18, (int) (71 * 1.2), (int) (17 * 2.4), 0, 0, 1024, 512, 1024, 512);
-
+	    blit(relX + 28, relY + 28, (int) (71 * 1.2), (int) (17 * 2.4), 0, 0, 1024, 512, 1024, 512);
+	    drawScaledRightAlignedString(((BlockPage) PAGES[currentPage]).caption, relX + 109, relY + 69, 0.4f, 000000);
+	    // TODO optimise
+	    drawScaledCenteredString("Step one:", relX + 210, relY + 15, 1f, 000000);
+	    drawScaledCenteredString("Converting sand to silicon", relX + 210, relY + 25, 0.8f, 000000);
+	    drawScaledSplitString(PAGES[currentPage].getTextRight(), relX + 160, relY + 35, 100, 0.59f, 000000);
+	    this.minecraft.getTextureManager().bindTexture(((BlockPage) PAGES[currentPage]).getGui());
+	    blit(relX + 34, relY + 90, (int) (71 * 1.2), (int) (17 * 2.4), 0, 0, 1024, 512, 1024, 512);
 	}
-	drawSplitString(I18n.format(PAGES[currentPage].getTextRight()), relX + 160, relY + 30, 100, 0.7f, 000000);
     }
 
-    public void drawSplitString(String text, int x, int y, int wrap, float size, int color) {
+    private void drawScaledSplitString(String text, int x, int y, int wrap, float size, int color) {
 	GL11.glScalef(size, size, size);
 	float mSize = (float) Math.pow(size, -1);
-	Minecraft.getInstance().fontRenderer.drawSplitString(I18n.format(text), Math.round(x / size), Math.round(y / size), Math.round(wrap / size), color);
+	this.font.drawSplitString(I18n.format(text), Math.round(x / size), Math.round(y / size), Math.round(wrap / size), color);
+	GL11.glScalef(mSize, mSize, mSize);
+    }
+
+    private void drawScaledRightAlignedString(String text, int x, int y, float size, int color) {
+	GL11.glScalef(size, size, size);
+	this.font.drawString(I18n.format(text), (float) (Math.round(x / size) - this.font.getStringWidth(text)), (float) Math.round(y / size), color);
+	float mSize = (float) Math.pow(size, -1);
+	GL11.glScalef(mSize, mSize, mSize);
+    }
+
+    private void drawScaledCenteredString(String text, int x, int y, float size, int color) {
+	// TODO add loop to use \n nexline
+	GL11.glScalef(size, size, size);
+	this.font.drawString(I18n.format(text), (float) (Math.round(x / size) - this.font.getStringWidth(text) / 2), (float) Math.round(y / size), color);
+	float mSize = (float) Math.pow(size, -1);
 	GL11.glScalef(mSize, mSize, mSize);
     }
 

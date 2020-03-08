@@ -42,7 +42,7 @@ public class CustomRecipeRegistry {
     // order of items corresponds with the order of the slots
     private static void init() {
 	customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(ModItems.WOODCHIP_ITEM), new ItemStack(ModBlocks.SILICASAND_BLOCK), new ItemStack(Items.COAL) },
-		new ItemStack[] { new ItemStack(Items.DIAMOND) }));
+		new ItemStack[] { new ItemStack(ModItems.METALURGICAL_SILICON_ITEM) }));
 
     }
 }

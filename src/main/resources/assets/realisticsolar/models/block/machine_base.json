@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
+
 	"textures": {
 		"base": "realisticsolar:block/machine_base"
 	},
