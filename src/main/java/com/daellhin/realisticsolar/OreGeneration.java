@@ -14,9 +14,9 @@ public class OreGeneration {
     
     // CountRangeConfig(Count, MinHeight, MaxHeightBase, MaxHeight)
     public static void setupOreGeneration() {
-	for (Biome biome : ForgeRegistries.BIOMES) {
-	    biome.addFeature(Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE,
-		    new OreFeatureConfig(FillerBlockType.NATURAL_STONE, ModBlocks.ALUMINIUMORE_BLOCK.getDefaultState(), 20), Placement.COUNT_RANGE, new CountRangeConfig(10, 20, 0, 100)));
-	}
+//	for (Biome biome : ForgeRegistries.BIOMES) {
+//	    biome.addFeature(Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE,
+//		    new OreFeatureConfig(FillerBlockType.NATURAL_STONE, ModBlocks.ALUMINIUMORE_BLOCK.getDefaultState(), 20), Placement.COUNT_RANGE, new CountRangeConfig(10, 20, 0, 100)));
+//	}
     }
 }

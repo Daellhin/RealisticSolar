@@ -20,13 +20,13 @@ This mod is still in the early stages of developement.
 [[dependencies.realisticsolar]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)" 
+    versionRange="[31,)" 
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.realisticsolar]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2]"
     ordering="NONE"
     side="BOTH"

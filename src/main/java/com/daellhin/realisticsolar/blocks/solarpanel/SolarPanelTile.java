@@ -34,7 +34,7 @@ public class SolarPanelTile extends GeneratorTile implements ITickableTileEntity
     @Override
     public void tick() {
 	if (!world.isRemote) {
-	    updateSunState();
+	   // updateSunState();
 	    if (theSunIsVisible) {
 		energy.ifPresent(e -> ((CustomEnergyStorage) e).addEnergy(Config.SOLARPANEL_GENERATE.get()));
 		markDirty();
@@ -46,11 +46,12 @@ public class SolarPanelTile extends GeneratorTile implements ITickableTileEntity
 	    sendOutPower(energy, Config.SOLARPANEL_SEND.get());
 	}
     }
-
+    /*
+     * TODO port sundata tot 1.15
     private void updateSunState() {
 	this.theSunIsVisible = getSkyLight(this.getWorld(), this.pos.up()) > 0.0F;
     }
-
+    
     public static float getSkyLight(World world, BlockPos pos) {
 	float sunBrightness = limit((float) Math.cos(world.getCelestialAngleRadians(1.0F)) * 2.0F + 0.2F, 0.0F, 1.0F);
 	if (!BiomeDictionary.hasType(world.getBiome(pos), BiomeDictionary.Type.SANDY)) {
@@ -60,6 +61,7 @@ public class SolarPanelTile extends GeneratorTile implements ITickableTileEntity
 	}
 	return world.getLightFor(LightType.SKY, pos) / 15.0F * sunBrightness;
     }
+    */
 
     @SuppressWarnings("unchecked")
     @Override

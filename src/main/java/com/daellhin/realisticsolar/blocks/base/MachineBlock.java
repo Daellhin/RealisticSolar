@@ -34,7 +34,14 @@ public abstract class MachineBlock extends Block {
     public boolean hasTileEntity(BlockState state) {
 	return true;
     }
-
+    
+    @Override
+        public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+    	// TODO Auto-generated method stub
+    	super.onBlockClicked(state, worldIn, pos, player);
+        }
+    /*
+     * TODO replace with new method
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 	if (!world.isRemote) {
@@ -47,10 +54,14 @@ public abstract class MachineBlock extends Block {
 	}
 	return true;
     }
-
+    */
+    
+    /*
+     * TODO port entity.posX does not exist
     public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
 	return Direction.getFacingFromVector((float) (entity.posX - clickedBlock.getX()), (float) (entity.posY - clickedBlock.getY()), (float) (entity.posZ - clickedBlock.getZ()));
     }
+    */
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {

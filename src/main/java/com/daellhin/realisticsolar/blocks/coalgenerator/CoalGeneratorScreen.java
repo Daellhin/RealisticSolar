@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.client.config.GuiUtils;
+
 
 public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer> {
 
@@ -51,13 +51,13 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 	s.add("Fuel: ");
 	s.add(">  " + tileEntity.getProgress());
 	if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
-	    GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
+	    //GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
 	}
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-	GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	//GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 	this.minecraft.getTextureManager().bindTexture(GUI);
 	int relX = (this.width - this.xSize) / 2;
 	int relY = (this.height - this.ySize) / 2;

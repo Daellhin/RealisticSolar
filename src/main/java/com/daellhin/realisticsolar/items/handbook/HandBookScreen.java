@@ -101,7 +101,7 @@ public class HandBookScreen extends Screen {
     }
 
     protected void renderButtons(int mouseX, int mouseY, float partialTicks) {
-	GlStateManager.scaled(1, 1, 1);
+	//GlStateManager.scaled(1, 1, 1);
 	buttonPreviousPage.visible = currentPage > 0;
 	buttonNextPage.visible = (currentPage < PAGES.length - 1);
 	buttonNextPage.render(mouseX, mouseY, partialTicks);
