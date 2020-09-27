@@ -1,11 +1,11 @@
 {
-    //"_comment": "Items",
+    "_comment_": "Items",
     "item.realisticsolar.aluminium_item": "Aluminium Ingot",
     "item.realisticsolar.hand_book_item": "Vademecum of Photovoltaics",
     "item.realisticsolar.wood_chip_item": "Wood Chips",
-        "item.realisticsolar.metallurgical_silicon_item": "Metallurgical Silicon",
+    "item.realisticsolar.metallurgical_silicon_item": "Metallurgical Silicon",
     
-    //"_comment": "Blocks",
+    "_comment_": "Blocks",
 	"block.realisticsolar.aluminium_block": "Aluminium Block",
 	"block.realisticsolar.aluminium_ore_block": "Aluminium Ore",
 	"block.realisticsolar.silica_sand_block": "Silica Sand",
@@ -15,10 +15,17 @@
 	"block.realisticsolar.siemens_reactor_top_block": "Siemens Reactor Top",
 	"block.realisticsolar.siemens_reactor_bottom_block": "Siemens Reactor Bottom",
 	
-	//"_comment": "Creative Tabs",
-	"itemGroup.rs_itemgroup1": "Realistic Solar",
+	"_comment_": "Creative Tabs",
+	"itemGroup.realisticsolar.itemgroup1": "Realistic Solar",
 	
-	//"_comment": "Vademecum Pages",
+	"_comment_": "Block Tooltip information",
+	"block.information.press_shift": "<Press Shift>",
+	"block.information.coal_generator": "TODO add information",
+	
+	"_comment_": "Item Tooltip information",
+	"item.information.hand_book_item": "Handbook for RealisticSolar",
+	
+	"_comment_": "Vademecum Pages",
 	"page_intro": "Welcome to Realistic Solar.\nA Tech mod all about producing solar panels, based upon industrial production processes.\n\nThis book will document the functionalities of al the machines, blocks and items, along with more information about them.\n\nI hope you enjoy playing with Realistic Solar as much as I enjoy making it! \n\n\n~Daellhin, the mod author",
 	"page_disclaimer": "DISCLAIMER! \n\nThis mod is still being developed, so expect bugs and crashes. There are still a lot of features and mechanics I have planned, so stay tuned. \n\nYou can always follow the development on the Realistic Solar GitHub page (linked under sources on the CurseForge page). New builds will be available on CurseForge.",
 	"page_arc_furnace_title": "Step one: \nConverting sand to silicon",

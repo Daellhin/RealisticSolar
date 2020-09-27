@@ -1,25 +1,27 @@
 package com.daellhin.realisticsolar.items;
 
-import com.daellhin.realisticsolar.RealisticSolar;
+import static com.daellhin.realisticsolar.setup.Registration.ITEMS;
+
 import com.daellhin.realisticsolar.items.handbook.HandBookItem;
+import com.daellhin.realisticsolar.setup.ModSetup;
+
 import net.minecraft.item.Item;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.RegistryObject;
 
 public class ModItems {
 
-    public static Item.Properties properties = new Item.Properties().group(RealisticSolar.setup.getTab());
-    
-    @ObjectHolder(RealisticSolar.MODID + ":" + "aluminium_item")
-    public static Item ALUMINIUM_ITEM = new Item(properties).setRegistryName("aluminium_item");
-    
-    @ObjectHolder(RealisticSolar.MODID + ":" + "wood_chip_item")
-    public static Item WOODCHIP_ITEM = new Item(properties).setRegistryName("wood_chip_item");
-    
-    @ObjectHolder(RealisticSolar.MODID + ":" + "metallurgical_silicon_item")
-    public static Item METALURGICAL_SILICON_ITEM = new Item(properties).setRegistryName("metallurgical_silicon_item");
-    
-    @ObjectHolder(RealisticSolar.MODID + ":" + HandBookItem.RegName)
-    public static HandBookItem HANDBOOK_ITEM = new HandBookItem();
-    
-    public static Item[] ITEMS = {ALUMINIUM_ITEM, WOODCHIP_ITEM, HANDBOOK_ITEM, METALURGICAL_SILICON_ITEM};
+	public static void register() {
+		// Needed to force class loading
+	}
+
+	private static final Item.Properties basicItemProperties = new Item.Properties().group(ModSetup.ITEM_GROUP);
+
+	// classless
+	public static final RegistryObject<Item> ALUMINIUM_ITEM = ITEMS.register("aluminium_item", () -> new Item(basicItemProperties));
+	public static final RegistryObject<Item> WOODCHIP_ITEM = ITEMS.register("wood_chip_item", () -> new Item(basicItemProperties));
+	public static final RegistryObject<Item> METALURGICAL_SILICON_ITEM = ITEMS.register("metallurgical_silicon_item", () -> new Item(basicItemProperties));
+
+	// class
+	public static final RegistryObject<Item> HANDBOOK_ITEM = ITEMS.register(HandBookItem.REGNAME, HandBookItem::new);
+
 }

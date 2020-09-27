@@ -6,37 +6,48 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
 
-    public CustomEnergyStorage(int capacity, int maxTransfer) {
-	super(capacity, maxTransfer);
-    }
-
-    public void setEnergy(int energy) {
-	this.energy = energy;
-    }
-
-    public void addEnergy(int energy) {
-	this.energy += energy;
-	if (this.energy > getMaxEnergyStored()) {
-	    this.energy = getEnergyStored();
+	public CustomEnergyStorage(int capacity, int maxTransfer) {
+		super(capacity, maxTransfer);
 	}
-    }
 
-    public void consumeEnergy(int energy) {
-	this.energy -= energy;
-	if (this.energy < 0) {
-	    this.energy = 0;
+	protected void onEnergyChanged() {
 	}
-    }
 
-    @Override
-    public CompoundNBT serializeNBT() {
-	CompoundNBT tag = new CompoundNBT();
-	tag.putInt("energy", getEnergyStored());
-	return tag;
-    }
+	public boolean isFull() {
+		return this.energy >= getMaxEnergyStored();
+	}
 
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-	setEnergy(nbt.getInt("energy"));
-    }
+	public void addEnergy(int energy) {
+		this.energy += energy;
+		if (isFull()) {
+			this.energy = getMaxEnergyStored();
+		}
+		onEnergyChanged();
+	}
+
+	public void consumeEnergy(int energy) {
+		this.energy -= energy;
+		if (this.energy < 0) {
+			this.energy = 0;
+		}
+		onEnergyChanged();
+	}
+
+	@Override
+	public CompoundNBT serializeNBT() {
+		CompoundNBT tag = new CompoundNBT();
+		tag.putInt("energy", getEnergyStored());
+		return tag;
+	}
+
+	@Override
+	public void deserializeNBT(CompoundNBT nbt) {
+		setEnergy(nbt.getInt("energy"));
+	}
+
+	// setters
+	public void setEnergy(int energy) {
+		this.energy = energy;
+		onEnergyChanged();
+	}
 }
