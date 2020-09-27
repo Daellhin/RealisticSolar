@@ -78,11 +78,11 @@ public class ModBlocks {
 	}));
 
 	// siemens reactor
-	public static final RegistryObject<Block> SIEMENSREACTOR_BOTTOM_BLOCK = BLOCKS.register(SiemensReactorBottomBlock.REGNAME, CoalGeneratorBlock::new);
+	public static final RegistryObject<Block> SIEMENSREACTOR_BOTTOM_BLOCK = BLOCKS.register(SiemensReactorBottomBlock.REGNAME, SiemensReactorBottomBlock::new);
 	public static final RegistryObject<Item> SIEMENSREACTOR_BOTTOM_BLOCK_ITEM = ITEMS.register(SiemensReactorBottomBlock.REGNAME, () -> new BlockItem(SIEMENSREACTOR_BOTTOM_BLOCK.get(), basicItemProperties));
-	public static final RegistryObject<Block> SIEMENSREACTOR_TOP_BLOCK = BLOCKS.register(SiemensReactorTopBlock.REGNAME, CoalGeneratorBlock::new);
+	public static final RegistryObject<Block> SIEMENSREACTOR_TOP_BLOCK = BLOCKS.register(SiemensReactorTopBlock.REGNAME, SiemensReactorTopBlock::new);
 	public static final RegistryObject<Item> SIEMENSREACTOR_TOP_BLOCK_ITEM = ITEMS.register(SiemensReactorTopBlock.REGNAME, () -> new BlockItem(SIEMENSREACTOR_TOP_BLOCK.get(), basicItemProperties));
-	public static final RegistryObject<TileEntityType<SiemensReactorTile>> SIEMENSREACTOR_TILE = TILES.register(SiemensReactorBottomBlock.REGNAME, () -> TileEntityType.Builder.create(SiemensReactorTile::new, COALGENERATOR_BLOCK.get()).build(null));
+	public static final RegistryObject<TileEntityType<SiemensReactorTile>> SIEMENSREACTOR_TILE = TILES.register(SiemensReactorBottomBlock.REGNAME, () -> TileEntityType.Builder.create(SiemensReactorTile::new, SIEMENSREACTOR_BOTTOM_BLOCK.get()).build(null));
 	public static final RegistryObject<ContainerType<SiemensReactorContainer>> SIEMENSREACTOR_CONTAINER = CONTAINERS.register(SiemensReactorBottomBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 		BlockPos pos = data.readBlockPos();
 		World world = inv.player.getEntityWorld();
