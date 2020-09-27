@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import com.daellhin.realisticsolar.tools.BlockBuilder;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,6 +26,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -43,11 +44,13 @@ public abstract class BaseBlock extends Block {
 	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	private final Supplier<TileEntity> tileEntitySupplier;
 	private final String shiftInformation;
+	private final VoxelShape shape;
 
 	public BaseBlock(BlockBuilder builder) {
 		super(builder.getProperties());
 		this.shiftInformation = builder.getShiftInformation();
 		this.tileEntitySupplier = builder.getTileEntitySupplier();
+		this.shape = builder.getShape();
 
 		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
 	}
@@ -65,12 +68,12 @@ public abstract class BaseBlock extends Block {
 
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		return tileEntitySupplier.get() != null;
+		return tileEntitySupplier != null;
 	}
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		if (tileEntitySupplier.get() != null) {
+		if (tileEntitySupplier != null) {
 			return tileEntitySupplier.get();
 		} else {
 			return null;
@@ -83,8 +86,6 @@ public abstract class BaseBlock extends Block {
 			TileEntity tileEntity = world.getTileEntity(pos);
 			if (tileEntity instanceof INamedContainerProvider) {
 				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-			} else {
-				throw new IllegalStateException("The named container provider is missing!");
 			}
 		}
 		return ActionResultType.SUCCESS;
@@ -96,9 +97,13 @@ public abstract class BaseBlock extends Block {
 	}
 
 	// getters
+	@SuppressWarnings("deprecation")
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.MODEL;
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		if (shape != null) {
+			return shape;
+		}
+		return super.getShape(state, worldIn, pos, context);
 	}
 
 	@SuppressWarnings("deprecation")

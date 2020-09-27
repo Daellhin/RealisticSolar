@@ -6,11 +6,13 @@ import net.minecraft.block.Block.Properties;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.shapes.VoxelShape;
 
 public class BlockBuilder {
 	private Properties properties;
 	private Supplier<TileEntity> tileEntitySupplier;
 	private String shiftInformation;
+	private VoxelShape shape;
 
 	public BlockBuilder properties(Properties properties) {
 		this.properties = properties;
@@ -37,6 +39,11 @@ public class BlockBuilder {
 		return this;
 	}
 
+	public BlockBuilder shape(VoxelShape shape) {
+		this.shape = shape;
+		return this;
+	}
+
 	// getters
 	public Properties getProperties() {
 		return properties;
@@ -48,6 +55,10 @@ public class BlockBuilder {
 
 	public String getShiftInformation() {
 		return shiftInformation;
+	}
+
+	public VoxelShape getShape() {
+		return shape;
 	}
 
 }
