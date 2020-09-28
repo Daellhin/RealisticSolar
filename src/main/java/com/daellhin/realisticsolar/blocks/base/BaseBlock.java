@@ -36,7 +36,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public abstract class BaseBlock extends Block {
 
 	private final Supplier<TileEntity> tileEntitySupplier;
-	private final String shiftInformation;
+	private final boolean shiftInformation;
 	private final VoxelShape shape;
 
 	public BaseBlock(BlockBuilder builder) {
@@ -48,11 +48,11 @@ public abstract class BaseBlock extends Block {
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> list, ITooltipFlag flags) {
-		if (shiftInformation != null) {
+		if (shiftInformation) {
 			if (Screen.hasShiftDown()) {
-				list.add(new TranslationTextComponent("block.information." + shiftInformation));
+				list.add(new TranslationTextComponent("information." + this.getRegistryName().getPath()));
 			} else {
-				list.add(new TranslationTextComponent("block.information.press_shift"));
+				list.add(new TranslationTextComponent("information.press_shift"));
 			}
 		}
 	}

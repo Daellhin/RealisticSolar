@@ -15,7 +15,7 @@ public class SolarPanelBlock extends BaseBlock {
 	public static final String REGNAME = "solar_panel_block";
 
 	public SolarPanelBlock() {
-		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(SolarPanelTile::new).shiftInformation("information." + REGNAME));
+		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(SolarPanelTile::new));
 		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false));
 
 	}

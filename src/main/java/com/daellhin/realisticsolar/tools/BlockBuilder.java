@@ -11,14 +11,14 @@ import net.minecraft.util.math.shapes.VoxelShape;
 public class BlockBuilder {
 	private Properties properties;
 	private Supplier<TileEntity> tileEntitySupplier;
-	private String shiftInformation;
+	private boolean shiftInformation;
 	private VoxelShape shape;
 
 	public BlockBuilder properties(Properties properties) {
 		this.properties = properties;
 		return this;
 	}
-
+	
 	public BlockBuilder basicProperties() {
 		this.properties = Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).lightValue(0);
 		return this;
@@ -34,8 +34,8 @@ public class BlockBuilder {
 		return this;
 	}
 
-	public BlockBuilder shiftInformation(String shiftInformation) {
-		this.shiftInformation = shiftInformation;
+	public BlockBuilder addShiftInformation() {
+		this.shiftInformation = true;
 		return this;
 	}
 
@@ -53,7 +53,7 @@ public class BlockBuilder {
 		return tileEntitySupplier;
 	}
 
-	public String getShiftInformation() {
+	public boolean getShiftInformation() {
 		return shiftInformation;
 	}
 

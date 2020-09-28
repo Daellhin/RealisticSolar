@@ -15,7 +15,7 @@ public class CoalGeneratorBlock extends BaseBlock {
 	public static final String REGNAME = "coal_generator_block";
 
 	public CoalGeneratorBlock() {
-		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(CoalGeneratorTile::new).shiftInformation("information." + REGNAME));
+		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(CoalGeneratorTile::new).addShiftInformation());
 		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false));
 	}
 	
