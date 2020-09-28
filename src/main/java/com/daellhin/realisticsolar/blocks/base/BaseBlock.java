@@ -14,15 +14,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -40,8 +35,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
  */
 public abstract class BaseBlock extends Block {
 
-	public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.values());
-	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	private final Supplier<TileEntity> tileEntitySupplier;
 	private final String shiftInformation;
 	private final VoxelShape shape;
@@ -51,8 +44,6 @@ public abstract class BaseBlock extends Block {
 		this.shiftInformation = builder.getShiftInformation();
 		this.tileEntitySupplier = builder.getTileEntitySupplier();
 		this.shape = builder.getShape();
-
-		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
 	}
 
 	@Override
@@ -91,11 +82,6 @@ public abstract class BaseBlock extends Block {
 		return ActionResultType.SUCCESS;
 	}
 
-	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
-	}
-
 	// getters
 	@SuppressWarnings("deprecation")
 	@Override
@@ -110,11 +96,6 @@ public abstract class BaseBlock extends Block {
 	@Override
 	public int getLightValue(BlockState state) {
 		return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
-	}
-
-	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 
 }
