@@ -5,8 +5,9 @@ import static com.daellhin.realisticsolar.setup.Registration.CONTAINERS;
 import static com.daellhin.realisticsolar.setup.Registration.ITEMS;
 import static com.daellhin.realisticsolar.setup.Registration.TILES;
 
-import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceBlock;
 import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceContainer;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceControllerBlock;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnacePartBlock;
 import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
@@ -58,10 +59,20 @@ public class ModBlocks {
 	public static final RegistryObject<TileEntityType<SolarPanelTile>> SOLARPANEL_TILE = TILES.register(SolarPanelBlock.REGNAME, () -> TileEntityType.Builder.create(SolarPanelTile::new, SOLARPANEL_BLOCK.get()).build(null));
 
 	// arc furnace
-	public static final RegistryObject<Block> ARCFURNACE_BLOCK = BLOCKS.register(ArcFurnaceBlock.REGNAME, ArcFurnaceBlock::new);
-	public static final RegistryObject<Item> ARCFURNACE_BLOCK_ITEM = ITEMS.register(ArcFurnaceBlock.REGNAME, () -> new BlockItem(ARCFURNACE_BLOCK.get(), basicItemProperties));
-	public static final RegistryObject<TileEntityType<ArcFurnaceTile>> ARCFURNACE_TILE = TILES.register(ArcFurnaceBlock.REGNAME, () -> TileEntityType.Builder.create(ArcFurnaceTile::new, ARCFURNACE_BLOCK.get()).build(null));
-	public static final RegistryObject<ContainerType<ArcFurnaceContainer>> ARCFURNACE_CONTAINER = CONTAINERS.register(ArcFurnaceBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
+	// controller
+	public static final RegistryObject<Block> ARCFURNACE_CONTROLLER_BLOCK = BLOCKS.register(ArcFurnaceControllerBlock.REGNAME, ArcFurnaceControllerBlock::new);
+	public static final RegistryObject<Item> ARCFURNACE_CONTROLLER_BLOCK_ITEM = ITEMS.register(ArcFurnaceControllerBlock.REGNAME, () -> new BlockItem(ARCFURNACE_CONTROLLER_BLOCK.get(), basicItemProperties));
+	
+	// parts
+	public static final RegistryObject<Block> ARCFURNACE_CASING_BLOCK = BLOCKS.register("arc_furnace_casing_block", ArcFurnacePartBlock::new);
+	public static final RegistryObject<Item> ARCFURNACE_CASING_BLOCK_ITEM = ITEMS.register("arc_furnace_casing_block", () -> new BlockItem(ARCFURNACE_CASING_BLOCK.get(), basicItemProperties));
+	
+	public static final RegistryObject<Block> ARCFURNACE_ELECTRODE_BLOCK = BLOCKS.register("arc_furnace_electrode_block", ArcFurnacePartBlock::new);
+	public static final RegistryObject<Item> ARCFURNACE_ELECTRODE_BLOCK_ITEM = ITEMS.register("arc_furnace_electrode_block", () -> new BlockItem(ARCFURNACE_ELECTRODE_BLOCK.get(), basicItemProperties));
+	
+	// common
+	public static final RegistryObject<TileEntityType<ArcFurnaceTile>> ARCFURNACE_TILE = TILES.register(ArcFurnaceControllerBlock.REGNAME, () -> TileEntityType.Builder.create(ArcFurnaceTile::new, ARCFURNACE_CONTROLLER_BLOCK.get()).build(null));
+	public static final RegistryObject<ContainerType<ArcFurnaceContainer>> ARCFURNACE_CONTAINER = CONTAINERS.register(ArcFurnaceControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 		BlockPos pos = data.readBlockPos();
 		World world = inv.player.getEntityWorld();
 		return new ArcFurnaceContainer(windowId, world, pos, inv, inv.player);
@@ -78,10 +89,15 @@ public class ModBlocks {
 	}));
 
 	// siemens reactor
+	// bottom block
 	public static final RegistryObject<Block> SIEMENSREACTOR_BOTTOM_BLOCK = BLOCKS.register(SiemensReactorBottomBlock.REGNAME, SiemensReactorBottomBlock::new);
 	public static final RegistryObject<Item> SIEMENSREACTOR_BOTTOM_BLOCK_ITEM = ITEMS.register(SiemensReactorBottomBlock.REGNAME, () -> new BlockItem(SIEMENSREACTOR_BOTTOM_BLOCK.get(), basicItemProperties));
+	
+	// top block
 	public static final RegistryObject<Block> SIEMENSREACTOR_TOP_BLOCK = BLOCKS.register(SiemensReactorTopBlock.REGNAME, SiemensReactorTopBlock::new);
 	public static final RegistryObject<Item> SIEMENSREACTOR_TOP_BLOCK_ITEM = ITEMS.register(SiemensReactorTopBlock.REGNAME, () -> new BlockItem(SIEMENSREACTOR_TOP_BLOCK.get(), basicItemProperties));
+	
+	// common
 	public static final RegistryObject<TileEntityType<SiemensReactorTile>> SIEMENSREACTOR_TILE = TILES.register(SiemensReactorBottomBlock.REGNAME, () -> TileEntityType.Builder.create(SiemensReactorTile::new, SIEMENSREACTOR_BOTTOM_BLOCK.get()).build(null));
 	public static final RegistryObject<ContainerType<SiemensReactorContainer>> SIEMENSREACTOR_CONTAINER = CONTAINERS.register(SiemensReactorBottomBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 		BlockPos pos = data.readBlockPos();

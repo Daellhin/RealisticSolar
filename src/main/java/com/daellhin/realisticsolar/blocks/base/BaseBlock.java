@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -58,44 +57,36 @@ public abstract class BaseBlock extends Block {
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
+	public boolean hasTileEntity(BlockState blockState) {
 		return tileEntitySupplier != null;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		if (tileEntitySupplier != null) {
+	public TileEntity createTileEntity(BlockState blockState, IBlockReader world) {
+		if (this.hasTileEntity()) {
 			return tileEntitySupplier.get();
 		} else {
 			return null;
 		}
 	}
 
-	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote) {
-			TileEntity tileEntity = world.getTileEntity(pos);
-			if (tileEntity instanceof INamedContainerProvider) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
-			}
-		}
-		return ActionResultType.SUCCESS;
-	}
-
 	// getters
 	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState blockState, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		if (shape != null) {
 			return shape;
 		}
-		return super.getShape(state, worldIn, pos, context);
+		return super.getShape(blockState, worldIn, pos, context);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public int getLightValue(BlockState state) {
-		return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
-	}
+	// move to class
+//	@SuppressWarnings("deprecation")
+//	@Override
+//	public int getLightValue(BlockState state) {
+//		if(state.)
+//		return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
+//	}
 
 }

@@ -43,7 +43,7 @@
               ]
             }
           ],
-          "name": "realisticsolar:arc_furnace_block"
+          "name": "realisticsolar:arc_furnace_controller_block"
         }
       ],
       "conditions": [

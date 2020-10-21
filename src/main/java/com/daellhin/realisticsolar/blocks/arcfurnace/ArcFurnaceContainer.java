@@ -99,7 +99,7 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ARCFURNACE_BLOCK.get());
+		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 	}
 
 	public ArcFurnaceTile getTileEntity() {
