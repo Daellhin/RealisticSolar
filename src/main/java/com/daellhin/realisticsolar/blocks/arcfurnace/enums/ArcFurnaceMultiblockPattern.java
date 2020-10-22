@@ -5,6 +5,8 @@ import com.daellhin.realisticsolar.blocks.ModBlocks;
 import net.minecraft.block.Block;
 
 public enum ArcFurnaceMultiblockPattern {
+	//@formatter:off
+	
 	// X = 0
 	IP0P0N2( 0,  0, -2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
 	IP0P0N1( 0,  0, -1, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
@@ -60,12 +62,10 @@ public enum ArcFurnaceMultiblockPattern {
 	IP2P2N1( 2,  2, -1, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
 	IP2P2P0( 2,  2,  0, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
 	IP2P2P1( 2,  2,  1, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
-	IP2P2P2( 2,  2,  2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
-	;
+	IP2P2P2( 2,  2,  2, ModBlocks.ARCFURNACE_CASING_BLOCK.get());
 	
-	// Optimization
-	// public static final MultiblockPattern[] VALUES = MultiblockPattern.values();
-	
+	//@formatter:on
+
 	private final int dx;
 	private final int dy;
 	private final int dz;
@@ -77,7 +77,7 @@ public enum ArcFurnaceMultiblockPattern {
 		this.dz = dz;
 		this.block = block;
 	}
-	
+
 	// getters
 	public int getDx() {
 		return dx;

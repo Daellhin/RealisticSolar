@@ -32,20 +32,26 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 	}
 
 	@Override
-	public boolean isMultiblockFormed(BlockState blockState) {
-		return blockState.get(ArcFurnaceControllerBlock.ARCFURNACEPART) != ArcFurnaceMultiblockPart.UNFORMED;
+	public boolean isMultiblockFormed(BlockState state, World world, BlockPos pos) {
+		BlockPos controllerPos = getControllerBlockPos(state, world, pos);
+		BlockState controllerBlockState = world.getBlockState(controllerPos);
+		
+		if (controllerBlockState.getBlock() instanceof ArcFurnaceControllerBlock) {
+			return ((ArcFurnaceControllerBlock) controllerBlockState.getBlock()).isMultiblockFormed(controllerBlockState);
+		}
+		return false;
 	}
 
 	@Override
-	public BlockPos getControllerBlock(BlockState blockState, World world, BlockPos pos) {
-		Direction facing = blockState.get(BlockStateProperties.FACING);
-		ArcFurnaceMultiblockPart part = blockState.get(ArcFurnaceControllerBlock.ARCFURNACEPART);
+	public BlockPos getControllerBlockPos(BlockState state, World world, BlockPos pos) {
+		Direction facing = state.get(BlockStateProperties.FACING);
+		ArcFurnaceMultiblockPart part = state.get(ArcFurnaceControllerBlock.ARCFURNACEPART);
 		return pos.offset(facing, part.getDx()).up(-part.getDy()).offset(facing.rotateY(), part.getDz());
 	}
 
 	@Override
-	public void destroyMultiblock(BlockState blockState, World world, BlockPos pos) {
-		BlockPos controllerPos = getControllerBlock(blockState, world, pos);
+	public void destroyMultiblock(BlockState state, World world, BlockPos pos) {
+		BlockPos controllerPos = getControllerBlockPos(state, world, pos);
 		BlockState controllerBlockState = world.getBlockState(controllerPos);
 		((ArcFurnaceControllerBlock) controllerBlockState.getBlock()).destroyMultiblock(controllerBlockState, world, controllerPos);
 	}

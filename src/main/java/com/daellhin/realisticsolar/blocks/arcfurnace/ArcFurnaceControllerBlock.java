@@ -47,7 +47,6 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
-			System.out.printf("dx: %2d, dy: %2d, dz: %2d = %s ? %s%n", part.getDx(), part.getDy(), part.getDz(), world.getBlockState(currentPos).getBlock(), part.getBlock());
 			if (part.getBlock() != world.getBlockState(currentPos).getBlock()) {
 				return false;
 			}
@@ -67,12 +66,17 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	}
 
 	@Override
-	public void destroyMultiblock(BlockState blockState, World world, BlockPos pos) {
-		Direction facing = blockState.get(BlockStateProperties.FACING).getOpposite();
+	public void destroyMultiblock(BlockState state, World world, BlockPos pos) {
+		Direction facing = state.get(BlockStateProperties.FACING).getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
-			world.setBlockState(currentPos, world.getBlockState(currentPos).with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED), 3);
+			BlockState currentState = world.getBlockState(currentPos);
+
+			// check if block has not been removed
+			if (currentState.getProperties().contains(ARCFURNACEPART)) {
+				world.setBlockState(currentPos, world.getBlockState(currentPos).with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED), 3);
+			}
 		}
 	}
 }

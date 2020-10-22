@@ -115,7 +115,11 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 		return false;
 	}
 
-	// returns false when all slots are not empty
+	/**
+	 * returns false when all slots are not empty
+	 * 
+	 * @return
+	 */
 	private boolean isInputEmpty() {
 		for (int i = 0; i < INPUT_SLOTS; i++) {
 			if (inputHandler.getStackInSlot(i).isEmpty()) {
@@ -148,9 +152,11 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	}
 
 	private CustomRecipe getRecipe() {
-		return CustomRecipeRegistry.getRecipe(new ItemStack[] { inputHandler.getStackInSlot(0), inputHandler.getStackInSlot(1), inputHandler.getStackInSlot(2) });
+		return CustomRecipeRegistry
+				.getRecipe(new ItemStack[] { inputHandler.getStackInSlot(0), inputHandler.getStackInSlot(1), inputHandler.getStackInSlot(2) });
 	}
 
+	// Something might be wrong here, null pointers on readNBT
 	private ItemStackHandler createInputHandler() {
 		return new ItemStackHandler(INPUT_SLOTS) {
 
@@ -164,9 +170,15 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 				return false;
 			}
 
+			@Nonnull
 			@Override
-			protected void onContentsChanged(int slot) {
-				markDirty();
+			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+				for (Item item : CustomRecipeRegistry.getValidItems(slot)) {
+					if (item == stack.getItem()) {
+						return stack;
+					}
+				}
+				return super.insertItem(slot, stack, simulate);
 			}
 		};
 	}

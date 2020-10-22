@@ -39,7 +39,8 @@ public class CoalGeneratorBlock extends BaseBlock {
 		builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
 	}
 	
-	public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	@SuppressWarnings("deprecation")
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (!world.isRemote) {
 			TileEntity tileEntity = world.getTileEntity(pos);
 			if (tileEntity instanceof INamedContainerProvider) {
@@ -47,7 +48,7 @@ public class CoalGeneratorBlock extends BaseBlock {
 				return ActionResultType.SUCCESS;
 			}
 		}
-		return super.onBlockActivated(blockState, world, pos, player, hand, hit);
+		return super.onBlockActivated(state, world, pos, player, hand, hit);
 	}
 
 }
