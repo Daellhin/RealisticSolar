@@ -43,7 +43,7 @@
               ]
             }
           ],
-          "name": "realisticsolar:siemens_reactor_bottom_block"
+          "name": "realisticsolar:siemens_reactor_controller_block"
         }
       ],
       "conditions": [

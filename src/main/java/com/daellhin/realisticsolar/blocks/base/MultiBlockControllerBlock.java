@@ -86,9 +86,9 @@ public abstract class MultiBlockControllerBlock extends BaseBlock {
 		super.onReplaced(state, world, pos, newState, isMoving);
 	}
 
-	public abstract boolean isMultiblockValid(BlockState state, World world, BlockPos pos);
-
 	public abstract boolean isMultiblockFormed(BlockState state);
+
+	public abstract boolean isMultiblockValid(BlockState state, World world, BlockPos pos);
 
 	public abstract void formMultiblock(BlockState state, World world, BlockPos pos);
 

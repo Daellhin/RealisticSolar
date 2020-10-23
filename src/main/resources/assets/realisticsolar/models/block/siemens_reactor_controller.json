@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "realisticsolar:block/siemens_reactor_bottom",
+		"0": "realisticsolar:block/siemens_reactor_controller",
 		"particle": "realisticsolar:block/silica_sand"
 	},
 	"elements": [

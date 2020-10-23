@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-/* TODO basic multiblock structure
+/* TODO change siemensReactor to multiblock
  * 
  * TODO JEI integration
  * TODO more fuctioning blocks
