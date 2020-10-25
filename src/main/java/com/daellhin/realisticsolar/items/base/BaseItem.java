@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.items;
+package com.daellhin.realisticsolar.items.base;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class BaseItem extends Item {
+public class BaseItem extends Item{
 
 	private final boolean shiftInformation;
 

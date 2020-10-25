@@ -1,6 +1,6 @@
 package com.daellhin.realisticsolar.items.handbook;
 
-import com.daellhin.realisticsolar.items.BaseItem;
+import com.daellhin.realisticsolar.items.base.BaseItem;
 import com.daellhin.realisticsolar.tools.ItemBuilder;
 
 import net.minecraft.client.Minecraft;
