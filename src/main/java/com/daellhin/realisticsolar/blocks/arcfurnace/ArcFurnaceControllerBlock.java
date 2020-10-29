@@ -14,6 +14,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
@@ -37,8 +38,21 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	}
 
 	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+			// drops everything in the inventory
+			worldIn.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+				for (int i = 0; i < h.getSlots(); i++) {
+					spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+				}
+			});
+		}
+		super.onReplaced(state, worldIn, pos, newState, isMoving);
+	}
+
+	@Override
 	public boolean isMultiblockFormed(BlockState state) {
-		return state.get(ARCFURNACEPART) != ArcFurnaceMultiblockPart.UNFORMED;
+		return true;
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class CoalGeneratorBlock extends BaseBlock {
 
@@ -28,17 +29,17 @@ public class CoalGeneratorBlock extends BaseBlock {
 		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(CoalGeneratorTile::new).addShiftInformation());
 		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false));
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return this.getDefaultState().with(BlockStateProperties.FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
-	
+
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED);
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (!world.isRemote) {
@@ -49,6 +50,20 @@ public class CoalGeneratorBlock extends BaseBlock {
 			}
 		}
 		return super.onBlockActivated(state, world, pos, player, hand, hit);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+			// drops everything in the inventory
+			worldIn.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+				for (int i = 0; i < h.getSlots(); i++) {
+					spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+				}
+			});
+		}
+		super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}
 
 }
