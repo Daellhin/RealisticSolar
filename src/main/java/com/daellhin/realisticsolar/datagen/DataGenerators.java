@@ -1,5 +1,8 @@
 package com.daellhin.realisticsolar.datagen;
 
+import com.daellhin.realisticsolar.datagen.providers.LootTables;
+import com.daellhin.realisticsolar.datagen.providers.Recipes;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -10,7 +13,6 @@ public class DataGenerators {
 
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
-		System.out.println("Started Data generation");
 		DataGenerator generator = event.getGenerator();
 
 		generator.addProvider(new Recipes(generator));

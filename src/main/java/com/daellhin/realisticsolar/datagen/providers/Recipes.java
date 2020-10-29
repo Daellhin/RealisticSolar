@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.datagen;
+package com.daellhin.realisticsolar.datagen.providers;
 
 
 import java.util.function.Consumer;

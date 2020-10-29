@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "realisticsolar:aluminium_ore_block"
+          "name": "realisticsolar:silica_sand_block"
         }
       ],
       "conditions": [

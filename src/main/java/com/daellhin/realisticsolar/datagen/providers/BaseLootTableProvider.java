@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.datagen;
+package com.daellhin.realisticsolar.datagen.providers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,6 +9,7 @@ import net.minecraft.data.IDataProvider;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
 import net.minecraft.world.storage.loot.functions.CopyName;
 import net.minecraft.world.storage.loot.functions.CopyNbt;
 import net.minecraft.world.storage.loot.functions.SetContents;
@@ -21,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BaseLootTableProvider extends LootTableProvider {
+	// loot table explanations:
+	// https://gist.github.com/misode/66456e57372ce62cd9b65d1052521069
 
 	private static final Logger LOGGER = LogManager.getLogger();
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -35,11 +38,34 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 
 	protected abstract void addTables();
 
-	protected LootTable.Builder createStandardTable(String name, Block block) {
-		LootPool.Builder builder = LootPool.builder().name(name).rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)
-				//.acceptFunction(CopyName.builder(CopyName.Source.BLOCK_ENTITY))
-				.acceptFunction(CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY).addOperation("inv", "BlockEntityTag.inv", CopyNbt.Action.REPLACE)
-						.addOperation("energy", "BlockEntityTag.energy", CopyNbt.Action.REPLACE))
+	protected void addSimpleTable(Block block) {
+		lootTables.put(block, createSimpleTable(block));
+	}
+
+	protected LootTable.Builder createSimpleTable(Block block) {
+		LootPool.Builder builder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block));
+		return LootTable.builder().addLootPool(builder);
+	}
+
+	protected void addSimpleTableSurvesExplosion(Block block) {
+		lootTables.put(block, createSimpleTableSurvivesExplosion(block));
+	}
+
+	protected LootTable.Builder createSimpleTableSurvivesExplosion(Block block) {
+		LootPool.Builder builder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))
+				.acceptCondition(SurvivesExplosion.builder());
+		return LootTable.builder().addLootPool(builder);
+	}
+
+	protected void addAdvancedTable(Block block) {
+		lootTables.put(block, createAdvancedTable(block));
+	}
+
+	protected LootTable.Builder createAdvancedTable(Block block) {
+		LootPool.Builder builder = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)
+				// TODO CopyName doesn't seem to work, the custom name is not given to the item
+				.acceptFunction(CopyName.builder(CopyName.Source.BLOCK_ENTITY))
+				.acceptFunction(CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY).addOperation("energy", "BlockEntityTag.energy", CopyNbt.Action.REPLACE))
 				.acceptFunction(SetContents.builder().addLootEntry(DynamicLootEntry.func_216162_a(new ResourceLocation("minecraft", "contents")))));
 		return LootTable.builder().addLootPool(builder);
 	}
