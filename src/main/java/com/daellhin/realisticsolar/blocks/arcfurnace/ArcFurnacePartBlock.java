@@ -17,18 +17,18 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 
 	public ArcFurnacePartBlock() {
 		super(new BlockBuilder().basicProperties());
-		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.FACING, Direction.NORTH)
+		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 				.with(ArcFurnaceControllerBlock.ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(BlockStateProperties.FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(BlockStateProperties.FACING, ArcFurnaceControllerBlock.ARCFURNACEPART);
+		builder.add(BlockStateProperties.HORIZONTAL_FACING, ArcFurnaceControllerBlock.ARCFURNACEPART);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 
 	@Override
 	public BlockPos getControllerBlockPos(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.FACING);
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
 		ArcFurnaceMultiblockPart part = state.get(ArcFurnaceControllerBlock.ARCFURNACEPART);
 		return pos.offset(facing, part.getDx()).up(-part.getDy()).offset(facing.rotateY(), part.getDz());
 	}

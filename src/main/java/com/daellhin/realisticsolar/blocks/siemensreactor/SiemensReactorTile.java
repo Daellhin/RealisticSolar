@@ -19,13 +19,6 @@ public class SiemensReactorTile extends TileEntity implements ITickableTileEntit
 
 	@Override
 	public void tick() {
-//		BlockState blockState = world.getBlockState(pos);
-//		if (blockState.get(SiemensReactorBottomBlock.FORMED) == true) {
-//			System.out.println("Formed");
-//		}else{
-//			System.out.println("unFormed");
-//		}
-
 	}
 
 	@Override

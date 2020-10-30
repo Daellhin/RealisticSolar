@@ -1,5 +1,7 @@
 package com.daellhin.realisticsolar.datagen;
 
+import com.daellhin.realisticsolar.datagen.providers.BlockStates;
+import com.daellhin.realisticsolar.datagen.providers.ItemModels;
 import com.daellhin.realisticsolar.datagen.providers.LootTables;
 import com.daellhin.realisticsolar.datagen.providers.Recipes;
 
@@ -14,13 +16,13 @@ public class DataGenerators {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
-
-		generator.addProvider(new Recipes(generator));
-		generator.addProvider(new LootTables(generator));
-
+		if (event.includeServer()) {
+			generator.addProvider(new Recipes(generator));
+			generator.addProvider(new LootTables(generator));
+		}
 		if (event.includeClient()) {
-			// generator.addProvider(new BlockStates(generator, event.getExistingFileHelper()));
-			// generator.addProvider(new Items(generator, event.getExistingFileHelper()));
+			generator.addProvider(new BlockStates(generator, event.getExistingFileHelper()));
+			generator.addProvider(new ItemModels(generator, event.getExistingFileHelper()));
 		}
 	}
 }

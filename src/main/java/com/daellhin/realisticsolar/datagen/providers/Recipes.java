@@ -21,14 +21,14 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shapedRecipe(ModBlocks.ALUMINIUMORE_BLOCK_ITEM.get())
-                .patternLine("xxx")
-                .patternLine("x#x")
-                .patternLine("xxx")
-                .key('x', Tags.Items.COBBLESTONE)
-                .key('#', Tags.Items.DYES_RED)
-                .setGroup("realisticsolar")
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+//        ShapedRecipeBuilder.shapedRecipe(ModBlocks.ALUMINIUMORE_BLOCK_ITEM.get())
+//                .patternLine("xxx")
+//                .patternLine("x#x")
+//                .patternLine("xxx")
+//                .key('x', Tags.Items.COBBLESTONE)
+//                .key('#', Tags.Items.DYES_RED)
+//                .setGroup("realisticsolar")
+//                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+//                .build(consumer);
     }
 }

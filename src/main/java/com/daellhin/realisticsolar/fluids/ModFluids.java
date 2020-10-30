@@ -43,9 +43,9 @@ public class ModFluids {
 	public static final Properties HYDROGEN_CHLORIDE_PROPERTIES = new Properties(() -> HYDROGEN_CHLORIDE_SOURCE.get(),
 			() -> HYDROGEN_CHLORIDE_FLOWING.get(),
 			FluidAttributes
-					.builder(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_source"), new ResourceLocation(RealisticSolar.MODID,
-							"block/hydrogen_chloride_flowing"))
-					.overlay(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_overlay"))).block(() -> HYROGEN_CHLORIDE_BLOCK.get())
+					.builder(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_block_source"), new ResourceLocation(RealisticSolar.MODID,
+							"block/hydrogen_chloride_block_flowing"))
+					.overlay(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_block_overlay"))).block(() -> HYROGEN_CHLORIDE_BLOCK.get())
 							.bucket(() -> HYROGEN_CHLORIDE_BUCKET.get());
 
 }

@@ -23,18 +23,18 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	public ArcFurnaceControllerBlock() {
 		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(ArcFurnaceTile::new));
-		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false)
+		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false)
 				.with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(BlockStateProperties.FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED, ARCFURNACEPART);
+		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.POWERED, ARCFURNACEPART);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	@Override
 	public boolean isMultiblockValid(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.FACING).getOpposite();
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
@@ -70,18 +70,18 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	@Override
 	public void formMultiblock(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.FACING).getOpposite();
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
 			world.setBlockState(currentPos, world.getBlockState(currentPos).with(ARCFURNACEPART, ArcFurnaceMultiblockPart.valueOf(part.name()))
-					.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING)), 3);
+					.with(BlockStateProperties.HORIZONTAL_FACING, state.get(BlockStateProperties.HORIZONTAL_FACING)), 3);
 		}
 	}
 
 	@Override
 	public void destroyMultiblock(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.FACING).getOpposite();
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());

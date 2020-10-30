@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.datagen.providers;
+package com.daellhin.realisticsolar.datagen.providers.base;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

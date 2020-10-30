@@ -1,6 +1,7 @@
 package com.daellhin.realisticsolar.datagen.providers;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
+import com.daellhin.realisticsolar.datagen.providers.base.BaseLootTableProvider;
 
 import net.minecraft.data.DataGenerator;
 
