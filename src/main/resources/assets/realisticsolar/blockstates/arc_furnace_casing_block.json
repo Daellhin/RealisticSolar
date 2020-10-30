@@ -1,9 +1,19 @@
 {
-	"variants": {
-		"": [
-			{
-				"model": "realisticsolar:block/aluminium"
-			}
-		]
-	}
+  "variants": {
+    "facing=north": {
+      "model": "realisticsolar:block/arc_furnace_casing_block"
+    },
+    "facing=south": {
+      "model": "realisticsolar:block/arc_furnace_casing_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "realisticsolar:block/arc_furnace_casing_block",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "realisticsolar:block/arc_furnace_casing_block",
+      "y": 90
+    }
+  }
 }

@@ -1,0 +1,8 @@
+	{
+	"parent": "realisticsolar:block/base/machine_base",
+	"textures": {
+		"front": "realisticsolar:block/arc_furnace_controller_block_idle",
+		"side": "realisticsolar:block/machine_idle",
+		"particle": "realisticsolar:block/arc_furnace_controller_block_idle"
+	}
+}

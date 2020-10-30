@@ -1,0 +1,8 @@
+{
+	"parent": "realisticsolar:block/base/machine_base",
+	"textures": {
+		"front": "realisticsolar:block/coal_generator_powered",
+		"side": "realisticsolar:block/machine_powered",
+		"particle": "realisticsolar:block/coal_generator_powered"
+	}
+}

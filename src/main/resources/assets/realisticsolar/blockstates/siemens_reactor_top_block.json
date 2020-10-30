@@ -1,10 +1,19 @@
 {
-    "variants": {
-		"facing=north":  { "model": "realisticsolar:block/siemens_reactor_top" },
-		"facing=south":  { "model": "realisticsolar:block/siemens_reactor_top", "y": 180 },
-		"facing=west":   { "model": "realisticsolar:block/siemens_reactor_top", "y": 270 },
-		"facing=east":   { "model": "realisticsolar:block/siemens_reactor_top", "y": 90 },
-		"facing=up":     { "model": "realisticsolar:block/siemens_reactor_top" },
-		"facing=down":   { "model": "realisticsolar:block/siemens_reactor_top" }
+  "variants": {
+    "facing=north": {
+      "model": "realisticsolar:block/siemens_reactor_top_block"
+    },
+    "facing=south": {
+      "model": "realisticsolar:block/siemens_reactor_top_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "realisticsolar:block/siemens_reactor_top_block",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "realisticsolar:block/siemens_reactor_top_block",
+      "y": 90
     }
+  }
 }
