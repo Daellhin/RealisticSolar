@@ -14,11 +14,12 @@ public class BlockStates extends BaseBlockStateProvider {
 	}
 
 	@Override
+	// all block models have to be created/edited manually(to much variation to make functions)
 	protected void registerStatesAndModels() {
 		// blocks
-		simpleBlockDefaultModel(ModBlocks.ALUMINIUM_BLOCK.get());
-		simpleBlockDefaultModel(ModBlocks.ALUMINIUMORE_BLOCK.get());
-		simpleBlockDefaultModel(ModBlocks.SILICASAND_BLOCK.get());
+		simpleBlockEmptyModel(ModBlocks.ALUMINIUM_BLOCK.get());
+		simpleBlockEmptyModel(ModBlocks.ALUMINIUMORE_BLOCK.get());
+		simpleBlockEmptyModel(ModBlocks.SILICASAND_BLOCK.get());
 		simpleBlockEmptyModel(ModFluids.HYROGEN_CHLORIDE_BLOCK.get());
 
 		horizontalBlockEmptyModel(ModBlocks.SIEMENSREACTOR_TOP_BLOCK.get());
@@ -34,14 +35,16 @@ public class BlockStates extends BaseBlockStateProvider {
 		simpleBlockItemDefaultModel(ModBlocks.ALUMINIUM_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.ALUMINIUMORE_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.SILICASAND_BLOCK.get());
-		simpleFluidBlockItem(ModFluids.HYROGEN_CHLORIDE_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.SIEMENSREACTOR_TOP_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_CASING_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_ELECTRODE_BLOCK.get());
-		//simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
-		//simpleBlockItemDefaultModel(ModBlocks.SOLARPANEL_BLOCK.get());
-		//simpleBlockItemDefaultModel(ModBlocks.COALGENERATOR_BLOCK.get());
+
+		simpleFluidBlockItemDefaultModel(ModFluids.HYROGEN_CHLORIDE_BLOCK.get());
+
+		poweredBlockItemDefaultModel(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
+		poweredBlockItemDefaultModel(ModBlocks.SOLARPANEL_BLOCK.get());
+		poweredBlockItemDefaultModel(ModBlocks.COALGENERATOR_BLOCK.get());
 
 	}
 

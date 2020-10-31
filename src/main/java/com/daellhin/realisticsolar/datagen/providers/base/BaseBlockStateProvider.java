@@ -24,7 +24,7 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	}
 
 	public void simpleBlockEmptyModel(Block block) {
-		super.simpleBlock(block, emptyModel(block.getRegistryName().getPath()));
+		super.simpleBlock(block, emptyTexture(block.getRegistryName().getPath()));
 	}
 
 	public void horizontalBlockDefaultModel(Block block) {
@@ -32,20 +32,24 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	}
 
 	public void horizontalBlockEmptyModel(Block block) {
-		horizontalFacingBlock(block, emptyModel(block.getRegistryName().getPath()));
+		horizontalFacingBlock(block, emptyTexture(block.getRegistryName().getPath()));
 	}
 
 	public void horizontalPoweredBlockEmptyModel(Block block) {
 		String registryName = block.getRegistryName().getPath();
-		horizontalOrientePoweredBlock(block, emptyModel(registryName + "_idle"), emptyModel(registryName + "_powered"));
+		horizontalOrientePoweredBlock(block, emptyTexture(registryName + "_idle"), emptyTexture(registryName + "_powered"));
 	}
 
 	public void simpleBlockItemDefaultModel(Block block) {
-		super.simpleBlockItem(block, defaultModel(block.getRegistryName().getPath()));
+		super.simpleBlockItem(block, emptyTexture(block.getRegistryName().getPath()));
 	}
 	
-	public void simpleFluidBlockItem(Block block) {
-		super.simpleBlockItem(block, defaultModel(block.getRegistryName().getPath() + "_source"));
+	public void simpleFluidBlockItemDefaultModel(Block block) {
+		super.simpleBlockItem(block, emptyTexture(block.getRegistryName().getPath() + "_source"));
+	}
+	
+	public void poweredBlockItemDefaultModel(Block block) {
+		super.simpleBlockItem(block, emptyTexture(block.getRegistryName().getPath() + "_idle"));
 	}
 
 	// -----------------------------------
@@ -56,10 +60,15 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 		return models().cubeAll(modelName, modLoc(textureName));
 	}
 
-	protected ModelFile emptyModel(String registryName) {
-		// points to an empty texture so no errors are thrown, must be replaced with a valid model file
+	protected ModelFile defaultModel(String registryName, String textureName) {
 		String modelName = registryName;
-		String textureName = "block/empty";
+		return models().cubeAll(modelName, modLoc("block/" + textureName));
+	}
+
+	protected ModelFile emptyTexture(String registryName) {
+		// points to an empty texture so no errors are thrown
+		String modelName = registryName;
+		String textureName = "block/base/empty";
 		return models().cubeAll(modelName, modLoc(textureName));
 	}
 
