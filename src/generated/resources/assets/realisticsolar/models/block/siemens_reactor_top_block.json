@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "realisticsolar:block/siemens_reactor_top_block"
+    "all": "realisticsolar:block/base/empty"
   }
 }

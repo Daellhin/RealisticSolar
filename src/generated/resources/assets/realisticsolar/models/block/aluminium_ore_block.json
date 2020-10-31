@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "realisticsolar:block/aluminium_ore_block"
+    "all": "realisticsolar:block/base/empty"
   }
 }
