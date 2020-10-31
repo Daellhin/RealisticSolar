@@ -2,7 +2,7 @@
 	"parent": "realisticsolar:block/base/machine_base",
 	"textures": {
 		"front": "realisticsolar:block/coal_generator_block_idle",
-		"side": "realisticsolar:block/machine_idle",
+		"side": "realisticsolar:block/base/machine_idle",
 		"particle": "realisticsolar:block/coal_generator_block_idle"
 	}
 }

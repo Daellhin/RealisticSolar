@@ -3,7 +3,7 @@
 	"parent": "block/block",
 
 	"textures": {
-		"base": "realisticsolar:block/machine_base"
+		"base": "realisticsolar:block/base/machine_base"
 	},
 	"elements": [
 		{
