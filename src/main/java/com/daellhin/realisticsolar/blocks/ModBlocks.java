@@ -11,10 +11,12 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
+import com.daellhin.realisticsolar.blocks.fluidtank.FluidTankBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorContainer;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorControllerBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorPartBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
+import com.daellhin.realisticsolar.blocks.solarpanel.FluidTankTile;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
 import com.daellhin.realisticsolar.setup.ModSetup;
@@ -37,7 +39,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
-
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
@@ -110,6 +111,13 @@ public class ModBlocks {
 				World world = inv.player.getEntityWorld();
 				return new SiemensReactorContainer(windowId, world, pos, inv, inv.player);
 			}));
+
+	// Fluid tank
+	public static final RegistryObject<Block> FLUID_TANK_BLOCK = BLOCKS.register(FluidTankBlock.REGNAME, FluidTankBlock::new);
+	
+	public static final RegistryObject<TileEntityType<FluidTankTile>> FLUID_TANK_TILE = TILES
+			.register(FluidTankBlock.REGNAME, () -> TileEntityType.Builder.create(FluidTankTile::new, FLUID_TANK_BLOCK.get())
+					.build(null));
 
 	@SubscribeEvent
 	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
