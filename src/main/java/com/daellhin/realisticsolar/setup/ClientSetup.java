@@ -4,6 +4,7 @@ import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceScreen;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorScreen;
+import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerScreen;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorScreen;
 
 import net.minecraft.client.gui.ScreenManager;
@@ -18,5 +19,6 @@ public class ClientSetup {
 		ScreenManager.registerFactory(ModBlocks.COALGENERATOR_CONTAINER.get(), CoalGeneratorScreen::new);
 		ScreenManager.registerFactory(ModBlocks.ARCFURNACE_CONTAINER.get(), ArcFurnaceScreen::new);
 		ScreenManager.registerFactory(ModBlocks.SIEMENSREACTOR_CONTAINER.get(), SiemensReactorScreen::new);
+		ScreenManager.registerFactory(ModBlocks.HCL_BURNER_CONTAINER.get(), HClBurnerScreen::new);
 	}
 }

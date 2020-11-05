@@ -23,8 +23,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class SolarPanelTile extends TileEntity implements ITickableTileEntity {
 
 	private boolean isSunVisible;
-	public CustomEnergyStorage energyStorage = createEnergy();
-	public LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+	private CustomEnergyStorage energyStorage = createEnergy();
+	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
 	public SolarPanelTile() {
 		super(ModBlocks.SOLARPANEL_TILE.get());

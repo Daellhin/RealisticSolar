@@ -11,12 +11,13 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
-import com.daellhin.realisticsolar.blocks.fluidtank.FluidTankBlock;
+import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerContainer;
+import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerControllerBlock;
+import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerTile;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorContainer;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorControllerBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorPartBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
-import com.daellhin.realisticsolar.blocks.solarpanel.FluidTankTile;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
 import com.daellhin.realisticsolar.setup.ModSetup;
@@ -48,23 +49,32 @@ public class ModBlocks {
 	}
 
 	// classless
-	public static final RegistryObject<Block> ALUMINIUM_BLOCK = BLOCKS.register("aluminium_block", () -> new Block(
-			Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> ALUMINIUMORE_BLOCK = BLOCKS.register("aluminium_ore_block", () -> new Block(
-			Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(2.0f).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> ALUMINIUM_BLOCK = BLOCKS.register("aluminium_block", () -> new Block(Properties.create(Material.IRON)
+			.sound(SoundType.METAL)
+			.hardnessAndResistance(2.0f)
+			.harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> ALUMINIUMORE_BLOCK = BLOCKS
+			.register("aluminium_ore_block", () -> new Block(Properties.create(Material.ROCK)
+					.sound(SoundType.STONE)
+					.hardnessAndResistance(2.0f)
+					.harvestTool(ToolType.PICKAXE)));
 
-	public static final RegistryObject<Block> SILICASAND_BLOCK = BLOCKS.register("silica_sand_block", () -> new Block(
-			Properties.create(Material.SAND).sound(SoundType.SAND).hardnessAndResistance(2.0f).harvestTool(ToolType.SHOVEL)));
+	public static final RegistryObject<Block> SILICASAND_BLOCK = BLOCKS.register("silica_sand_block", () -> new Block(Properties.create(Material.SAND)
+			.sound(SoundType.SAND)
+			.hardnessAndResistance(2.0f)
+			.harvestTool(ToolType.SHOVEL)));
 
 	// solar panel
 	public static final RegistryObject<Block> SOLARPANEL_BLOCK = BLOCKS.register(SolarPanelBlock.REGNAME, SolarPanelBlock::new);
 	public static final RegistryObject<TileEntityType<SolarPanelTile>> SOLARPANEL_TILE = TILES
-			.register(SolarPanelBlock.REGNAME, () -> TileEntityType.Builder.create(SolarPanelTile::new, SOLARPANEL_BLOCK.get()).build(null));
+			.register(SolarPanelBlock.REGNAME, () -> TileEntityType.Builder.create(SolarPanelTile::new, SOLARPANEL_BLOCK.get())
+					.build(null));
 
 	// coal generator
 	public static final RegistryObject<Block> COALGENERATOR_BLOCK = BLOCKS.register(CoalGeneratorBlock.REGNAME, CoalGeneratorBlock::new);
 	public static final RegistryObject<TileEntityType<CoalGeneratorTile>> COALGENERATOR_TILE = TILES
-			.register(CoalGeneratorBlock.REGNAME, () -> TileEntityType.Builder.create(CoalGeneratorTile::new, COALGENERATOR_BLOCK.get()).build(null));
+			.register(CoalGeneratorBlock.REGNAME, () -> TileEntityType.Builder.create(CoalGeneratorTile::new, COALGENERATOR_BLOCK.get())
+					.build(null));
 	public static final RegistryObject<ContainerType<CoalGeneratorContainer>> COALGENERATOR_CONTAINER = CONTAINERS
 			.register(CoalGeneratorBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 				BlockPos pos = data.readBlockPos();
@@ -104,7 +114,8 @@ public class ModBlocks {
 	// common
 	public static final RegistryObject<TileEntityType<SiemensReactorTile>> SIEMENSREACTOR_TILE = TILES
 			.register(SiemensReactorControllerBlock.REGNAME, () -> TileEntityType.Builder
-					.create(SiemensReactorTile::new, SIEMENSREACTOR_CONTROLLER_BLOCK.get()).build(null));
+					.create(SiemensReactorTile::new, SIEMENSREACTOR_CONTROLLER_BLOCK.get())
+					.build(null));
 	public static final RegistryObject<ContainerType<SiemensReactorContainer>> SIEMENSREACTOR_CONTAINER = CONTAINERS
 			.register(SiemensReactorControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 				BlockPos pos = data.readBlockPos();
@@ -112,20 +123,33 @@ public class ModBlocks {
 				return new SiemensReactorContainer(windowId, world, pos, inv, inv.player);
 			}));
 
+	// HCl burner
 	// Fluid tank
-	public static final RegistryObject<Block> FLUID_TANK_BLOCK = BLOCKS.register(FluidTankBlock.REGNAME, FluidTankBlock::new);
-	
-	public static final RegistryObject<TileEntityType<FluidTankTile>> FLUID_TANK_TILE = TILES
-			.register(FluidTankBlock.REGNAME, () -> TileEntityType.Builder.create(FluidTankTile::new, FLUID_TANK_BLOCK.get())
+	public static final RegistryObject<Block> HCL_BURNER_CONTROLLER_BLOCK = BLOCKS
+			.register(HClBurnerControllerBlock.REGNAME, HClBurnerControllerBlock::new);
+
+	public static final RegistryObject<TileEntityType<HClBurnerTile>> HCL_BURNER_TILE = TILES
+			.register(HClBurnerControllerBlock.REGNAME, () -> TileEntityType.Builder.create(HClBurnerTile::new, HCL_BURNER_CONTROLLER_BLOCK.get())
 					.build(null));
+
+	public static final RegistryObject<ContainerType<HClBurnerContainer>> HCL_BURNER_CONTAINER = CONTAINERS
+			.register(HClBurnerControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
+				BlockPos pos = data.readBlockPos();
+				World world = inv.player.getEntityWorld();
+				return new HClBurnerContainer(windowId, world, pos, inv, inv.player);
+			}));
 
 	@SubscribeEvent
 	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		Item.Properties properties = new Item.Properties().group(ModSetup.ITEM_GROUP);
-		BLOCKS.getEntries().stream().map(RegistryObject::get).filter(block -> !(block instanceof FlowingFluidBlock)).forEach(block -> {
-			registry.register(new BlockItem(block, properties).setRegistryName(block.getRegistryName()));
-		});
+		BLOCKS.getEntries()
+				.stream()
+				.map(RegistryObject::get)
+				.filter(block -> !(block instanceof FlowingFluidBlock))
+				.forEach(block -> {
+					registry.register(new BlockItem(block, properties).setRegistryName(block.getRegistryName()));
+				});
 
 	}
 
