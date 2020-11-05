@@ -1,6 +1,8 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "realisticsolar:block/aluminium_block"
-  }
+	"parent": "realisticsolar:block/base/machine_base",
+	"textures": {
+		"front": "realisticsolar:block/hcl_burner_block_idle",
+		"side": "realisticsolar:block/base/machine_idle",
+		"particle": "realisticsolar:block/hcl_burner_block_idle"
+	}
 }
