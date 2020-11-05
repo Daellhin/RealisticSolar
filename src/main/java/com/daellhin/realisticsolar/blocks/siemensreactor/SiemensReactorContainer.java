@@ -26,7 +26,8 @@ public class SiemensReactorContainer extends PlayerInventoryContainer {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
+		return isWithinUsableDistance(IWorldPosCallable
+				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
 	}
 
 }

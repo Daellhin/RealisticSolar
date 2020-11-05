@@ -34,14 +34,15 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	}
 
 	private void layoutMachineInventorySlots() {
-		this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
-			// Input
-			addSlot(new SlotItemHandler(itemHandler, 0, 24, 19));
-			addSlot(new SlotItemHandler(itemHandler, 1, 24, 43));
-			addSlot(new SlotItemHandler(itemHandler, 2, 24, 66));
-			// Output
-			addSlot(new SlotItemHandler(itemHandler, 3, 134, 43));
-		});
+		this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+				.ifPresent(itemHandler -> {
+					// Input
+					addSlot(new SlotItemHandler(itemHandler, 0, 24, 19));
+					addSlot(new SlotItemHandler(itemHandler, 1, 24, 43));
+					addSlot(new SlotItemHandler(itemHandler, 2, 24, 66));
+					// Output
+					addSlot(new SlotItemHandler(itemHandler, 3, 134, 43));
+				});
 	}
 
 	private void syncEnergy() {
@@ -99,7 +100,8 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
+		return isWithinUsableDistance(IWorldPosCallable
+				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 	}
 
 	public ArcFurnaceTile getTileEntity() {

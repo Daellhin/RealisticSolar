@@ -21,8 +21,10 @@ public class HydrogenChlorideBlock extends FlowingFluidBlock {
 	private static final Random rand = new Random();
 
 	public HydrogenChlorideBlock() {
-		super(() -> ModFluids.HYDROGEN_CHLORIDE_SOURCE.get(),
-				Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0f).noDrops());
+		super(() -> ModFluids.HYDROGEN_CHLORIDE_SOURCE.get(), Block.Properties.create(Material.WATER)
+				.doesNotBlockMovement()
+				.hardnessAndResistance(100.0f)
+				.noDrops());
 	}
 
 	@Override

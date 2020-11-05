@@ -34,11 +34,12 @@ public abstract class MultiBlockControllerBlock extends BaseBlock {
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (world.isRemote) {
-			return (isMultiblockFormed(state) || player.getHeldItem(hand).getItem() == ModItems.WRENCH_ITEM.get()) ? ActionResultType.SUCCESS
-					: ActionResultType.PASS;
+			return (isMultiblockFormed(state) || player.getHeldItem(hand)
+					.getItem() == ModItems.WRENCH_ITEM.get()) ? ActionResultType.SUCCESS : ActionResultType.PASS;
 		} else {
 			// forming
-			if (player.getHeldItem(hand).getItem() == ModItems.WRENCH_ITEM.get()) {
+			if (player.getHeldItem(hand)
+					.getItem() == ModItems.WRENCH_ITEM.get()) {
 				if (isMultiblockFormed(state)) {
 					player.sendMessage(new TranslationTextComponent("multiblock.already_formed").applyTextStyle(TextFormatting.GREEN));
 				} else {

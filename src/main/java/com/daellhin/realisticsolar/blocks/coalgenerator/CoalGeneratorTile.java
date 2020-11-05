@@ -62,7 +62,8 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 				markDirty();
 			} else {
 				if (!energyStorage.isFull()) {
-					int index = findValidItem(inputHandler.getStackInSlot(0).getItem());
+					int index = findValidItem(inputHandler.getStackInSlot(0)
+							.getItem());
 					if (index != -1) {
 						if (index < 2) {
 							progress = 100;
@@ -157,17 +158,19 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 			for (Direction direction : Direction.values()) {
 				TileEntity te = world.getTileEntity(pos.offset(direction));
 				if (te != null) {
-					boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
-						if (handler.canReceive()) {
-							int received = handler.receiveEnergy(Math.max(capacity.get(), send), false);
-							capacity.addAndGet(-received);
-							energyStorage.consumeEnergy(received);
-							markDirty();
-							return capacity.get() > 0;
-						} else {
-							return true;
-						}
-					}).orElse(true);
+					boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction)
+							.map(handler -> {
+								if (handler.canReceive()) {
+									int received = handler.receiveEnergy(Math.max(capacity.get(), send), false);
+									capacity.addAndGet(-received);
+									energyStorage.consumeEnergy(received);
+									markDirty();
+									return capacity.get() > 0;
+								} else {
+									return true;
+								}
+							})
+							.orElse(true);
 					if (!doContinue) {
 						return;
 					}
@@ -179,7 +182,8 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName().getPath());
+		return new StringTextComponent(getType().getRegistryName()
+				.getPath());
 	}
 
 	@Override
@@ -206,7 +210,8 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 
 	// energy
 	public int getEnergy() {
-		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored)
+				.orElse(0);
 	}
 
 	public void setEnergy(int energy) {

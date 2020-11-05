@@ -23,11 +23,16 @@ public class Registration {
 	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, RealisticSolar.MODID);
 
 	public static void init() {
-		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		TILES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		ITEMS.register(FMLJavaModLoadingContext.get()
+				.getModEventBus());
+		BLOCKS.register(FMLJavaModLoadingContext.get()
+				.getModEventBus());
+		FLUIDS.register(FMLJavaModLoadingContext.get()
+				.getModEventBus());
+		TILES.register(FMLJavaModLoadingContext.get()
+				.getModEventBus());
+		CONTAINERS.register(FMLJavaModLoadingContext.get()
+				.getModEventBus());
 
 		ModItems.register();
 		ModBlocks.register();

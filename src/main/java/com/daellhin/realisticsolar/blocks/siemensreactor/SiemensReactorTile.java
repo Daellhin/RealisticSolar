@@ -28,7 +28,8 @@ public class SiemensReactorTile extends TileEntity implements ITickableTileEntit
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName().getPath());
+		return new StringTextComponent(getType().getRegistryName()
+				.getPath());
 	}
 
 }

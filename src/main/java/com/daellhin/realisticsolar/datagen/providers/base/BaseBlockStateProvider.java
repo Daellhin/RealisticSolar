@@ -20,36 +20,44 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	// ------------------------
 
 	public void simpleBlockDefaultModel(Block block) {
-		super.simpleBlock(block, defaultModel(block.getRegistryName().getPath()));
+		super.simpleBlock(block, defaultModel(block.getRegistryName()
+				.getPath()));
 	}
 
 	public void simpleBlockEmptyModel(Block block) {
-		super.simpleBlock(block, emptyTexture(block.getRegistryName().getPath()));
+		super.simpleBlock(block, emptyTexture(block.getRegistryName()
+				.getPath()));
 	}
 
 	public void horizontalBlockDefaultModel(Block block) {
-		horizontalFacingBlock(block, defaultModel(block.getRegistryName().getPath()));
+		horizontalFacingBlock(block, defaultModel(block.getRegistryName()
+				.getPath()));
 	}
 
 	public void horizontalBlockEmptyModel(Block block) {
-		horizontalFacingBlock(block, emptyTexture(block.getRegistryName().getPath()));
+		horizontalFacingBlock(block, emptyTexture(block.getRegistryName()
+				.getPath()));
 	}
 
 	public void horizontalPoweredBlockEmptyModel(Block block) {
-		String registryName = block.getRegistryName().getPath();
+		String registryName = block.getRegistryName()
+				.getPath();
 		horizontalOrientePoweredBlock(block, emptyTexture(registryName + "_idle"), emptyTexture(registryName + "_powered"));
 	}
 
 	public void simpleBlockItemDefaultModel(Block block) {
-		super.simpleBlockItem(block, emptyTexture(block.getRegistryName().getPath()));
+		super.simpleBlockItem(block, emptyTexture(block.getRegistryName()
+				.getPath()));
 	}
-	
+
 	public void simpleFluidBlockItemDefaultModel(Block block) {
-		super.simpleBlockItem(block, emptyTexture(block.getRegistryName().getPath() + "_source"));
+		super.simpleBlockItem(block, emptyTexture(block.getRegistryName()
+				.getPath() + "_source"));
 	}
-	
+
 	public void poweredBlockItemDefaultModel(Block block) {
-		super.simpleBlockItem(block, emptyTexture(block.getRegistryName().getPath() + "_idle"));
+		super.simpleBlockItem(block, emptyTexture(block.getRegistryName()
+				.getPath() + "_idle"));
 	}
 
 	// -----------------------------------
@@ -77,18 +85,32 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	public void horizontalFacingBlock(Block block, ModelFile model) {
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 		for (Direction dir : Direction.Plane.HORIZONTAL) {
-			builder.partialState().with(BlockStateProperties.HORIZONTAL_FACING, dir).modelForState().modelFile(model)
-					.rotationY((int) dir.getHorizontalAngle()).addModel();
+			builder.partialState()
+					.with(BlockStateProperties.HORIZONTAL_FACING, dir)
+					.modelForState()
+					.modelFile(model)
+					.rotationY((int) dir.getHorizontalAngle())
+					.addModel();
 		}
 	}
 
 	public void horizontalOrientePoweredBlock(Block block, ModelFile modelIdle, ModelFile modelPowered) {
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 		for (Direction dir : Direction.Plane.HORIZONTAL) {
-			builder.partialState().with(BlockStateProperties.HORIZONTAL_FACING, dir).with(BlockStateProperties.POWERED, false).modelForState()
-					.modelFile(modelIdle).rotationY((int) dir.getHorizontalAngle()).addModel();
-			builder.partialState().with(BlockStateProperties.HORIZONTAL_FACING, dir).with(BlockStateProperties.POWERED, true).modelForState()
-					.modelFile(modelPowered).rotationY((int) dir.getHorizontalAngle()).addModel();
+			builder.partialState()
+					.with(BlockStateProperties.HORIZONTAL_FACING, dir)
+					.with(BlockStateProperties.POWERED, false)
+					.modelForState()
+					.modelFile(modelIdle)
+					.rotationY((int) dir.getHorizontalAngle())
+					.addModel();
+			builder.partialState()
+					.with(BlockStateProperties.HORIZONTAL_FACING, dir)
+					.with(BlockStateProperties.POWERED, true)
+					.modelForState()
+					.modelFile(modelPowered)
+					.rotationY((int) dir.getHorizontalAngle())
+					.addModel();
 		}
 	}
 

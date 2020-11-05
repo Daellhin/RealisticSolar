@@ -22,14 +22,18 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	public static final EnumProperty<ArcFurnaceMultiblockPart> ARCFURNACEPART = EnumProperty.create("type", ArcFurnaceMultiblockPart.class);
 
 	public ArcFurnaceControllerBlock() {
-		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(ArcFurnaceTile::new));
-		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false)
+		super(new BlockBuilder().basicMachineProperties()
+				.tileEntitySupplier(ArcFurnaceTile::new));
+		setDefaultState(stateContainer.getBaseState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.with(BlockStateProperties.POWERED, false)
 				.with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.getDefaultState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
 	}
 
 	@Override
@@ -41,11 +45,13 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
 			// drops everything in the inventory
-			worldIn.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-				for (int i = 0; i < h.getSlots(); i++) {
-					spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
-				}
-			});
+			worldIn.getTileEntity(pos)
+					.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+					.ifPresent(h -> {
+						for (int i = 0; i < h.getSlots(); i++) {
+							spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+						}
+					});
 		}
 		super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}
@@ -57,11 +63,15 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	@Override
 	public boolean isMultiblockValid(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
+				.getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
-			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
-			if (part.getBlock() != world.getBlockState(currentPos).getBlock()) {
+			BlockPos currentPos = pos.offset(facing, part.getDx())
+					.up(part.getDy())
+					.offset(facing.rotateY(), part.getDz());
+			if (part.getBlock() != world.getBlockState(currentPos)
+					.getBlock()) {
 				return false;
 			}
 		}
@@ -70,26 +80,35 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	@Override
 	public void formMultiblock(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
+				.getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
-			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
-			world.setBlockState(currentPos, world.getBlockState(currentPos).with(ARCFURNACEPART, ArcFurnaceMultiblockPart.valueOf(part.name()))
+			BlockPos currentPos = pos.offset(facing, part.getDx())
+					.up(part.getDy())
+					.offset(facing.rotateY(), part.getDz());
+			world.setBlockState(currentPos, world.getBlockState(currentPos)
+					.with(ARCFURNACEPART, ArcFurnaceMultiblockPart.valueOf(part.name()))
 					.with(BlockStateProperties.HORIZONTAL_FACING, state.get(BlockStateProperties.HORIZONTAL_FACING)), 3);
 		}
 	}
 
 	@Override
 	public void destroyMultiblock(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
+				.getOpposite();
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
-			BlockPos currentPos = pos.offset(facing, part.getDx()).up(part.getDy()).offset(facing.rotateY(), part.getDz());
+			BlockPos currentPos = pos.offset(facing, part.getDx())
+					.up(part.getDy())
+					.offset(facing.rotateY(), part.getDz());
 			BlockState currentState = world.getBlockState(currentPos);
 
 			// check if block has not been removed
-			if (currentState.getProperties().contains(ARCFURNACEPART)) {
-				world.setBlockState(currentPos, world.getBlockState(currentPos).with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED), 3);
+			if (currentState.getProperties()
+					.contains(ARCFURNACEPART)) {
+				world.setBlockState(currentPos, world.getBlockState(currentPos)
+						.with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED), 3);
 			}
 		}
 	}

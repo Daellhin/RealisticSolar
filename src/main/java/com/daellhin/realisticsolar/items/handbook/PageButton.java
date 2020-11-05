@@ -33,7 +33,9 @@ public class PageButton extends Button {
 
 	@Override
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-		Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
+		Minecraft.getInstance()
+				.getTextureManager()
+				.bindTexture(resourceLocation);
 		blit(xPos, yPos, textureX + (this.isHovered ? 18 : 0), textureY, buttonWidth, buttonHeight, 64, 64);
 	}
 }

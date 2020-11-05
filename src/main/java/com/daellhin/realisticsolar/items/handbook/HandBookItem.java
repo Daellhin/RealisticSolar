@@ -20,7 +20,9 @@ public class HandBookItem extends BaseItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		player.openBook(player.getHeldItem(hand), hand);
-		Minecraft.getInstance().displayGuiScreen(new HandBookScreen(new StringTextComponent(this.getRegistryName().getPath())));
+		Minecraft.getInstance()
+				.displayGuiScreen(new HandBookScreen(new StringTextComponent(this.getRegistryName()
+						.getPath())));
 		return super.onItemRightClick(world, player, hand);
 	}
 

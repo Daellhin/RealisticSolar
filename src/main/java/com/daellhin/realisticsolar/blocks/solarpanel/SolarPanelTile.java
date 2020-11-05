@@ -95,15 +95,17 @@ public class SolarPanelTile extends TileEntity implements ITickableTileEntity {
 			for (Direction direction : Direction.values()) {
 				TileEntity te = world.getTileEntity(pos.offset(direction));
 				if (te != null) {
-					boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
-						if (handler.canReceive()) {
-							int received = handler.receiveEnergy(sendable.get(), false);
-							sendable.addAndGet(-received);
-							return sendable.get() > 0;
-						} else {
-							return true;
-						}
-					}).orElse(true);
+					boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction)
+							.map(handler -> {
+								if (handler.canReceive()) {
+									int received = handler.receiveEnergy(sendable.get(), false);
+									sendable.addAndGet(-received);
+									return sendable.get() > 0;
+								} else {
+									return true;
+								}
+							})
+							.orElse(true);
 					if (!doContinue) {
 						return;
 					}

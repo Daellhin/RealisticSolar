@@ -43,7 +43,8 @@ public class HClBurnerContainer extends Container {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
+		return isWithinUsableDistance(IWorldPosCallable
+				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
 	}
 
 	public HClBurnerTile getTileEntity() {

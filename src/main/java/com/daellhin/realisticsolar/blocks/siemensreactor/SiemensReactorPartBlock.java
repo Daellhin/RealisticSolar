@@ -16,14 +16,17 @@ import net.minecraft.world.World;
 public class SiemensReactorPartBlock extends MultiblockPartBlock {
 
 	public SiemensReactorPartBlock() {
-		super(new BlockBuilder().basicProperties().shape(Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)));
-		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+		super(new BlockBuilder().basicProperties()
+				.shape(Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)));
+		setDefaultState(stateContainer.getBaseState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 				.with(SiemensReactorControllerBlock.SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.getDefaultState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
 	}
 
 	@Override
@@ -46,7 +49,9 @@ public class SiemensReactorPartBlock extends MultiblockPartBlock {
 	public BlockPos getControllerBlockPos(BlockState state, World world, BlockPos pos) {
 		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
 		SiemensReactorMultiblockPart part = state.get(SiemensReactorControllerBlock.SIEMENSREACTORPART);
-		return pos.offset(facing, part.getDx()).up(-part.getDy()).offset(facing.rotateY(), part.getDz());
+		return pos.offset(facing, part.getDx())
+				.up(-part.getDy())
+				.offset(facing.rotateY(), part.getDz());
 	}
 
 	@Override

@@ -32,14 +32,20 @@ public class RealisticSolar {
 	public static final String MODID = "realisticsolar";
 
 	public RealisticSolar() {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+		ModLoadingContext.get()
+				.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+		ModLoadingContext.get()
+				.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
 
 		Registration.init();
 
 		// Register the setup method for modloading
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+		FMLJavaModLoadingContext.get()
+				.getModEventBus()
+				.addListener(ModSetup::init);
+		FMLJavaModLoadingContext.get()
+				.getModEventBus()
+				.addListener(ClientSetup::init);
 	}
-	
+
 }

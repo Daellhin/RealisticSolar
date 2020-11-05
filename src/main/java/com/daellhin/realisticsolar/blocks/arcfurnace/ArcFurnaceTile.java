@@ -122,7 +122,8 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	 */
 	private boolean isInputEmpty() {
 		for (int i = 0; i < INPUT_SLOTS; i++) {
-			if (inputHandler.getStackInSlot(i).isEmpty()) {
+			if (inputHandler.getStackInSlot(i)
+					.isEmpty()) {
 				return true;
 			}
 		}
@@ -246,7 +247,8 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName().getPath());
+		return new StringTextComponent(getType().getRegistryName()
+				.getPath());
 	}
 
 	@Override
@@ -273,7 +275,8 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 
 	// energy
 	public int getEnergy() {
-		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+		return getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored)
+				.orElse(0);
 	}
 
 	public void setEnergy(int energy) {

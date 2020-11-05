@@ -80,7 +80,7 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 					progress = 10;
 				}
 			}
-			
+
 			BlockState blockState = world.getBlockState(pos);
 			if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
 				world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);

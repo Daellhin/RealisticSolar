@@ -26,13 +26,18 @@ public class CoalGeneratorBlock extends BaseBlock {
 	public static final String REGNAME = "coal_generator_block";
 
 	public CoalGeneratorBlock() {
-		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(CoalGeneratorTile::new).addShiftInformation());
-		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false));
+		super(new BlockBuilder().basicMachineProperties()
+				.tileEntitySupplier(CoalGeneratorTile::new)
+				.addShiftInformation());
+		setDefaultState(stateContainer.getBaseState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.with(BlockStateProperties.POWERED, false));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.getDefaultState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
 	}
 
 	@Override
@@ -57,11 +62,13 @@ public class CoalGeneratorBlock extends BaseBlock {
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
 			// drops everything in the inventory
-			worldIn.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-				for (int i = 0; i < h.getSlots(); i++) {
-					spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
-				}
-			});
+			worldIn.getTileEntity(pos)
+					.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+					.ifPresent(h -> {
+						for (int i = 0; i < h.getSlots(); i++) {
+							spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+						}
+					});
 		}
 		super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}

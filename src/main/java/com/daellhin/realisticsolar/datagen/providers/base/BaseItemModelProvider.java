@@ -13,8 +13,10 @@ public abstract class BaseItemModelProvider extends ItemModelProvider {
 	}
 
 	public void itemGeneratedDefaultModel(Item item) {
-		getBuilder(item.getRegistryName().getPath()).parent(getExistingFile(mcLoc("item/generated")))
-				.texture("layer0", "item/" + item.getRegistryName().getPath());
+		getBuilder(item.getRegistryName()
+				.getPath()).parent(getExistingFile(mcLoc("item/generated")))
+						.texture("layer0", "item/" + item.getRegistryName()
+								.getPath());
 	}
 
 }

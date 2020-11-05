@@ -46,7 +46,8 @@ public class CustomRecipeRegistry {
 	public static List<Item> getValidItems(int slot) {
 		List<Item> output = new ArrayList<>();
 		for (CustomRecipe customRecipe : getCustomRecipeList()) {
-			output.add(customRecipe.getInput(slot).getItem());
+			output.add(customRecipe.getInput(slot)
+					.getItem());
 		}
 
 		return output;
@@ -54,7 +55,9 @@ public class CustomRecipeRegistry {
 
 	// order of items corresponds with the order of the slots
 	private static void init() {
-		customRecipeList.add(new CustomRecipe(new ItemStack[] { new ItemStack(ModItems.WOODCHIP_ITEM.get()), new ItemStack(ModBlocks.SILICASAND_BLOCK.get()), new ItemStack(Items.COAL) }, new ItemStack[] { new ItemStack(ModItems.METALURGICAL_SILICON_ITEM.get()) }));
+		customRecipeList
+				.add(new CustomRecipe(new ItemStack[] { new ItemStack(ModItems.WOODCHIP_ITEM.get()), new ItemStack(ModBlocks.SILICASAND_BLOCK.get()),
+						new ItemStack(Items.COAL) }, new ItemStack[] { new ItemStack(ModItems.METALURGICAL_SILICON_ITEM.get()) }));
 
 	}
 }

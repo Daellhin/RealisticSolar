@@ -36,16 +36,17 @@ public class ModFluids {
 
 	// item
 	public static final RegistryObject<Item> HYROGEN_CHLORIDE_BUCKET = ITEMS
-			.register("hydrogen_chloride_bucket", () -> new BucketItem(() -> HYDROGEN_CHLORIDE_SOURCE.get(),
-					new Item.Properties().maxStackSize(1).group(ModSetup.ITEM_GROUP)));
+			.register("hydrogen_chloride_bucket", () -> new BucketItem(() -> HYDROGEN_CHLORIDE_SOURCE.get(), new Item.Properties().maxStackSize(1)
+					.group(ModSetup.ITEM_GROUP)));
 
 	// properties
 	public static final Properties HYDROGEN_CHLORIDE_PROPERTIES = new Properties(() -> HYDROGEN_CHLORIDE_SOURCE.get(),
 			() -> HYDROGEN_CHLORIDE_FLOWING.get(),
 			FluidAttributes
-					.builder(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_block_source"), new ResourceLocation(RealisticSolar.MODID,
-							"block/hydrogen_chloride_block_flowing"))
-					.overlay(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_block_overlay"))).block(() -> HYROGEN_CHLORIDE_BLOCK.get())
+					.builder(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_block_source"), new ResourceLocation(
+							RealisticSolar.MODID, "block/hydrogen_chloride_block_flowing"))
+					.overlay(new ResourceLocation(RealisticSolar.MODID, "block/hydrogen_chloride_block_overlay")))
+							.block(() -> HYROGEN_CHLORIDE_BLOCK.get())
 							.bucket(() -> HYROGEN_CHLORIDE_BUCKET.get());
 
 }

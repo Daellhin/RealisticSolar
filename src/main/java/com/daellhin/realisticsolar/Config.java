@@ -1,4 +1,4 @@
-	package com.daellhin.realisticsolar;
+package com.daellhin.realisticsolar;
 
 import java.nio.file.Path;
 
@@ -55,15 +55,18 @@ public class Config {
 	public static BooleanValue ALUMINIUMORE_ENABLED;// TODO remove ore from Oregen and blocks when false
 
 	static {
-		COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
+		COMMON_BUILDER.comment("General settings")
+				.push(CATEGORY_GENERAL);
 		setupGeneralConfig();
 		COMMON_BUILDER.pop();
-		COMMON_BUILDER.comment("Power settings").push(CATEGORY_POWER);
+		COMMON_BUILDER.comment("Power settings")
+				.push(CATEGORY_POWER);
 		setupSolarPanelConfig();
 		setupCoalGeneratorConfig();
 		setupArcFurnaceConfig();
 		COMMON_BUILDER.pop();
-		COMMON_BUILDER.comment("WorldGen settings.").push(CATEGORY_POWER);
+		COMMON_BUILDER.comment("WorldGen settings.")
+				.push(CATEGORY_POWER);
 		setupAluminiumOreConfig();
 		COMMON_BUILDER.pop();
 		COMMON_CONFIG = COMMON_BUILDER.build();
@@ -71,44 +74,65 @@ public class Config {
 	}
 
 	private static void setupGeneralConfig() {
-		COMMON_BUILDER.comment("Solar Panel settings").push(CATEGORY_GENERAL);
+		COMMON_BUILDER.comment("Solar Panel settings")
+				.push(CATEGORY_GENERAL);
 		COMMON_BUILDER.pop();
 	}
 
 	private static void setupSolarPanelConfig() {
-		COMMON_BUILDER.comment("Solar Panel settings").push(SUBCATEGORY_SOLARPANEL);
-		SOLARPANEL_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Solar Panel").defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
-		SOLARPANEL_GENERATE = COMMON_BUILDER.comment("Power generation per tick").defineInRange("generate", 10, 0, Integer.MAX_VALUE);
-		SOLARPANEL_SEND = COMMON_BUILDER.comment("Max power sent per tick").defineInRange("send", 100, 0, Integer.MAX_VALUE);
+		COMMON_BUILDER.comment("Solar Panel settings")
+				.push(SUBCATEGORY_SOLARPANEL);
+		SOLARPANEL_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Solar Panel")
+				.defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
+		SOLARPANEL_GENERATE = COMMON_BUILDER.comment("Power generation per tick")
+				.defineInRange("generate", 10, 0, Integer.MAX_VALUE);
+		SOLARPANEL_SEND = COMMON_BUILDER.comment("Max power sent per tick")
+				.defineInRange("send", 100, 0, Integer.MAX_VALUE);
 		COMMON_BUILDER.pop();
 	}
 
 	private static void setupCoalGeneratorConfig() {
-		COMMON_BUILDER.comment("Coal Generator settings").push(SUBCATEGORY_COALGENERATOR);
-		COALGENERATOR_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Coal Generator").defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
-		COALGENERATOR_GENERATE = COMMON_BUILDER.comment("Power generation per tick").defineInRange("generate", 1000, 0, Integer.MAX_VALUE);
-		COALGENERATOR_SEND = COMMON_BUILDER.comment("Max power sent per tick").defineInRange("send", 1000, 0, Integer.MAX_VALUE);
+		COMMON_BUILDER.comment("Coal Generator settings")
+				.push(SUBCATEGORY_COALGENERATOR);
+		COALGENERATOR_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Coal Generator")
+				.defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
+		COALGENERATOR_GENERATE = COMMON_BUILDER.comment("Power generation per tick")
+				.defineInRange("generate", 1000, 0, Integer.MAX_VALUE);
+		COALGENERATOR_SEND = COMMON_BUILDER.comment("Max power sent per tick")
+				.defineInRange("send", 1000, 0, Integer.MAX_VALUE);
 		COMMON_BUILDER.pop();
 	}
 
 	private static void setupArcFurnaceConfig() {
-		COMMON_BUILDER.comment("Arc Furnace settings").push(SUBCATEGORY_ARCFURNACE);
-		ARCFURNACE_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Arc Furnace").defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
-		ARCFURNACE_USAGE = COMMON_BUILDER.comment("Power usage per tick").defineInRange("usage", 1000, 0, Integer.MAX_VALUE);
-		ARCFURNACE_RECEIVE = COMMON_BUILDER.comment("Max power received per tick").defineInRange("receive", 1000, 0, Integer.MAX_VALUE);
-		ARCFURNACE_TICKS = COMMON_BUILDER.comment("Ticks per recipe").defineInRange("ticks", 60, 0, Integer.MAX_VALUE);
+		COMMON_BUILDER.comment("Arc Furnace settings")
+				.push(SUBCATEGORY_ARCFURNACE);
+		ARCFURNACE_MAXPOWER = COMMON_BUILDER.comment("Maximum power for the Arc Furnace")
+				.defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
+		ARCFURNACE_USAGE = COMMON_BUILDER.comment("Power usage per tick")
+				.defineInRange("usage", 1000, 0, Integer.MAX_VALUE);
+		ARCFURNACE_RECEIVE = COMMON_BUILDER.comment("Max power received per tick")
+				.defineInRange("receive", 1000, 0, Integer.MAX_VALUE);
+		ARCFURNACE_TICKS = COMMON_BUILDER.comment("Ticks per recipe")
+				.defineInRange("ticks", 60, 0, Integer.MAX_VALUE);
 		COMMON_BUILDER.pop();
 	}
 
 	private static void setupAluminiumOreConfig() {
-		COMMON_BUILDER.comment("Aluminium Ore settings").push(SUBCATEGORY_ALUMINIUMORE);
-		ALUMINIUMORE_VEINSIZE = COMMON_BUILDER.comment("Maximum veinsize for Aluminium Ore").defineInRange("veinSize", 20, 1, 100);
-		ALUMINIUMORE_CHANCE = COMMON_BUILDER.comment("Chance of Aluminium Ore generating.").defineInRange("chance", 20, 1, 100);
+		COMMON_BUILDER.comment("Aluminium Ore settings")
+				.push(SUBCATEGORY_ALUMINIUMORE);
+		ALUMINIUMORE_VEINSIZE = COMMON_BUILDER.comment("Maximum veinsize for Aluminium Ore")
+				.defineInRange("veinSize", 20, 1, 100);
+		ALUMINIUMORE_CHANCE = COMMON_BUILDER.comment("Chance of Aluminium Ore generating.")
+				.defineInRange("chance", 20, 1, 100);
 		COMMON_BUILDER.pop();
 	}
 
 	public static void loadConfig(ForgeConfigSpec spec, Path path) {
-		final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
+		final CommentedFileConfig configData = CommentedFileConfig.builder(path)
+				.sync()
+				.autosave()
+				.writingMode(WritingMode.REPLACE)
+				.build();
 		configData.load();
 		spec.setConfig(configData);
 	}

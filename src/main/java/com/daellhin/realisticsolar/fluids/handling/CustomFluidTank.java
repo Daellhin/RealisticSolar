@@ -29,7 +29,7 @@ public class CustomFluidTank extends FluidTank {
 	}
 
 	public CustomFluidTank onContentsChanged(Runnable onContentChange) {
-		//System.out.println("Contents changed " + name);
+		// System.out.println("Contents changed " + name);
 		this.onContentsChanged = onContentChange;
 		return this;
 	}

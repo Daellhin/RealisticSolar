@@ -24,8 +24,11 @@ public class Page {
 	}
 
 	public static Page[] createPages() {
-		Page[] pages = { new IntroPage(new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/logo_transparent.png"), "page_intro", "page_disclaimer"),
-				new BlockPage(new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/arc_furnace.png"), "page_arc_furnace_right", "page_arc_furnace_caption", "page_arc_furnace_title", new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/arc_furnace_gui.png")),
+		Page[] pages = {
+				new IntroPage(new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/logo_transparent.png"), "page_intro", "page_disclaimer"),
+				new BlockPage(new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/arc_furnace.png"), "page_arc_furnace_right",
+						"page_arc_furnace_caption", "page_arc_furnace_title",
+						new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/arc_furnace_gui.png")),
 				new Page(new ResourceLocation(RealisticSolar.MODID, "textures/gui/page/logo_transparent.png"), "Hi") };
 		return pages;
 	}

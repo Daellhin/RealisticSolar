@@ -1,6 +1,5 @@
 package com.daellhin.realisticsolar.datagen.providers;
 
-
 import java.util.function.Consumer;
 
 import net.minecraft.data.DataGenerator;
@@ -9,12 +8,12 @@ import net.minecraft.data.RecipeProvider;
 
 public class Recipes extends RecipeProvider {
 
-    public Recipes(DataGenerator generatorIn) {
-        super(generatorIn);
-    }
+	public Recipes(DataGenerator generatorIn) {
+		super(generatorIn);
+	}
 
-    @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+	@Override
+	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 //        ShapedRecipeBuilder.shapedRecipe(ModBlocks.ALUMINIUMORE_BLOCK_ITEM.get())
 //                .patternLine("xxx")
 //                .patternLine("x#x")
@@ -24,5 +23,5 @@ public class Recipes extends RecipeProvider {
 //                .setGroup("realisticsolar")
 //                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
 //                .build(consumer);
-    }
+	}
 }

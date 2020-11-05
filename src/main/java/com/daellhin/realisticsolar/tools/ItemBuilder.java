@@ -15,7 +15,8 @@ public class ItemBuilder {
 	}
 
 	public ItemBuilder unstackableItemProperties() {
-		this.properties = new Item.Properties().maxStackSize(1).group(ModSetup.ITEM_GROUP);
+		this.properties = new Item.Properties().maxStackSize(1)
+				.group(ModSetup.ITEM_GROUP);
 		return this;
 	}
 

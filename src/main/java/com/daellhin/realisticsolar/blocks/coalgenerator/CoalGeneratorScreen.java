@@ -50,10 +50,11 @@ public class CoalGeneratorScreen extends BaseContainerScreen<CoalGeneratorContai
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		this.minecraft.getTextureManager().bindTexture(backgroundTexture);
+		this.minecraft.getTextureManager()
+				.bindTexture(backgroundTexture);
 		int relX = (this.width - this.xSize) / 2;
 		int relY = (this.height - this.ySize) / 2;
-		
+
 		// GUI background
 		this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
 		// flame

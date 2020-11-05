@@ -36,7 +36,7 @@ public abstract class BaseBlock extends Block {
 		this.tileEntitySupplier = builder.getTileEntitySupplier();
 		this.shape = builder.getShape();
 	}
-	
+
 	/**
 	 * Adds tooltip to the item, shift to show, when present uses the registryName to search in lang file
 	 */
@@ -44,7 +44,8 @@ public abstract class BaseBlock extends Block {
 	public void addInformation(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> list, ITooltipFlag flags) {
 		if (shiftInformation) {
 			if (Screen.hasShiftDown()) {
-				list.add(new TranslationTextComponent("information." + this.getRegistryName().getPath()));
+				list.add(new TranslationTextComponent("information." + this.getRegistryName()
+						.getPath()));
 			} else {
 				list.add(new TranslationTextComponent("information.press_shift"));
 			}

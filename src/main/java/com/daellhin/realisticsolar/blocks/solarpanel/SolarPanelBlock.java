@@ -15,14 +15,18 @@ public class SolarPanelBlock extends BaseBlock {
 	public static final String REGNAME = "solar_panel_block";
 
 	public SolarPanelBlock() {
-		super(new BlockBuilder().basicMachineProperties().tileEntitySupplier(SolarPanelTile::new));
-		setDefaultState(stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.POWERED, false));
+		super(new BlockBuilder().basicMachineProperties()
+				.tileEntitySupplier(SolarPanelTile::new));
+		setDefaultState(stateContainer.getBaseState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.with(BlockStateProperties.POWERED, false));
 
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.getDefaultState()
+				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
 	}
 
 	@Override

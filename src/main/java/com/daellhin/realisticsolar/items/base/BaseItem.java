@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class BaseItem extends Item{
+public class BaseItem extends Item {
 
 	private final boolean shiftInformation;
 
@@ -25,7 +25,8 @@ public class BaseItem extends Item{
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		if (shiftInformation) {
 			if (Screen.hasShiftDown()) {
-				list.add(new TranslationTextComponent("information." + this.getRegistryName().getPath()));
+				list.add(new TranslationTextComponent("information." + this.getRegistryName()
+						.getPath()));
 			} else {
 				list.add(new TranslationTextComponent("information.press_shift"));
 			}

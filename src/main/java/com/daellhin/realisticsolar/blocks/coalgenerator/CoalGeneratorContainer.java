@@ -35,9 +35,10 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 	}
 
 	private void layoutMachineInventorySlots() {
-		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-			addSlot(new SlotItemHandler(h, 0, 80, 20));
-		});
+		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+				.ifPresent(h -> {
+					addSlot(new SlotItemHandler(h, 0, 80, 20));
+				});
 	}
 
 	private void syncEnergy() {
@@ -110,7 +111,8 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.COALGENERATOR_BLOCK.get());
+		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.COALGENERATOR_BLOCK
+				.get());
 	}
 
 	public CoalGeneratorTile getTileEntity() {

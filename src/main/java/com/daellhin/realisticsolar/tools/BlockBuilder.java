@@ -18,14 +18,20 @@ public class BlockBuilder {
 		this.properties = properties;
 		return this;
 	}
-	
+
 	public BlockBuilder basicProperties() {
-		this.properties = Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).lightValue(0);
+		this.properties = Properties.create(Material.IRON)
+				.sound(SoundType.METAL)
+				.hardnessAndResistance(2.0f)
+				.lightValue(0);
 		return this;
 	}
 
 	public BlockBuilder basicMachineProperties() {
-		this.properties = Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).lightValue(13);
+		this.properties = Properties.create(Material.IRON)
+				.sound(SoundType.METAL)
+				.hardnessAndResistance(2.0f)
+				.lightValue(13);
 		return this;
 	}
 
