@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,powered=false": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_idle",
+      "y": 180
+    },
+    "facing=south,powered=false": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_idle"
+    },
+    "facing=west,powered=false": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_idle",
+      "y": 90
+    },
+    "facing=east,powered=false": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_idle",
+      "y": 270
+    },
+    "facing=north,powered=true": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_powered",
+      "y": 180
+    },
+    "facing=south,powered=true": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_powered"
+    },
+    "facing=west,powered=true": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_powered",
+      "y": 90
+    },
+    "facing=east,powered=true": {
+      "model": "realisticsolar:block/hcl_burner_controller_block_powered",
+      "y": 270
+    }
+  }
+}

@@ -6,6 +6,7 @@
 	"item.realisticsolar.metallurgical_silicon_item": "Metallurgical Silicon",
 	"item.realisticsolar.wrench_item": "Wrench",
 	"item.realisticsolar.hydrogen_chloride_bucket": "Hydrogen Chloride Bucket",
+	
 	"_comment_": "Blocks",
 	"block.realisticsolar.aluminium_block": "Aluminium Block",
 	"block.realisticsolar.aluminium_ore_block": "Aluminium Ore",
@@ -17,17 +18,22 @@
 	"block.realisticsolar.coal_generator_block": "Coal Generator",
 	"block.realisticsolar.siemens_reactor_top_block": "Siemens Reactor Top",
 	"block.realisticsolar.siemens_reactor_controller_block": "Siemens Reactor Bottom",
+	"block.realisticsolar.hcl_burner_controller_block": "HCl burner",
+	
 	"_comment_": "Creative Tabs",
 	"itemGroup.realisticsolar.itemgroup1": "Realistic Solar",
+	
 	"_comment_": "Tooltip information",
 	"information.press_shift": "<Press Shift>",
 	"information.hand_book_item": "Handbook for RealisticSolar",
 	"information.wrench_item": "Every good mod needs a wrench.",
+	
 	"_comment_": "Multiblock Mesages",
 	"multiblock.formed": "Multiblock formed",
 	"multiblock.already_formed": "Multiblock already formed",
 	"multiblock.unable_to_form": "Unable to form multiblock",
 	"multiblock.destroyed": "Multiblock destroyed",
+	
 	"_comment_": "Vademecum Pages",
 	"page_intro": "Welcome to Realistic Solar.\nA Tech mod all about producing solar panels, based upon industrial production processes.\n\nThis book will document the functionalities of al the machines, blocks and items, along with more information about them.\n\nI hope you enjoy playing with Realistic Solar as much as I enjoy making it! \n\n\n~Daellhin, the mod author",
 	"page_disclaimer": "DISCLAIMER! \n\nThis mod is still being developed, so expect bugs and crashes. There are still a lot of features and mechanics I have planned, so stay tuned. \n\nYou can always follow the development on the Realistic Solar GitHub page (linked under sources on the CurseForge page). New builds will be available on CurseForge.",

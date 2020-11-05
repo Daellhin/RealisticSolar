@@ -3,15 +3,9 @@ package com.daellhin.realisticsolar.datagen.providers;
 
 import java.util.function.Consumer;
 
-import com.daellhin.realisticsolar.blocks.ModBlocks;
-
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraftforge.common.Tags;
 
 public class Recipes extends RecipeProvider {
 

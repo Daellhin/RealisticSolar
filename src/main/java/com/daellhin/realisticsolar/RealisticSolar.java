@@ -1,22 +1,13 @@
 package com.daellhin.realisticsolar;
 
-import static com.daellhin.realisticsolar.setup.Registration.BLOCKS;
-
 import com.daellhin.realisticsolar.setup.ClientSetup;
 import com.daellhin.realisticsolar.setup.ModSetup;
 import com.daellhin.realisticsolar.setup.Registration;
 
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.IForgeRegistry;
 
 /* TODO change siemensReactor to multiblock
  * 
@@ -24,7 +15,6 @@ import net.minecraftforge.registries.IForgeRegistry;
  * TODO more fuctioning blocks
  * TODO more pages in the book
  * TODO more recipes
- * TODO multiblocks
  * TODO animations(wait for gecoLib)
  * TODO update transfer stack in slot
  * TODO update readme

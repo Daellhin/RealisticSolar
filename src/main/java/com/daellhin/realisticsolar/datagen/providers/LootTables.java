@@ -21,6 +21,7 @@ public class LootTables extends BaseLootTableProvider {
 		addSimpleTable(ModBlocks.SIEMENSREACTOR_TOP_BLOCK.get());
 		addSimpleTable(ModBlocks.SOLARPANEL_BLOCK.get());
 		addSimpleTable(ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
+		addSimpleTable(ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
 	
 		addAdvancedTable(ModBlocks.COALGENERATOR_BLOCK.get());
 		addAdvancedTable(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());

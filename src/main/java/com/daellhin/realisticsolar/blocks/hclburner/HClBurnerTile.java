@@ -17,6 +17,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -72,11 +73,17 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 					inputWaterTank.drainForced(USAGE, FluidAction.EXECUTE);
 					outputHClTank.fillForced(new FluidStack(ModFluids.HYDROGEN_CHLORIDE_SOURCE.get(), USAGE), FluidAction.EXECUTE);
 				}
+				return;
 			} else {
 				if (inputHydrogenTank.canDrain(USAGE) && inputChlorideTank.canDrain(USAGE) && inputWaterTank.canDrain(USAGE) && outputHClTank
 						.canAdd(USAGE)) {
 					progress = 10;
 				}
+			}
+			
+			BlockState blockState = world.getBlockState(pos);
+			if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
+				world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);
 			}
 		}
 	}

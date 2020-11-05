@@ -30,6 +30,7 @@ public class BlockStates extends BaseBlockStateProvider {
 		horizontalPoweredBlockEmptyModel(ModBlocks.SOLARPANEL_BLOCK.get());
 		horizontalPoweredBlockEmptyModel(ModBlocks.COALGENERATOR_BLOCK.get());
 		horizontalPoweredBlockEmptyModel(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
+		horizontalPoweredBlockEmptyModel(ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
 
 		// blockItems
 		simpleBlockItemDefaultModel(ModBlocks.ALUMINIUM_BLOCK.get());
@@ -45,6 +46,7 @@ public class BlockStates extends BaseBlockStateProvider {
 		poweredBlockItemDefaultModel(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 		poweredBlockItemDefaultModel(ModBlocks.SOLARPANEL_BLOCK.get());
 		poweredBlockItemDefaultModel(ModBlocks.COALGENERATOR_BLOCK.get());
+		poweredBlockItemDefaultModel(ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
 
 	}
 
