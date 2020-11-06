@@ -4,6 +4,7 @@ import com.daellhin.realisticsolar.setup.ModSetup;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
+import net.minecraft.item.Items;
 
 public class ItemBuilder {
 	private Properties properties;
@@ -17,6 +18,13 @@ public class ItemBuilder {
 	public ItemBuilder unstackableItemProperties() {
 		this.properties = new Item.Properties().maxStackSize(1)
 				.group(ModSetup.ITEM_GROUP);
+		return this;
+	}
+
+	public ItemBuilder bucketItemProperties() {
+		this.properties = new Item.Properties().maxStackSize(1)
+				.group(ModSetup.ITEM_GROUP)
+				.containerItem(Items.BUCKET);
 		return this;
 	}
 

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.daellhin.realisticsolar.fluids.base.AcidBlock;
+import com.daellhin.realisticsolar.items.base.BaseGasItem;
 import com.daellhin.realisticsolar.setup.ModSetup;
+import com.daellhin.realisticsolar.tools.ItemBuilder;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
@@ -48,6 +50,45 @@ public class FluidDeferredRegister {
 				.builder(new ResourceLocation(modid, "block/fluid/" + sourceName), new ResourceLocation(modid, "block/fluid/" + flowingName));
 
 		return registerFluid(name, builder);
+	}
+
+	public FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> registerGas(String name, int color) {
+		String sourceName = name + "_source";
+		String flowingName = name + "_flowing";
+		String bucketName = name + "_bucket";
+		String blockName = name + "_block";
+		FluidAttributes.Builder builder = FluidAttributes
+				.builder(new ResourceLocation(modid, "block/gas/" + sourceName), new ResourceLocation(modid, "block/gas/" + flowingName))
+				.gaseous()
+				.color(color);
+
+		// All fluids use block/water_overlay for being against glass as vanilla water
+		builder.overlay(OVERLAY);
+
+		// Create the registry object with dummy entries that we can use as part of the supplier but that works as use in suppliers
+		FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> fluidRegistryObject = new FluidRegistryObject<>(modid, name);
+
+		// Pass in suppliers that are wrapped instead of direct references to the registry objects, so that when we update the registry object to
+		// point to a new object it gets updated properly.
+		ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(fluidRegistryObject::getSource, fluidRegistryObject::getFlowing,
+				builder).bucket(fluidRegistryObject::getBucket)
+						.block(fluidRegistryObject::getBlock);
+
+		// Update the references to objects that are retrieved from the deferred registers
+		fluidRegistryObject.updateSource(fluidRegister.register(sourceName, () -> new Source(properties)));
+		fluidRegistryObject.updateFlowing(fluidRegister.register(flowingName, () -> new Flowing(properties)));
+
+		fluidRegistryObject.updateBucket(itemRegister
+				.register(bucketName, () -> new BaseGasItem(fluidRegistryObject::getSource, new ItemBuilder().bucketItemProperties()
+						.addShiftInformation())));
+		fluidRegistryObject.updateBlock(blockRegister.register(blockName, () -> new FlowingFluidBlock(fluidRegistryObject::getSource,
+				Block.Properties.create(Material.AIR)
+						.doesNotBlockMovement()
+						.hardnessAndResistance(0F)
+						.noDrops())));
+
+		allFluids.add(fluidRegistryObject);
+		return fluidRegistryObject;
 	}
 
 	public FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> registerFluid(String name, FluidAttributes.Builder builder) {

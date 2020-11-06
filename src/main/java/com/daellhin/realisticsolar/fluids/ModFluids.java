@@ -15,8 +15,14 @@ public class ModFluids {
 	public static void register() {
 	}
 
-	// hydrogen_chloride
+	// hydrogen chloride
 	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> HYDROGEN_CHLORIDE = FLUIDS
 			.registerAcidFluid("hydrogen_chloride");
+
+	// hydrogen
+	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> HYDROGEN = FLUIDS.registerGas("hydrogen", 16777215);
+
+	// hydrogen chloride
+	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> CHLORIDE = FLUIDS.registerGas("chloride", 16777045);
 
 }

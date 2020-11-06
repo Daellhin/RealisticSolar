@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "realisticsolar:block/fluids/hydrogen_source"
+  }
+}

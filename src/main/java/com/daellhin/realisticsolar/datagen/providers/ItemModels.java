@@ -19,8 +19,11 @@ public class ItemModels extends BaseItemModelProvider {
 		itemGeneratedDefaultModel(ModItems.HANDBOOK_ITEM.get());
 		itemGeneratedDefaultModel(ModItems.WRENCH_ITEM.get());
 		itemGeneratedDefaultModel(ModItems.METALURGICAL_SILICON_ITEM.get());
-		itemGeneratedDefaultModel(ModFluids.HYDROGEN_CHLORIDE.getBucket());
 		itemGeneratedDefaultModel(ModItems.WOODCHIP_ITEM.get());
+		
+		itemGeneratedDefaultModel(ModFluids.HYDROGEN_CHLORIDE.getBucket());
+		itemGeneratedDefaultModel(ModFluids.HYDROGEN.getBucket());
+		itemGeneratedDefaultModel(ModFluids.CHLORIDE.getBucket());
 	}
 
 }
