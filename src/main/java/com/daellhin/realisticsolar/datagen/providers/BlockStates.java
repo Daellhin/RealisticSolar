@@ -20,7 +20,7 @@ public class BlockStates extends BaseBlockStateProvider {
 		simpleBlockEmptyModel(ModBlocks.ALUMINIUM_BLOCK.get());
 		simpleBlockEmptyModel(ModBlocks.ALUMINIUMORE_BLOCK.get());
 		simpleBlockEmptyModel(ModBlocks.SILICASAND_BLOCK.get());
-		simpleBlockEmptyModel(ModFluids.HYROGEN_CHLORIDE_BLOCK.get());
+		simpleBlockEmptyModel(ModFluids.HYDROGEN_CHLORIDE.getBlock());
 
 		horizontalBlockEmptyModel(ModBlocks.SIEMENSREACTOR_TOP_BLOCK.get());
 		horizontalBlockEmptyModel(ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
@@ -41,7 +41,7 @@ public class BlockStates extends BaseBlockStateProvider {
 		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_CASING_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_ELECTRODE_BLOCK.get());
 
-		simpleFluidBlockItemDefaultModel(ModFluids.HYROGEN_CHLORIDE_BLOCK.get());
+		simpleFluidBlockItemDefaultModel(ModFluids.HYDROGEN_CHLORIDE.getBlock());
 
 		poweredBlockItemDefaultModel(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 		poweredBlockItemDefaultModel(ModBlocks.SOLARPANEL_BLOCK.get());

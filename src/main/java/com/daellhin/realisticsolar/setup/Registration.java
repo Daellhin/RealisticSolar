@@ -4,9 +4,9 @@ import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.fluids.ModFluids;
 import com.daellhin.realisticsolar.items.ModItems;
+import com.daellhin.realisticsolar.tools.registry.FluidDeferredRegister;
 
 import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
@@ -20,7 +20,7 @@ public class Registration {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, RealisticSolar.MODID);
 	public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, RealisticSolar.MODID);
 	public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, RealisticSolar.MODID);
-	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, RealisticSolar.MODID);
+	public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(RealisticSolar.MODID);
 
 	public static void init() {
 		ITEMS.register(FMLJavaModLoadingContext.get()

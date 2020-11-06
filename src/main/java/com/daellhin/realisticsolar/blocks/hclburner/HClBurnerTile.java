@@ -48,7 +48,7 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 	private CustomFluidTank outputHClTank = new CustomFluidTank(TANK_SIZE, "output_hcl").setTankAction(TankAction.DRAIN)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
-					.equals(ModFluids.HYDROGEN_CHLORIDE_SOURCE.get()));
+					.equals(ModFluids.HYDROGEN_CHLORIDE.getSource()));
 
 	private TankContainer tankContainer = new TankContainer();
 
@@ -71,7 +71,7 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 					inputHydrogenTank.drainForced(USAGE, FluidAction.EXECUTE);
 					inputChlorideTank.drainForced(USAGE, FluidAction.EXECUTE);
 					inputWaterTank.drainForced(USAGE, FluidAction.EXECUTE);
-					outputHClTank.fillForced(new FluidStack(ModFluids.HYDROGEN_CHLORIDE_SOURCE.get(), USAGE), FluidAction.EXECUTE);
+					outputHClTank.fillForced(new FluidStack(ModFluids.HYDROGEN_CHLORIDE.getSource(), USAGE), FluidAction.EXECUTE);
 				}
 				return;
 			} else {

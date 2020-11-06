@@ -1,8 +1,8 @@
-package com.daellhin.realisticsolar.fluids.hydrogenchloride;
+package com.daellhin.realisticsolar.fluids.base;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
-import com.daellhin.realisticsolar.fluids.ModFluids;
 import com.daellhin.realisticsolar.tools.ModDamageSources;
 
 import net.minecraft.block.Block;
@@ -11,17 +11,18 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class HydrogenChlorideBlock extends FlowingFluidBlock {
+public class AcidBlock extends FlowingFluidBlock {
 	private static final Random rand = new Random();
 
-	public HydrogenChlorideBlock() {
-		super(() -> ModFluids.HYDROGEN_CHLORIDE_SOURCE.get(), Block.Properties.create(Material.WATER)
+	public AcidBlock(Supplier<? extends FlowingFluid> sourceFluid) {
+		super(sourceFluid, Block.Properties.create(Material.WATER)
 				.doesNotBlockMovement()
 				.hardnessAndResistance(100.0f)
 				.noDrops());
@@ -41,5 +42,7 @@ public class HydrogenChlorideBlock extends FlowingFluidBlock {
 			entityIn.remove();
 		}
 	}
+	
+
 
 }
