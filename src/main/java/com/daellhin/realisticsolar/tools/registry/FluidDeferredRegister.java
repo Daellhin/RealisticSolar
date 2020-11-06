@@ -81,14 +81,41 @@ public class FluidDeferredRegister {
 						.doesNotBlockMovement()
 						.hardnessAndResistance(100.0F)
 						.noDrops())));
+
 		allFluids.add(fluidRegistryObject);
 		return fluidRegistryObject;
 	}
 
 	public FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> registerAcidFluid(String name) {
-		FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> fluidRegistryObject = registerDefaultFluid(name);
-		fluidRegistryObject.updateBlock(blockRegister.register(name + "_block", () -> new AcidBlock(fluidRegistryObject::getSource)));
+		String sourceName = name + "_source";
+		String flowingName = name + "_flowing";
+		String bucketName = name + "_bucket";
+		String blockName = name + "_block";
+		FluidAttributes.Builder builder = FluidAttributes
+				.builder(new ResourceLocation(modid, "block/fluid/" + sourceName), new ResourceLocation(modid, "block/fluid/" + flowingName));
 
+		// All fluids use block/water_overlay for being against glass as vanilla water
+		builder.overlay(OVERLAY);
+
+		// Create the registry object with dummy entries that we can use as part of the supplier but that works as use in suppliers
+		FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> fluidRegistryObject = new FluidRegistryObject<>(modid, name);
+
+		// Pass in suppliers that are wrapped instead of direct references to the registry objects, so that when we update the registry object to
+		// point to a new object it gets updated properly.
+		ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(fluidRegistryObject::getSource, fluidRegistryObject::getFlowing,
+				builder).bucket(fluidRegistryObject::getBucket)
+						.block(fluidRegistryObject::getBlock);
+
+		// Update the references to objects that are retrieved from the deferred registers
+		fluidRegistryObject.updateSource(fluidRegister.register(sourceName, () -> new Source(properties)));
+		fluidRegistryObject.updateFlowing(fluidRegister.register(flowingName, () -> new Flowing(properties)));
+		fluidRegistryObject.updateBucket(itemRegister.register(bucketName, () -> new BucketItem(fluidRegistryObject::getSource,
+				new Item.Properties().maxStackSize(1)
+						.group(ModSetup.ITEM_GROUP)
+						.containerItem(Items.BUCKET))));
+		fluidRegistryObject.updateBlock(blockRegister.register(blockName, () -> new AcidBlock(fluidRegistryObject::getSource)));
+
+		allFluids.add(fluidRegistryObject);
 		return fluidRegistryObject;
 	}
 

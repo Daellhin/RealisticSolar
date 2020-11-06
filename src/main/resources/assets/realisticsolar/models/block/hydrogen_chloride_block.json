@@ -1,5 +1,5 @@
 {
     "textures": {
-        "particle" : "realisticsolar:block/hydrogen_chloride_block_source"
+        "particle" : "realisticsolar:block/fluid/hydrogen_chloride_source"
     }
 }

@@ -42,7 +42,5 @@ public class AcidBlock extends FlowingFluidBlock {
 			entityIn.remove();
 		}
 	}
-	
-
 
 }
