@@ -34,13 +34,13 @@ public class HClBurnerScreen extends BaseContainerScreen<HClBurnerContainer> {
 		// GUI elements
 		CustomFluidTank tank;
 		tank = tileEntity.getInputChlorideTank();
-		this.font.drawString(String.format("Chloride: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 10, 000000);
+		this.font.drawString(String.format("WEST|  Chloride: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 10, 000000);
 		tank = tileEntity.getInputHydrogenTank();
-		this.font.drawString(String.format("Hydrogen: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 40, 000000);
+		this.font.drawString(String.format("EAST|  Hydrogen: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 40, 000000);
 		tank = tileEntity.getInputWaterTank();
-		this.font.drawString(String.format("Water: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 70, 000000);
+		this.font.drawString(String.format("NORTH| Water: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 70, 000000);
 		tank = tileEntity.getOutputHClTank();
-		this.font.drawString(String.format("HCl: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 100, 000000);
+		this.font.drawString(String.format("SOUTH| HCl: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 100, 000000);
 
 		this.font.drawString("Progress: " + tileEntity.getProgress(), relX + 10, relY + 120, 000000);
 

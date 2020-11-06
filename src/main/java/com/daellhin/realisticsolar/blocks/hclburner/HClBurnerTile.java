@@ -36,11 +36,11 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 	private CustomFluidTank inputHydrogenTank = new CustomFluidTank(TANK_SIZE, "input_hydrogen").setTankAction(TankAction.FILL)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
-					.equals(Fluids.WATER));
+					.equals(ModFluids.HYDROGEN.getSource()));
 	private CustomFluidTank inputChlorideTank = new CustomFluidTank(TANK_SIZE, "input_chloride").setTankAction(TankAction.FILL)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
-					.equals(Fluids.WATER));
+					.equals(ModFluids.CHLORIDE.getSource()));
 	private CustomFluidTank inputWaterTank = new CustomFluidTank(TANK_SIZE, "input_water").setTankAction(TankAction.FILL)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
