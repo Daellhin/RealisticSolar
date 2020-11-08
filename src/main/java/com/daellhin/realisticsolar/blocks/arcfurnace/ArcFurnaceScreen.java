@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.daellhin.realisticsolar.RealisticSolar;
+import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnaceControllerTile;
 import com.daellhin.realisticsolar.blocks.base.BaseContainerScreen;
 
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class ArcFurnaceScreen extends BaseContainerScreen<ArcFurnaceContainer> {
 
-	private ArcFurnaceTile tileEntity;
+	private ArcFurnaceControllerTile tileEntity;
 
 	// variables of the arrow
 	private final int ARROW_GUI_X = 44;

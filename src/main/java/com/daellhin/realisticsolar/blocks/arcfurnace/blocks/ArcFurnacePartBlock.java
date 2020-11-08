@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.arcfurnace;
+package com.daellhin.realisticsolar.blocks.arcfurnace.blocks;
 
 import com.daellhin.realisticsolar.blocks.arcfurnace.enums.ArcFurnaceMultiblockPart;
 import com.daellhin.realisticsolar.blocks.base.MultiblockPartBlock;
@@ -14,9 +14,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ArcFurnacePartBlock extends MultiblockPartBlock {
-
+	
+	// Use when creating ArcFurnacePart blocks
 	public ArcFurnacePartBlock() {
-		super(new BlockBuilder().basicProperties());
+		this(new BlockBuilder().basicProperties());
+	}
+	
+	// Use when creating ArcFurnacePort blocks
+	public ArcFurnacePartBlock(BlockBuilder builder) {
+		super(builder);
 		setDefaultState(stateContainer.getBaseState()
 				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 				.with(ArcFurnaceControllerBlock.ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
@@ -46,7 +52,7 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 
 	@Override
 	public BlockPos getControllerBlockPos(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
 		ArcFurnaceMultiblockPart part = state.get(ArcFurnaceControllerBlock.ARCFURNACEPART);
 		return pos.offset(facing, part.getDx())
 				.up(-part.getDy())

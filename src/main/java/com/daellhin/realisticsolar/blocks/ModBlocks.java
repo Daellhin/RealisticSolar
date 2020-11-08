@@ -5,9 +5,11 @@ import static com.daellhin.realisticsolar.setup.Registration.CONTAINERS;
 import static com.daellhin.realisticsolar.setup.Registration.TILES;
 
 import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceContainer;
-import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceControllerBlock;
-import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnacePartBlock;
-import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceTile;
+import com.daellhin.realisticsolar.blocks.arcfurnace.blocks.ArcFurnaceControllerBlock;
+import com.daellhin.realisticsolar.blocks.arcfurnace.blocks.ArcFurnacePartBlock;
+import com.daellhin.realisticsolar.blocks.arcfurnace.blocks.ArcFurnacePortBlock;
+import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnaceControllerTile;
+import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnacePortTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
@@ -21,6 +23,7 @@ import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
 import com.daellhin.realisticsolar.setup.ModSetup;
+import com.daellhin.realisticsolar.tools.MultiblockPortType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.Properties;
@@ -92,10 +95,25 @@ public class ModBlocks {
 
 	public static final RegistryObject<Block> ARCFURNACE_ELECTRODE_BLOCK = BLOCKS.register("arc_furnace_electrode_block", ArcFurnacePartBlock::new);
 
-	// common
-	public static final RegistryObject<TileEntityType<ArcFurnaceTile>> ARCFURNACE_TILE = TILES
-			.register(ArcFurnaceControllerBlock.REGNAME, () -> TileEntityType.Builder.create(ArcFurnaceTile::new, ARCFURNACE_CONTROLLER_BLOCK.get())
+	// ports
+	public static final RegistryObject<Block> ARCFURNACE_ITEM_INPUT_PORT_BLOCK = BLOCKS
+			.register("arcfurnace_item_input_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ITEM_INPUT));
+
+	public static final RegistryObject<Block> ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK = BLOCKS
+			.register("arcfurnace_item_output_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ITEM_OUTPUT));
+
+	// tiles
+	public static final RegistryObject<TileEntityType<ArcFurnaceControllerTile>> ARCFURNACE_CONTROLLER_TILE = TILES
+			.register(ArcFurnaceControllerBlock.REGNAME, () -> TileEntityType.Builder
+					.create(ArcFurnaceControllerTile::new, ARCFURNACE_CONTROLLER_BLOCK.get())
 					.build(null));
+
+	public static final RegistryObject<TileEntityType<ArcFurnacePortTile>> ARCFURNACE_PORT_TILE = TILES
+			.register("arcfurnace_port", () -> TileEntityType.Builder
+					.create(ArcFurnacePortTile::new, ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get(), ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK.get())
+					.build(null));
+
+	// common
 	public static final RegistryObject<ContainerType<ArcFurnaceContainer>> ARCFURNACE_CONTAINER = CONTAINERS
 			.register(ArcFurnaceControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 				BlockPos pos = data.readBlockPos();

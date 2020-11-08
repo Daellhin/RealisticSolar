@@ -1,6 +1,7 @@
 package com.daellhin.realisticsolar.blocks.arcfurnace;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
+import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnaceControllerTile;
 import com.daellhin.realisticsolar.blocks.base.PlayerInventoryContainer;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,13 +19,13 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ArcFurnaceContainer extends PlayerInventoryContainer {
 
-	private ArcFurnaceTile tileEntity;
+	private ArcFurnaceControllerTile tileEntity;
 	private PlayerEntity playerEntity;
 	private IItemHandler playerInventory;
 
 	public ArcFurnaceContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		super(ModBlocks.ARCFURNACE_CONTAINER.get(), windowId);
-		this.tileEntity = (ArcFurnaceTile) world.getTileEntity(pos);
+		this.tileEntity = (ArcFurnaceControllerTile) world.getTileEntity(pos);
 		this.playerEntity = playerEntity;
 		this.playerInventory = new InvWrapper(playerInventory);
 		layoutPlayerInventorySlots(this.playerInventory, 8, 99);
@@ -82,11 +83,11 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack = slot.getStack();
 			itemstack = stack.copy();
-			if (index < ArcFurnaceTile.SIZE) {
-				if (!this.mergeItemStack(stack, ArcFurnaceTile.SIZE, this.inventorySlots.size(), true)) {
+			if (index < ArcFurnaceControllerTile.SIZE) {
+				if (!this.mergeItemStack(stack, ArcFurnaceControllerTile.SIZE, this.inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(stack, 0, ArcFurnaceTile.SIZE, false)) {
+			} else if (!this.mergeItemStack(stack, 0, ArcFurnaceControllerTile.SIZE, false)) {
 				return ItemStack.EMPTY;
 			}
 			if (stack.isEmpty()) {
@@ -104,7 +105,7 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 	}
 
-	public ArcFurnaceTile getTileEntity() {
+	public ArcFurnaceControllerTile getTileEntity() {
 		return tileEntity;
 	}
 }

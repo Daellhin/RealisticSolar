@@ -1,7 +1,8 @@
-package com.daellhin.realisticsolar.blocks.arcfurnace;
+package com.daellhin.realisticsolar.blocks.arcfurnace.blocks;
 
 import com.daellhin.realisticsolar.blocks.arcfurnace.enums.ArcFurnaceMultiblockPart;
 import com.daellhin.realisticsolar.blocks.arcfurnace.enums.ArcFurnaceMultiblockPattern;
+import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnaceControllerTile;
 import com.daellhin.realisticsolar.blocks.base.MultiBlockControllerBlock;
 import com.daellhin.realisticsolar.tools.BlockBuilder;
 
@@ -23,7 +24,7 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	public ArcFurnaceControllerBlock() {
 		super(new BlockBuilder().basicMachineProperties()
-				.tileEntitySupplier(ArcFurnaceTile::new));
+				.tileEntitySupplier(ArcFurnaceControllerTile::new));
 		setDefaultState(stateContainer.getBaseState()
 				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 				.with(BlockStateProperties.POWERED, false)
@@ -58,18 +59,21 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 
 	@Override
 	public boolean isMultiblockFormed(BlockState state) {
-		return true;
+		return state.get(ARCFURNACEPART) != ArcFurnaceMultiblockPart.UNFORMED;
 	}
 
 	@Override
 	public boolean isMultiblockValid(BlockState state, World world, BlockPos pos) {
 		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
-				.getOpposite();
+				;
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx())
 					.up(part.getDy())
 					.offset(facing.rotateY(), part.getDz());
+
+			System.out.println(part.getBlock() + "" + world.getBlockState(currentPos)
+					.getBlock());
 			if (part.getBlock() != world.getBlockState(currentPos)
 					.getBlock()) {
 				return false;
@@ -81,7 +85,7 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	@Override
 	public void formMultiblock(BlockState state, World world, BlockPos pos) {
 		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
-				.getOpposite();
+				;
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx())
@@ -96,7 +100,7 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	@Override
 	public void destroyMultiblock(BlockState state, World world, BlockPos pos) {
 		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
-				.getOpposite();
+				;
 
 		for (ArcFurnaceMultiblockPattern part : ArcFurnaceMultiblockPattern.values()) {
 			BlockPos currentPos = pos.offset(facing, part.getDx())
@@ -104,7 +108,7 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 					.offset(facing.rotateY(), part.getDz());
 			BlockState currentState = world.getBlockState(currentPos);
 
-			// check if block has not been removed
+			// check if block has not been removed(player, explosion, piston)
 			if (currentState.getProperties()
 					.contains(ARCFURNACEPART)) {
 				world.setBlockState(currentPos, world.getBlockState(currentPos)

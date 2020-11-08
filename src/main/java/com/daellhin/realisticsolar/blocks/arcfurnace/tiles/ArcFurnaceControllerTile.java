@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.blocks.arcfurnace;
+package com.daellhin.realisticsolar.blocks.arcfurnace.tiles;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -6,9 +6,11 @@ import javax.annotation.Nonnull;
 
 import com.daellhin.realisticsolar.Config;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
+import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceContainer;
 import com.daellhin.realisticsolar.recipe.CustomRecipe;
 import com.daellhin.realisticsolar.recipe.CustomRecipeRegistry;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
+import com.daellhin.realisticsolar.tools.MultiblockPortType;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +35,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
-public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class ArcFurnaceControllerTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final int INPUT_SLOTS = 3;
 	public static final int OUTPUT_SLOTS = 3;
@@ -50,8 +52,8 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	private LazyOptional<IItemHandler> combinedSlotHolder = LazyOptional.of(() -> new CombinedInvWrapper(inputHandler, outputHandler));
 	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);;
 
-	public ArcFurnaceTile() {
-		super(ModBlocks.ARCFURNACE_TILE.get());
+	public ArcFurnaceControllerTile() {
+		super(ModBlocks.ARCFURNACE_CONTROLLER_TILE.get());
 	}
 
 	@Override
@@ -218,8 +220,9 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 	}
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+		System.out.println("checked");
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (side == null) {
 				return combinedSlotHolder.cast();
 			} else if (side == Direction.UP) {
@@ -228,10 +231,29 @@ public class ArcFurnaceTile extends TileEntity implements ITickableTileEntity, I
 				return outputSlotHolder.cast();
 			}
 		}
-		if (cap == CapabilityEnergy.ENERGY) {
+		if (capability == CapabilityEnergy.ENERGY) {
 			return energy.cast();
 		}
-		return super.getCapability(cap, side);
+		return super.getCapability(capability, side);
+	}
+
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side, MultiblockPortType type) {
+		System.out.println("checked");
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			if (side == null) {
+				return combinedSlotHolder.cast();
+			} else if (type == MultiblockPortType.ITEM_INPUT) {
+				return inputSlotHolder.cast();
+			} else if (type == MultiblockPortType.ITEM_OUTPUT) {
+				System.out.println("output");
+				return outputSlotHolder.cast();
+			}
+		}
+		if (capability == CapabilityEnergy.ENERGY) {
+			return energy.cast();
+		}
+
+		return super.getCapability(capability, side);
 	}
 
 	public CustomEnergyStorage createEnergy() {
