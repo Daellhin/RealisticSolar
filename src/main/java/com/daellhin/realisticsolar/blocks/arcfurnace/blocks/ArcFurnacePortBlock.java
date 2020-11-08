@@ -1,8 +1,8 @@
 package com.daellhin.realisticsolar.blocks.arcfurnace.blocks;
 
 import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnacePortTile;
-import com.daellhin.realisticsolar.tools.BlockBuilder;
-import com.daellhin.realisticsolar.tools.MultiblockPortType;
+import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
+import com.daellhin.realisticsolar.tools.enums.MultiblockPortType;
 
 public class ArcFurnacePortBlock extends ArcFurnacePartBlock {
 

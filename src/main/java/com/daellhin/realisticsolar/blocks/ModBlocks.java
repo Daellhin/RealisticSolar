@@ -23,7 +23,7 @@ import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorTile;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelBlock;
 import com.daellhin.realisticsolar.blocks.solarpanel.SolarPanelTile;
 import com.daellhin.realisticsolar.setup.ModSetup;
-import com.daellhin.realisticsolar.tools.MultiblockPortType;
+import com.daellhin.realisticsolar.tools.enums.MultiblockPortType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.Properties;
@@ -34,8 +34,6 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -56,6 +54,7 @@ public class ModBlocks {
 			.sound(SoundType.METAL)
 			.hardnessAndResistance(2.0f)
 			.harvestTool(ToolType.PICKAXE)));
+
 	public static final RegistryObject<Block> ALUMINIUMORE_BLOCK = BLOCKS
 			.register("aluminium_ore_block", () -> new Block(Properties.create(Material.ROCK)
 					.sound(SoundType.STONE)
@@ -67,40 +66,38 @@ public class ModBlocks {
 			.hardnessAndResistance(2.0f)
 			.harvestTool(ToolType.SHOVEL)));
 
-	// solar panel
+	// Solar Panel
 	public static final RegistryObject<Block> SOLARPANEL_BLOCK = BLOCKS.register(SolarPanelBlock.REGNAME, SolarPanelBlock::new);
 	public static final RegistryObject<TileEntityType<SolarPanelTile>> SOLARPANEL_TILE = TILES
 			.register(SolarPanelBlock.REGNAME, () -> TileEntityType.Builder.create(SolarPanelTile::new, SOLARPANEL_BLOCK.get())
 					.build(null));
 
-	// coal generator
+	// Coal Generator
 	public static final RegistryObject<Block> COALGENERATOR_BLOCK = BLOCKS.register(CoalGeneratorBlock.REGNAME, CoalGeneratorBlock::new);
 	public static final RegistryObject<TileEntityType<CoalGeneratorTile>> COALGENERATOR_TILE = TILES
 			.register(CoalGeneratorBlock.REGNAME, () -> TileEntityType.Builder.create(CoalGeneratorTile::new, COALGENERATOR_BLOCK.get())
 					.build(null));
 	public static final RegistryObject<ContainerType<CoalGeneratorContainer>> COALGENERATOR_CONTAINER = CONTAINERS
 			.register(CoalGeneratorBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
-				BlockPos pos = data.readBlockPos();
-				World world = inv.player.getEntityWorld();
-				return new CoalGeneratorContainer(windowId, world, pos, inv, inv.player);
+				return new CoalGeneratorContainer(windowId, inv.player.getEntityWorld(), data.readBlockPos(), inv, inv.player);
 			}));
 
-	// arc furnace multiblock
+	// Arc Furnace
 	// controller
 	public static final RegistryObject<Block> ARCFURNACE_CONTROLLER_BLOCK = BLOCKS
 			.register(ArcFurnaceControllerBlock.REGNAME, ArcFurnaceControllerBlock::new);
 
 	// parts
 	public static final RegistryObject<Block> ARCFURNACE_CASING_BLOCK = BLOCKS.register("arc_furnace_casing_block", ArcFurnacePartBlock::new);
-
 	public static final RegistryObject<Block> ARCFURNACE_ELECTRODE_BLOCK = BLOCKS.register("arc_furnace_electrode_block", ArcFurnacePartBlock::new);
 
 	// ports
 	public static final RegistryObject<Block> ARCFURNACE_ITEM_INPUT_PORT_BLOCK = BLOCKS
 			.register("arcfurnace_item_input_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ITEM_INPUT));
-
 	public static final RegistryObject<Block> ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK = BLOCKS
 			.register("arcfurnace_item_output_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ITEM_OUTPUT));
+	public static final RegistryObject<Block> ARCFURNACE_ENERGY_OUTPUT_PORT_BLOCK = BLOCKS
+			.register("arcfurnace_energy_output_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ENERGY_INPUT));
 
 	// tiles
 	public static final RegistryObject<TileEntityType<ArcFurnaceControllerTile>> ARCFURNACE_CONTROLLER_TILE = TILES
@@ -110,18 +107,17 @@ public class ModBlocks {
 
 	public static final RegistryObject<TileEntityType<ArcFurnacePortTile>> ARCFURNACE_PORT_TILE = TILES
 			.register("arcfurnace_port", () -> TileEntityType.Builder
-					.create(ArcFurnacePortTile::new, ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get(), ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK.get())
+					.create(ArcFurnacePortTile::new, ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get(), ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK
+							.get(), ARCFURNACE_ENERGY_OUTPUT_PORT_BLOCK.get())
 					.build(null));
 
-	// common
+	// container
 	public static final RegistryObject<ContainerType<ArcFurnaceContainer>> ARCFURNACE_CONTAINER = CONTAINERS
 			.register(ArcFurnaceControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
-				BlockPos pos = data.readBlockPos();
-				World world = inv.player.getEntityWorld();
-				return new ArcFurnaceContainer(windowId, world, pos, inv, inv.player);
+				return new ArcFurnaceContainer(windowId, inv.player.getEntityWorld(), data.readBlockPos(), inv, inv.player);
 			}));
 
-	// Siemens reactor multiblock
+	// Siemens Reactor
 	// controller
 	public static final RegistryObject<Block> SIEMENSREACTOR_CONTROLLER_BLOCK = BLOCKS
 			.register(SiemensReactorControllerBlock.REGNAME, SiemensReactorControllerBlock::new);
@@ -136,27 +132,21 @@ public class ModBlocks {
 					.build(null));
 	public static final RegistryObject<ContainerType<SiemensReactorContainer>> SIEMENSREACTOR_CONTAINER = CONTAINERS
 			.register(SiemensReactorControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
-				BlockPos pos = data.readBlockPos();
-				World world = inv.player.getEntityWorld();
-				return new SiemensReactorContainer(windowId, world, pos, inv, inv.player);
+				return new SiemensReactorContainer(windowId, inv.player.getEntityWorld(), data.readBlockPos(), inv, inv.player);
 			}));
 
-	// HCl burner
-	// Fluid tank
+	// HCl Burner
 	public static final RegistryObject<Block> HCL_BURNER_CONTROLLER_BLOCK = BLOCKS
 			.register(HClBurnerControllerBlock.REGNAME, HClBurnerControllerBlock::new);
-
 	public static final RegistryObject<TileEntityType<HClBurnerTile>> HCL_BURNER_TILE = TILES
 			.register(HClBurnerControllerBlock.REGNAME, () -> TileEntityType.Builder.create(HClBurnerTile::new, HCL_BURNER_CONTROLLER_BLOCK.get())
 					.build(null));
-
 	public static final RegistryObject<ContainerType<HClBurnerContainer>> HCL_BURNER_CONTAINER = CONTAINERS
 			.register(HClBurnerControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
-				BlockPos pos = data.readBlockPos();
-				World world = inv.player.getEntityWorld();
-				return new HClBurnerContainer(windowId, world, pos, inv, inv.player);
+				return new HClBurnerContainer(windowId, inv.player.getEntityWorld(), data.readBlockPos(), inv, inv.player);
 			}));
-
+	
+	// generate blockItems
 	@SubscribeEvent
 	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();

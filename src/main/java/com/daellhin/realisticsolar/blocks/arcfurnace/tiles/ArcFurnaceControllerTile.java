@@ -10,8 +10,8 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.ArcFurnaceContainer;
 import com.daellhin.realisticsolar.recipe.CustomRecipe;
 import com.daellhin.realisticsolar.recipe.CustomRecipeRegistry;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
-import com.daellhin.realisticsolar.tools.MultiblockPortType;
 import com.daellhin.realisticsolar.tools.OutputStackHandler;
+import com.daellhin.realisticsolar.tools.enums.MultiblockPortType;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -236,16 +236,16 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side, MultiblockPortType type) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (side == null) {
-				return combinedSlotHolder.cast();
-			} else if (type == MultiblockPortType.ITEM_INPUT) {
+			if (type == MultiblockPortType.ITEM_INPUT) {
 				return inputSlotHolder.cast();
 			} else if (type == MultiblockPortType.ITEM_OUTPUT) {
 				return outputSlotWrapperHolder.cast();
 			}
 		}
 		if (capability == CapabilityEnergy.ENERGY) {
-			return energy.cast();
+			if (type == MultiblockPortType.ENERGY_INPUT) {
+				return energy.cast();
+			}
 		}
 		return super.getCapability(capability, side);
 	}

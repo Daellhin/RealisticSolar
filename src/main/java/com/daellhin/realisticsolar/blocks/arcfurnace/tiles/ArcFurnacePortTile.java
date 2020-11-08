@@ -19,12 +19,17 @@ public class ArcFurnacePortTile extends TileEntity {
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
 		BlockState state = world.getBlockState(pos);
-		if ((state.getBlock() instanceof ArcFurnacePortBlock) && ((ArcFurnacePortBlock) state.getBlock()).isMultiblockFormed(state, world, pos)) {
-			BlockPos controllerPos = ((ArcFurnacePortBlock) state.getBlock()).getControllerBlockPos(state, world, pos);
-			TileEntity te = world.getTileEntity(controllerPos);
-			if (te instanceof ArcFurnaceControllerTile) {
-				return ((ArcFurnaceControllerTile) te).getCapability(capability, side, ((ArcFurnacePortBlock) state.getBlock()).getType());
 
+		if ((state.getBlock() instanceof ArcFurnacePortBlock)) {
+			ArcFurnacePortBlock portBlock = ((ArcFurnacePortBlock) state.getBlock());		
+			
+			if (portBlock.isMultiblockFormed(state, world, pos)) {	
+				BlockPos controllerPos = portBlock.getControllerBlockPos(state, world, pos);
+				TileEntity te = world.getTileEntity(controllerPos);			
+				
+				if (te instanceof ArcFurnaceControllerTile) {
+					return ((ArcFurnaceControllerTile) te).getCapability(capability, side, portBlock.getType());
+				}
 			}
 		}
 		return super.getCapability(capability, side);
