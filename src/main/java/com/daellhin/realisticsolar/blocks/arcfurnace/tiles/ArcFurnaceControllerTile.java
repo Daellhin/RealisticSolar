@@ -11,13 +11,13 @@ import com.daellhin.realisticsolar.recipe.CustomRecipe;
 import com.daellhin.realisticsolar.recipe.CustomRecipeRegistry;
 import com.daellhin.realisticsolar.tools.CustomEnergyStorage;
 import com.daellhin.realisticsolar.tools.MultiblockPortType;
+import com.daellhin.realisticsolar.tools.OutputStackHandler;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -38,18 +38,19 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 public class ArcFurnaceControllerTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final int INPUT_SLOTS = 3;
-	public static final int OUTPUT_SLOTS = 3;
-	public static final int SIZE = INPUT_SLOTS + OUTPUT_SLOTS;
+	public static final int OUTPUT_SLOTS = 1;
+
 	private CustomRecipe currentRecipe;
 	private int progress;
 
 	private ItemStackHandler inputHandler = createInputHandler();
 	private ItemStackHandler outputHandler = createOutputHandler();
+	private ItemStackHandler outputSlotWrapper = new OutputStackHandler(outputHandler);
 	private CustomEnergyStorage energyStorage = createEnergy();
 
 	private LazyOptional<IItemHandler> inputSlotHolder = LazyOptional.of(() -> inputHandler);
-	private LazyOptional<IItemHandler> outputSlotHolder = LazyOptional.of(() -> outputHandler);
-	private LazyOptional<IItemHandler> combinedSlotHolder = LazyOptional.of(() -> new CombinedInvWrapper(inputHandler, outputHandler));
+	private final LazyOptional<IItemHandler> outputSlotWrapperHolder = LazyOptional.of(() -> outputSlotWrapper);
+	private LazyOptional<IItemHandler> combinedSlotHolder = LazyOptional.of(() -> new CombinedInvWrapper(inputHandler, outputSlotWrapper));
 	private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);;
 
 	public ArcFurnaceControllerTile() {
@@ -60,8 +61,8 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 	public void remove() {
 		super.remove();
 		inputSlotHolder.invalidate();
-		outputSlotHolder.invalidate();
 		combinedSlotHolder.invalidate();
+		outputSlotWrapperHolder.invalidate();
 		energy.invalidate();
 	}
 
@@ -165,24 +166,14 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 			@Override
 			public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-				for (Item item : CustomRecipeRegistry.getValidItems(slot)) {
-					if (item == stack.getItem()) {
-						return true;
-					}
-				}
-				return false;
+				return CustomRecipeRegistry.isItemValid(slot, stack);
 			}
 
-			@Nonnull
 			@Override
-			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-				for (Item item : CustomRecipeRegistry.getValidItems(slot)) {
-					if (item == stack.getItem()) {
-						return stack;
-					}
-				}
-				return super.insertItem(slot, stack, simulate);
+			protected void onContentsChanged(int slot) {
+				markDirty();
 			}
+
 		};
 	}
 
@@ -190,14 +181,21 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 		return new ItemStackHandler(OUTPUT_SLOTS) {
 
 			@Override
-			public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-				return true;
-			}
-
-			@Override
 			protected void onContentsChanged(int slot) {
 				markDirty();
 			}
+
+		};
+	}
+
+	public CustomEnergyStorage createEnergy() {
+		return new CustomEnergyStorage(Config.ARCFURNACE_MAXPOWER.get(), Config.ARCFURNACE_RECEIVE.get()) {
+
+			@Override
+			protected void onEnergyChanged() {
+				markDirty();
+			}
+
 		};
 	}
 
@@ -221,14 +219,13 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		System.out.println("checked");
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (side == null) {
 				return combinedSlotHolder.cast();
 			} else if (side == Direction.UP) {
 				return inputSlotHolder.cast();
 			} else {
-				return outputSlotHolder.cast();
+				return outputSlotWrapperHolder.cast();
 			}
 		}
 		if (capability == CapabilityEnergy.ENERGY) {
@@ -238,33 +235,19 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 	}
 
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side, MultiblockPortType type) {
-		System.out.println("checked");
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (side == null) {
 				return combinedSlotHolder.cast();
 			} else if (type == MultiblockPortType.ITEM_INPUT) {
 				return inputSlotHolder.cast();
 			} else if (type == MultiblockPortType.ITEM_OUTPUT) {
-				System.out.println("output");
-				return outputSlotHolder.cast();
+				return outputSlotWrapperHolder.cast();
 			}
 		}
 		if (capability == CapabilityEnergy.ENERGY) {
 			return energy.cast();
 		}
-
 		return super.getCapability(capability, side);
-	}
-
-	public CustomEnergyStorage createEnergy() {
-		return new CustomEnergyStorage(Config.ARCFURNACE_MAXPOWER.get(), Config.ARCFURNACE_RECEIVE.get()) {
-
-			@Override
-			protected void onEnergyChanged() {
-				markDirty();
-			}
-
-		};
 	}
 
 	@Override
@@ -274,8 +257,8 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 	}
 
 	@Override
-	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new ArcFurnaceContainer(i, world, pos, playerInventory, playerEntity);
+	public Container createMenu(int windowID, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+		return new ArcFurnaceContainer(windowID, world, pos, playerInventory, playerEntity);
 	}
 
 	// progress

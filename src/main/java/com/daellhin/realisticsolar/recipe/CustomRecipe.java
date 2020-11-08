@@ -13,7 +13,6 @@ public class CustomRecipe {
 	}
 
 	public ItemStack getInput(int index) {
-		System.out.println(input[index].toString());
 		return input[index];
 	}
 

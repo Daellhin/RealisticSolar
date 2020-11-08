@@ -3,6 +3,7 @@ package com.daellhin.realisticsolar.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.daellhin.realisticsolar.blocks.ModBlocks;
@@ -15,19 +16,20 @@ import net.minecraft.item.Items;
 public class CustomRecipeRegistry {
 
 	private static boolean isInit = false;
-	private static List<CustomRecipe> customRecipeList = new ArrayList<>();
+	// never use directly, use getCustomRecipes
+	private static List<CustomRecipe> customRecipes = new ArrayList<>();
 
-	public static List<CustomRecipe> getCustomRecipeList() {
+	public static List<CustomRecipe> getCustomRecipes() {
 		if (!isInit) {
 			init();
 			isInit = true;
 		}
-		return customRecipeList;
+		return customRecipes;
 	}
 
 	@Nullable
 	public static CustomRecipe getRecipe(ItemStack[] inputs) {
-		for (CustomRecipe recipe : getCustomRecipeList()) {
+		for (CustomRecipe recipe : getCustomRecipes()) {
 			if (inputs.length == recipe.getInputLength()) {
 				boolean equal = true;
 				for (int i = 0; i < inputs.length && equal; i++) {
@@ -45,7 +47,7 @@ public class CustomRecipeRegistry {
 
 	public static List<Item> getValidItems(int slot) {
 		List<Item> output = new ArrayList<>();
-		for (CustomRecipe customRecipe : getCustomRecipeList()) {
+		for (CustomRecipe customRecipe : getCustomRecipes()) {
 			output.add(customRecipe.getInput(slot)
 					.getItem());
 		}
@@ -53,11 +55,19 @@ public class CustomRecipeRegistry {
 		return output;
 	}
 
+	public static boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+		for (CustomRecipe recipe : getCustomRecipes()) {
+			if (ItemStack.areItemsEqual(stack, recipe.getInput(slot))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// order of items corresponds with the order of the slots
 	private static void init() {
-		customRecipeList
+		customRecipes
 				.add(new CustomRecipe(new ItemStack[] { new ItemStack(ModItems.WOODCHIP_ITEM.get()), new ItemStack(ModBlocks.SILICASAND_BLOCK.get()),
 						new ItemStack(Items.COAL) }, new ItemStack[] { new ItemStack(ModItems.METALURGICAL_SILICON_ITEM.get()) }));
-
 	}
 }

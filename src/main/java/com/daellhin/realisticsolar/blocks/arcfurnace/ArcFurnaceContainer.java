@@ -22,12 +22,15 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	private ArcFurnaceControllerTile tileEntity;
 	private PlayerEntity playerEntity;
 	private IItemHandler playerInventory;
+	protected final int inventorySize;
 
 	public ArcFurnaceContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		super(ModBlocks.ARCFURNACE_CONTAINER.get(), windowId);
 		this.tileEntity = (ArcFurnaceControllerTile) world.getTileEntity(pos);
 		this.playerEntity = playerEntity;
 		this.playerInventory = new InvWrapper(playerInventory);
+		this.inventorySize = ArcFurnaceControllerTile.INPUT_SLOTS;
+
 		layoutPlayerInventorySlots(this.playerInventory, 8, 99);
 		layoutMachineInventorySlots();
 		syncEnergy();
@@ -76,27 +79,32 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 		});
 	}
 
-	@Override
+	// Doesn't work yet
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
+		ItemStack transferStack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
+
 		if (slot != null && slot.getHasStack()) {
-			ItemStack stack = slot.getStack();
-			itemstack = stack.copy();
-			if (index < ArcFurnaceControllerTile.SIZE) {
-				if (!this.mergeItemStack(stack, ArcFurnaceControllerTile.SIZE, this.inventorySlots.size(), true)) {
+			// Stack already in slot
+			ItemStack currentHeldStack = slot.getStack();
+			transferStack = currentHeldStack.copy();
+
+			if (index < inventorySize) {
+				if (!this.mergeItemStack(currentHeldStack, inventorySize, this.inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(stack, 0, ArcFurnaceControllerTile.SIZE, false)) {
+			} else if (!this.mergeItemStack(currentHeldStack, 0, inventorySize, false)) {
 				return ItemStack.EMPTY;
 			}
-			if (stack.isEmpty()) {
+
+			if (currentHeldStack.getCount() == 0) {
 				slot.putStack(ItemStack.EMPTY);
 			} else {
 				slot.onSlotChanged();
 			}
 		}
-		return itemstack;
+
+		return transferStack;
 	}
 
 	@Override
