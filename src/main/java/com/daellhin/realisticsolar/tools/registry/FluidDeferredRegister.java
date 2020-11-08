@@ -6,7 +6,7 @@ import java.util.List;
 import com.daellhin.realisticsolar.fluids.base.AcidBlock;
 import com.daellhin.realisticsolar.items.base.BaseGasItem;
 import com.daellhin.realisticsolar.setup.ModSetup;
-import com.daellhin.realisticsolar.tools.ItemBuilder;
+import com.daellhin.realisticsolar.tools.builders.ItemBuilder;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;

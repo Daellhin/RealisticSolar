@@ -5,8 +5,8 @@ import javax.annotation.Nullable;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.fluids.ModFluids;
 import com.daellhin.realisticsolar.fluids.handling.CustomFluidTank;
-import com.daellhin.realisticsolar.fluids.handling.TankAction;
 import com.daellhin.realisticsolar.fluids.handling.TankContainer;
+import com.daellhin.realisticsolar.tools.enums.InOutAction;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,19 +33,19 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 	private static final int TANK_SIZE = 10 * 1000;
 	private static final int USAGE = 10;
 
-	private CustomFluidTank inputHydrogenTank = new CustomFluidTank(TANK_SIZE, "input_hydrogen").setTankAction(TankAction.FILL)
+	private CustomFluidTank inputHydrogenTank = new CustomFluidTank(TANK_SIZE, "input_hydrogen").setTankAction(InOutAction.INPUT)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
 					.equals(ModFluids.HYDROGEN.getSource()));
-	private CustomFluidTank inputChlorideTank = new CustomFluidTank(TANK_SIZE, "input_chloride").setTankAction(TankAction.FILL)
+	private CustomFluidTank inputChlorideTank = new CustomFluidTank(TANK_SIZE, "input_chloride").setTankAction(InOutAction.INPUT)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
 					.equals(ModFluids.CHLORIDE.getSource()));
-	private CustomFluidTank inputWaterTank = new CustomFluidTank(TANK_SIZE, "input_water").setTankAction(TankAction.FILL)
+	private CustomFluidTank inputWaterTank = new CustomFluidTank(TANK_SIZE, "input_water").setTankAction(InOutAction.INPUT)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
 					.equals(Fluids.WATER));
-	private CustomFluidTank outputHClTank = new CustomFluidTank(TANK_SIZE, "output_hcl").setTankAction(TankAction.DRAIN)
+	private CustomFluidTank outputHClTank = new CustomFluidTank(TANK_SIZE, "output_hcl").setTankAction(InOutAction.OUTPUT)
 			.onContentsChanged(() -> onContentsChanged())
 			.setValidator(fluidStack -> fluidStack.getFluid()
 					.equals(ModFluids.HYDROGEN_CHLORIDE.getSource()));

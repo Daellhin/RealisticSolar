@@ -1,6 +1,6 @@
 package com.daellhin.realisticsolar.blocks.base;
 
-import com.daellhin.realisticsolar.tools.BlockBuilder;
+import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

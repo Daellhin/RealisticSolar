@@ -4,7 +4,7 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.enums.ArcFurnaceMultiblockP
 import com.daellhin.realisticsolar.blocks.arcfurnace.enums.ArcFurnaceMultiblockPattern;
 import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnaceControllerTile;
 import com.daellhin.realisticsolar.blocks.base.MultiBlockControllerBlock;
-import com.daellhin.realisticsolar.tools.BlockBuilder;
+import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -72,8 +72,6 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 					.up(part.getDy())
 					.offset(facing.rotateY(), part.getDz());
 
-			System.out.println(part.getBlock() + "" + world.getBlockState(currentPos)
-					.getBlock());
 			if (part.getBlock() != world.getBlockState(currentPos)
 					.getBlock()) {
 				return false;

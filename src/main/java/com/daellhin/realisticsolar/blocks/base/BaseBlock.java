@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.daellhin.realisticsolar.tools.BlockBuilder;
+import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

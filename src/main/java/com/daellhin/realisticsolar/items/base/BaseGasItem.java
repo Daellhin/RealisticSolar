@@ -3,7 +3,7 @@ package com.daellhin.realisticsolar.items.base;
 import java.util.List;
 import java.util.function.Supplier;
 
-import com.daellhin.realisticsolar.tools.ItemBuilder;
+import com.daellhin.realisticsolar.tools.builders.ItemBuilder;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;

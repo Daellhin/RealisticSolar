@@ -2,7 +2,7 @@ package com.daellhin.realisticsolar.blocks.arcfurnace.blocks;
 
 import com.daellhin.realisticsolar.blocks.arcfurnace.enums.ArcFurnaceMultiblockPart;
 import com.daellhin.realisticsolar.blocks.base.MultiblockPartBlock;
-import com.daellhin.realisticsolar.tools.BlockBuilder;
+import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

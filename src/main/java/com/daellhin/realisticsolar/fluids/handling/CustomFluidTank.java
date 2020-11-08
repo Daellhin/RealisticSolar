@@ -4,13 +4,15 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
+import com.daellhin.realisticsolar.tools.enums.InOutAction;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class CustomFluidTank extends FluidTank {
 
-	private TankAction tankAction;
+	private InOutAction tankAction;
 	private Runnable onContentsChanged;
 	private String name;
 
@@ -19,11 +21,11 @@ public class CustomFluidTank extends FluidTank {
 		this.name = name;
 
 		// defaults
-		this.tankAction = TankAction.BOTH;
+		this.tankAction = InOutAction.BOTH;
 		this.onContentsChanged = () -> {};
 	}
 
-	public CustomFluidTank setTankAction(TankAction tankAction) {
+	public CustomFluidTank setTankAction(InOutAction tankAction) {
 		this.tankAction = tankAction;
 		return this;
 	}
@@ -34,7 +36,7 @@ public class CustomFluidTank extends FluidTank {
 		return this;
 	}
 
-	public TankAction getTankAction() {
+	public InOutAction getTankAction() {
 		return tankAction;
 	}
 
@@ -64,13 +66,13 @@ public class CustomFluidTank extends FluidTank {
 
 	@Override
 	public int fill(FluidStack resource, FluidAction action) {
-		return getTankAction().canFill() ? super.fill(resource, action) : 0;
+		return getTankAction().canInput() ? super.fill(resource, action) : 0;
 	}
 
 	@Nonnull
 	@Override
 	public FluidStack drain(FluidStack resource, FluidAction action) {
-		return getTankAction().canDrain() ? drainInternal(resource, action) : FluidStack.EMPTY;
+		return getTankAction().canOutput() ? drainInternal(resource, action) : FluidStack.EMPTY;
 	}
 
 	private FluidStack drainInternal(FluidStack resource, FluidAction action) {
@@ -83,7 +85,7 @@ public class CustomFluidTank extends FluidTank {
 	@Nonnull
 	@Override
 	public FluidStack drain(int maxDrain, FluidAction action) {
-		return getTankAction().canDrain() ? drainInternal(maxDrain, action) : FluidStack.EMPTY;
+		return getTankAction().canOutput() ? drainInternal(maxDrain, action) : FluidStack.EMPTY;
 	}
 
 	@Nonnull

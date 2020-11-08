@@ -4,7 +4,7 @@ import static com.daellhin.realisticsolar.setup.Registration.ITEMS;
 
 import com.daellhin.realisticsolar.items.base.BaseItem;
 import com.daellhin.realisticsolar.items.handbook.HandBookItem;
-import com.daellhin.realisticsolar.tools.ItemBuilder;
+import com.daellhin.realisticsolar.tools.builders.ItemBuilder;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;

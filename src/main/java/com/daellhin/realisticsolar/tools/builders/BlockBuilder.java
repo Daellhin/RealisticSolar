@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.tools;
+package com.daellhin.realisticsolar.tools.builders;
 
 import java.util.function.Supplier;
 

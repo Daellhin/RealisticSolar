@@ -1,7 +1,7 @@
 package com.daellhin.realisticsolar.blocks.solarpanel;
 
 import com.daellhin.realisticsolar.blocks.base.BaseBlock;
-import com.daellhin.realisticsolar.tools.BlockBuilder;
+import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
