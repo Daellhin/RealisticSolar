@@ -36,6 +36,6 @@ public class PageButton extends Button {
 		Minecraft.getInstance()
 				.getTextureManager()
 				.bindTexture(resourceLocation);
-		blit(xPos, yPos, textureX + (this.isHovered ? 18 : 0), textureY, buttonWidth, buttonHeight, 64, 64);
+		blit(xPos, yPos, textureX + (this.isHovered ? buttonWidth : 0), textureY, buttonWidth, buttonHeight, 64, 64);
 	}
 }

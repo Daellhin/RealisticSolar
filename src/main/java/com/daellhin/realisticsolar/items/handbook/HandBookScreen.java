@@ -36,7 +36,7 @@ public class HandBookScreen extends Screen {
 
 		buttonNextPage = new PageButton(relX + 240, relY + 152, BUTTONS, 0, 0, 18, 10, (button) -> currentPage++);
 		buttonPreviousPage = new PageButton(relX + 20, relY + 152, BUTTONS, 0, 10, 18, 10, (button) -> currentPage--);
-		buttonChapters = new PageButton(relX + 20 + 40, relY + 152, BUTTONS, 0, 10, 18, 10, (button) -> currentChapter = chapters.getChapter("index"));
+		buttonChapters = new PageButton(relX + 20 + 40, relY + 152, BUTTONS, 36, 0, 13, 12, (button) -> currentChapter = chapters.getChapter("index"));
 		
 		addButton(buttonNextPage);
 		addButton(buttonPreviousPage);
