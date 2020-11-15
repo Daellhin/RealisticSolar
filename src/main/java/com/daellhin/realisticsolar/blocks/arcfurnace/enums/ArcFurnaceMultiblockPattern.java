@@ -9,7 +9,7 @@ public enum ArcFurnaceMultiblockPattern {
 	
 	// X = 0
 	IP0P0N2( 0,  0, -2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
-	IP0P0N1( 0,  0, -1, ModBlocks.ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get()),
+	IP0P0N1( 0,  0, -1, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
 	IP0P0P0( 0,  0,  0, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get()),
 	IP0P0P1( 0,  0,  1, ModBlocks.ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK.get()),
 	IP0P0P2( 0,  0,  2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
@@ -40,9 +40,9 @@ public enum ArcFurnaceMultiblockPattern {
 	IP1P1P2( 1,  1,  2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
 	
 	IP1P2N2( 1,  2, -2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
-	IP1P2N1( 1,  2, -1, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
-	IP1P2P0( 1,  2,  0, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
-	IP1P2P1( 1,  2,  1, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
+	IP1P2N1( 1,  2, -1, ModBlocks.ARCFURNACE_ENERGY_INPUT_PORT_BLOCK.get()),
+	IP1P2P0( 1,  2,  0, ModBlocks.ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get()),
+	IP1P2P1( 1,  2,  1, ModBlocks.ARCFURNACE_ENERGY_INPUT_PORT_BLOCK.get()),
 	IP1P2P2( 1,  2,  2, ModBlocks.ARCFURNACE_CASING_BLOCK.get()),
 	
 	// X = 2

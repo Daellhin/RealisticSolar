@@ -20,7 +20,7 @@ public class BlockStates extends BaseBlockStateProvider {
 		simpleBlockEmptyModel(ModBlocks.ALUMINIUM_BLOCK.get());
 		simpleBlockEmptyModel(ModBlocks.ALUMINIUMORE_BLOCK.get());
 		simpleBlockEmptyModel(ModBlocks.SILICASAND_BLOCK.get());
-		
+
 		simpleBlockEmptyModel(ModFluids.HYDROGEN_CHLORIDE.getBlock());
 		simpleBlockEmptyModel(ModFluids.HYDROGEN.getBlock());
 		simpleBlockEmptyModel(ModFluids.CHLORIDE.getBlock());
@@ -29,6 +29,9 @@ public class BlockStates extends BaseBlockStateProvider {
 		horizontalBlockEmptyModel(ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
 		horizontalBlockEmptyModel(ModBlocks.ARCFURNACE_CASING_BLOCK.get());
 		horizontalBlockEmptyModel(ModBlocks.ARCFURNACE_ELECTRODE_BLOCK.get());
+		horizontalBlockEmptyModel(ModBlocks.ARCFURNACE_ENERGY_INPUT_PORT_BLOCK.get());
+		horizontalBlockEmptyModel(ModBlocks.ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get());
+		horizontalBlockEmptyModel(ModBlocks.ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK.get());
 
 		horizontalPoweredBlockEmptyModel(ModBlocks.SOLARPANEL_BLOCK.get());
 		horizontalPoweredBlockEmptyModel(ModBlocks.COALGENERATOR_BLOCK.get());
@@ -43,6 +46,9 @@ public class BlockStates extends BaseBlockStateProvider {
 		simpleBlockItemDefaultModel(ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_CASING_BLOCK.get());
 		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_ELECTRODE_BLOCK.get());
+		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_ENERGY_INPUT_PORT_BLOCK.get());
+		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get());
+		simpleBlockItemDefaultModel(ModBlocks.ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK.get());
 
 		poweredBlockItemDefaultModel(ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 		poweredBlockItemDefaultModel(ModBlocks.SOLARPANEL_BLOCK.get());

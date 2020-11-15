@@ -96,8 +96,8 @@ public class ModBlocks {
 			.register("arcfurnace_item_input_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ITEM_INPUT));
 	public static final RegistryObject<Block> ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK = BLOCKS
 			.register("arcfurnace_item_output_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ITEM_OUTPUT));
-	public static final RegistryObject<Block> ARCFURNACE_ENERGY_OUTPUT_PORT_BLOCK = BLOCKS
-			.register("arcfurnace_energy_output_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ENERGY_INPUT));
+	public static final RegistryObject<Block> ARCFURNACE_ENERGY_INPUT_PORT_BLOCK = BLOCKS
+			.register("arcfurnace_energy_input_port_block", () -> new ArcFurnacePortBlock(MultiblockPortType.ENERGY_INPUT));
 
 	// tiles
 	public static final RegistryObject<TileEntityType<ArcFurnaceControllerTile>> ARCFURNACE_CONTROLLER_TILE = TILES
@@ -108,7 +108,7 @@ public class ModBlocks {
 	public static final RegistryObject<TileEntityType<ArcFurnacePortTile>> ARCFURNACE_PORT_TILE = TILES
 			.register("arcfurnace_port", () -> TileEntityType.Builder
 					.create(ArcFurnacePortTile::new, ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get(), ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK
-							.get(), ARCFURNACE_ENERGY_OUTPUT_PORT_BLOCK.get())
+							.get(), ARCFURNACE_ENERGY_INPUT_PORT_BLOCK.get())
 					.build(null));
 
 	// container

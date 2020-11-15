@@ -18,6 +18,9 @@ public class LootTables extends BaseLootTableProvider {
 		addSimpleTableSurvesExplosion(ModBlocks.SILICASAND_BLOCK.get());
 		addSimpleTable(ModBlocks.ARCFURNACE_CASING_BLOCK.get());
 		addSimpleTable(ModBlocks.ARCFURNACE_ELECTRODE_BLOCK.get());
+		addSimpleTable(ModBlocks.ARCFURNACE_ENERGY_INPUT_PORT_BLOCK.get());
+		addSimpleTable(ModBlocks.ARCFURNACE_ITEM_INPUT_PORT_BLOCK.get());
+		addSimpleTable(ModBlocks.ARCFURNACE_ITEM_OUTPUT_PORT_BLOCK.get());
 		addSimpleTable(ModBlocks.SIEMENSREACTOR_TOP_BLOCK.get());
 		addSimpleTable(ModBlocks.SOLARPANEL_BLOCK.get());
 		addSimpleTable(ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());

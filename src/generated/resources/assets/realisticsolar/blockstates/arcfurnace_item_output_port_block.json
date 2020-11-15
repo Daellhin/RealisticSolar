@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "realisticsolar:block/arcfurnace_item_output_port_block",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "realisticsolar:block/arcfurnace_item_output_port_block"
+    },
+    "facing=west": {
+      "model": "realisticsolar:block/arcfurnace_item_output_port_block",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "realisticsolar:block/arcfurnace_item_output_port_block",
+      "y": 270
+    }
+  }
+}
