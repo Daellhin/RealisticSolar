@@ -1,0 +1,66 @@
+{
+	"pages": [
+		{
+			"text": [
+				{
+					"text": "page_arc_furnace_caption_1",
+					"alignement": "RIGHT",
+					"wrap": -1,
+					"color": 0,
+					"size": 0.4,
+					"x": 109,
+					"y": 69
+				},
+				{
+					"text": "page_arc_furnace_title",
+					"alignement": "LEFT",
+					"wrap": -1,
+					"color": 0,
+					"size": 1,
+					"x": 210,
+					"y": 15
+				},
+				{
+					"text": "page_arc_furnace_subtitle",
+					"alignement": "CENTER",
+					"wrap": -1,
+					"color": 0,
+					"size": 0.8,
+					"x": 210,
+					"y": 25
+				},
+				{
+					"text": "page_arc_furnace_text",
+					"alignement": "LEFT",
+					"wrap": 100,
+					"color": 0,
+					"size": 0.59,
+					"x": 160,
+					"y": 35
+				}
+			],
+			"images": [
+				{
+					"location": "textures/gui/page/arc_furnace.png",
+					"width": 1024,
+					"height": 512,
+					"desiredWidth": 71,
+					"desiredHeight": 34,
+					"x": 28,
+					"y": 28
+				},
+				{
+					"location": "textures/gui/page/arc_furnace_gui.png",
+					"width": 1024,
+					"height": 512,
+					"desiredWidth": 71,
+					"desiredHeight":34,
+					"x": 34,
+					"y": 90
+				}
+			],
+			"links": [
+			]
+		}
+	]
+}

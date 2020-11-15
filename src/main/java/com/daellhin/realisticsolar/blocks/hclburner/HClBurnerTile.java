@@ -1,7 +1,13 @@
 package com.daellhin.realisticsolar.blocks.hclburner;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import javax.annotation.Nullable;
 
+import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.blocks.ModBlocks;
 import com.daellhin.realisticsolar.fluids.ModFluids;
 import com.daellhin.realisticsolar.fluids.handling.CustomFluidTank;
@@ -9,6 +15,7 @@ import com.daellhin.realisticsolar.fluids.handling.TankContainer;
 import com.daellhin.realisticsolar.tools.enums.InOutAction;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
@@ -17,10 +24,13 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.resources.IResource;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -61,9 +71,41 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 		tankContainer.add(inputWaterTank, Direction.NORTH);
 		tankContainer.add(outputHClTank, Direction.SOUTH);
 	}
+	
+	public static IResource getResource(ResourceLocation location) throws IOException {
+        IResourceManager manager = Minecraft.getInstance().getResourceManager();
+        IResource res = manager.getResource(location);
+        System.out.println(res.getLocation());
+        return res;
+}
 
 	@Override
 	public void tick() {
+		//yesss
+		ResourceLocation testLoc = new ResourceLocation(RealisticSolar.MODID, "test.json");
+		InputStreamReader reader;
+		try {
+			reader = new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(testLoc).getInputStream());
+			BufferedReader r = new BufferedReader(reader);
+			System.out.println(r.readLine());
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// testing
+//		try {
+//            getResource(new ResourceLocation(RealisticSolar.MODID, "recipes/test.json"));
+//            System.out.println("found");
+//		}catch(FileNotFoundException e) {
+//			System.out.println("fileNotFound");
+//        } catch (IOException e) {
+//            e.printStackTrace();	
+//        }
+		
+		//----------------
+		
 		if (!world.isRemote) {
 			if (progress > 0) {
 				progress--;
