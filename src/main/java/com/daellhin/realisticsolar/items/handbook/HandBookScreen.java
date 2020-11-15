@@ -9,7 +9,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class HandBookScreenNew extends Screen {
+public class HandBookScreen extends Screen {
 
 	private static final ResourceLocation GUI = new ResourceLocation(RealisticSolar.MODID, "textures/gui/hand_book_gui.png");
 	private static final ResourceLocation BUTTONS = new ResourceLocation(RealisticSolar.MODID, "textures/gui/hand_book_buttons.png");
@@ -23,7 +23,7 @@ public class HandBookScreenNew extends Screen {
 	private final int ySize = 180;
 	private int currentPage = 0;
 
-	public HandBookScreenNew(ITextComponent name) {
+	public HandBookScreen(ITextComponent name) {
 		super(name);
 	}
 
