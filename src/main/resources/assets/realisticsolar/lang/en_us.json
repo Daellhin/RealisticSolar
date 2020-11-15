@@ -6,6 +6,8 @@
 	"item.realisticsolar.metallurgical_silicon_item": "Metallurgical Silicon",
 	"item.realisticsolar.wrench_item": "Wrench",
 	"item.realisticsolar.hydrogen_chloride_bucket": "Hydrogen Chloride Bucket",
+	"item.realisticsolar.hydrogen_bucket": "Hydrogen Bucket",
+	"item.realisticsolar.chloride_bucket": "Chloride Bucket",
 	
 	"_comment_": "Blocks",
 	"block.realisticsolar.aluminium_block": "Aluminium Block",
@@ -15,6 +17,9 @@
 	"block.realisticsolar.arc_furnace_controller_block": "Arc Furnace Controller",
 	"block.realisticsolar.arc_furnace_casing_block": "Arc Furnace Casing",
 	"block.realisticsolar.arc_furnace_electrode_block": "Arc Furnace Electrode",
+	"block.realisticsolar.arcfurnace_item_input_port_block": "Arc Furnace Input Port (Items)",
+	"block.realisticsolar.arcfurnace_item_output_port_block": "Arc Furnace Output Port (Items)",
+	"block.realisticsolar.arcfurnace_energy_input_port_block": "Arc Furnace Input Port (Energy)",
 	"block.realisticsolar.coal_generator_block": "Coal Generator",
 	"block.realisticsolar.siemens_reactor_top_block": "Siemens Reactor Top",
 	"block.realisticsolar.siemens_reactor_controller_block": "Siemens Reactor Bottom",
@@ -27,6 +32,8 @@
 	"information.press_shift": "<Press Shift>",
 	"information.hand_book_item": "Handbook for RealisticSolar",
 	"information.wrench_item": "Every good mod needs a wrench.",
+	"information.hydrogen_bucket": "TEMP: temporary stand in for proper gas, no real solution yet",
+	"information.chloride_bucket": "TEMP: temporary stand in for proper gas, no real solution yet",
 	
 	"_comment_": "Multiblock Mesages",
 	"multiblock.formed": "Multiblock formed",
@@ -43,4 +50,5 @@
 	
 	"_comment_": "Death",
 	"death.attack.acid": "Trying to swim in acid?"
+	
 }
