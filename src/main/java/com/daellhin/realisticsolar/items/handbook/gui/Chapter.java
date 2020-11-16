@@ -1,5 +1,7 @@
 package com.daellhin.realisticsolar.items.handbook.gui;
 
+import com.daellhin.realisticsolar.items.handbook.gui.elements.Link;
+
 import net.minecraft.client.gui.FontRenderer;
 
 public class Chapter {
@@ -11,6 +13,10 @@ public class Chapter {
 
 	public int getPageAmount() {
 		return pages.length;
+	}
+	
+	public Link[] getLinks(int page) {
+		return pages[page].getLinks();
 	}
 
 }

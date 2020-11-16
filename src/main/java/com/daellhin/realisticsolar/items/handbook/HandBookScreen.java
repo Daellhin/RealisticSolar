@@ -4,6 +4,7 @@ import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.items.handbook.gui.Chapter;
 import com.daellhin.realisticsolar.items.handbook.gui.ChapterRegistry;
 import com.daellhin.realisticsolar.items.handbook.gui.IndexChapter;
+import com.daellhin.realisticsolar.items.handbook.gui.elements.Link;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
@@ -29,24 +30,32 @@ public class HandBookScreen extends Screen {
 
 	@Override
 	protected void init() {
-		super.init();          
+		super.init();
 		buttons.clear();
 		int relX = (this.width - this.xSize) / 2;
 		int relY = (this.height - this.ySize) / 2;
 
 		buttonNextPage = new PageButton(relX + 240, relY + 152, BUTTONS, 0, 0, 18, 10, (button) -> currentPage++);
 		buttonPreviousPage = new PageButton(relX + 20, relY + 152, BUTTONS, 0, 10, 18, 10, (button) -> currentPage--);
-		buttonChapters = new PageButton(relX + 20 + 40, relY + 152, BUTTONS, 36, 0, 13, 12, (button) -> currentChapter = chapters.getChapter("index"));
-		
+		buttonChapters = new PageButton(relX + 20 + 40, relY + 152, BUTTONS, 36, 0, 13, 12, (button) -> changeChapter("index"));
+
 		addButton(buttonNextPage);
 		addButton(buttonPreviousPage);
 		addButton(buttonChapters);
+
+		for (Link link : currentChapter.getLinks(currentPage)) {
+			link.initialize(this.font, (button) -> System.out.println("click"), relX, relY);
+			addButton(link.getLinkButton());
+		}
 	}
 
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		renderBackground();
-		renderButtons(mouseX, mouseY, partialTicks);
+		buttonPreviousPage.visible = currentPage > 0;
+		buttonNextPage.visible = currentPage < (currentChapter.getPageAmount() - 1);
+		buttonChapters.visible = !(currentChapter instanceof IndexChapter);
+
 		super.render(mouseX, mouseY, partialTicks);
 	}
 
@@ -63,17 +72,11 @@ public class HandBookScreen extends Screen {
 
 		// Chapter
 		currentChapter.draw(currentPage, font, relX, relY, 200);
-
 	}
 
-	protected void renderButtons(int mouseX, int mouseY, float partialTicks) {
-		buttonPreviousPage.visible = currentPage > 0;
-		buttonNextPage.visible = currentPage < (currentChapter.getPageAmount() - 1);
-		buttonChapters.visible = !(currentChapter instanceof IndexChapter);
-		
-		buttonNextPage.render(mouseX, mouseY, partialTicks);
-		buttonPreviousPage.render(mouseX, mouseY, partialTicks);
-		buttonChapters.render(mouseX, mouseY, partialTicks);
+	private void changeChapter(String chapterName) {
+		currentChapter = chapters.getChapter(chapterName);
+		init();
 	}
 
 }

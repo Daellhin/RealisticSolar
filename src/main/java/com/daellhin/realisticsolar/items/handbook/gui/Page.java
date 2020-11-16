@@ -21,7 +21,10 @@ public class Page {
 		for (Link link : this.links) {
 			link.draw(font, relX, relY, pageCenter);
 		}
+	}
 
+	public Link[] getLinks() {
+		return links;
 	}
 
 }
