@@ -3,7 +3,7 @@ package com.daellhin.realisticsolar.items.handbook;
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.items.handbook.gui.Chapter;
 import com.daellhin.realisticsolar.items.handbook.gui.ChapterRegistry;
-import com.daellhin.realisticsolar.items.handbook.gui.IndexChapter;
+import com.daellhin.realisticsolar.items.handbook.gui.PageButton;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Link;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -44,9 +44,10 @@ public class HandBookScreen extends Screen {
 		addButton(buttonChapters);
 
 		for (Link link : currentChapter.getLinks(currentPage)) {
-			link.initialize(this.font, (button) -> System.out.println("click"), relX, relY);
+			link.initialize(this, this.font, relX, relY);
 			addButton(link.getLinkButton());
 		}
+		
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class HandBookScreen extends Screen {
 		renderBackground();
 		buttonPreviousPage.visible = currentPage > 0;
 		buttonNextPage.visible = currentPage < (currentChapter.getPageAmount() - 1);
-		buttonChapters.visible = !(currentChapter instanceof IndexChapter);
+		buttonChapters.visible = !(currentChapter.isIndexChapter());
 
 		super.render(mouseX, mouseY, partialTicks);
 	}
@@ -74,7 +75,7 @@ public class HandBookScreen extends Screen {
 		currentChapter.draw(currentPage, font, relX, relY, 200);
 	}
 
-	private void changeChapter(String chapterName) {
+	public void changeChapter(String chapterName) {
 		currentChapter = chapters.getChapter(chapterName);
 		init();
 	}

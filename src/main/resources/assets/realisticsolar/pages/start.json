@@ -35,10 +35,12 @@
 			"links": [
 				{
 					"location": "location",
+					"linkfunction": "INTERNAL",
 					"text": "LinkText",
 					"alignement": "LEFT",
 					"wrap": 50,
-					"color": 60,
+					"color": 170,
+					"hoveredColor": 43690,
 					"size": 0.7,
 					"x": 160,
 					"y": 30

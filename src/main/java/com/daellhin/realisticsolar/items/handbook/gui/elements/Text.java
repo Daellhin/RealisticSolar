@@ -17,6 +17,18 @@ public class Text {
 	protected int x;
 	protected int y;
 	
+	
+	
+	public Text(String text, Alignement alignement, float size, int wrap, int color, int x, int y) {
+		this.text = text;
+		this.alignement = alignement;
+		this.size = size;
+		this.wrap = wrap;
+		this.color = color;
+		this.x = x;
+		this.y = y;
+	}
+
 	public void draw(FontRenderer font, int relX, int relY, int pageCenter) {
 		if (alignement == Alignement.RIGHT) {
 			drawRightAlignedString(font, text, relX + x, relY + y, size, color);

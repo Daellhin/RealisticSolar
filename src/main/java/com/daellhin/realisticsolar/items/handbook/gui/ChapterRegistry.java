@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,8 @@ public class ChapterRegistry {
 	public ChapterRegistry() {
 		add("start", () -> createChapter(new ResourceLocation(RealisticSolar.MODID, "pages/start.json"), Chapter.class));
 		add("arc_furnace", () -> createChapter(new ResourceLocation(RealisticSolar.MODID, "pages/arc_furnace.json"), Chapter.class));
-		add("index", () -> createChapter(new ResourceLocation(RealisticSolar.MODID, "pages/index.json"), IndexChapter.class));
+		add("index", () -> createChapter(new ResourceLocation(RealisticSolar.MODID, "pages/index.json"), Chapter.class)
+				.createIndexChapter(getIndexLinks()));
 	}
 
 	public void add(String name, Supplier<Chapter> supplier) {
@@ -50,13 +53,19 @@ public class ChapterRegistry {
 
 			Gson gson = new Gson();
 			chapter = gson.fromJson(text, classOf);
-
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return chapter;
+	}
+
+	// removes all the unwanted links from the index
+	public Set<String> getIndexLinks() {
+		Set<String> output = chapters.keySet();
+		output.removeAll(Arrays.asList("index"));
+		return output;
 	}
 
 }

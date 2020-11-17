@@ -24,17 +24,6 @@
 				}
 			],
 			"links": [
-				{
-					"location": "location",
-					"text": "LinkText",
-					"alignement": "LEFT",
-					"wrap": 50,
-					"color": 170,
-					"hoveredColor": 43690,
-					"size": 0.7,
-					"x": 160,
-					"y": 30
-				}
 			]
 		}
 	]

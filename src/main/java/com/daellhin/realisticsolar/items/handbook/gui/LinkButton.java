@@ -1,4 +1,4 @@
-package com.daellhin.realisticsolar.items.handbook;
+package com.daellhin.realisticsolar.items.handbook.gui;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
