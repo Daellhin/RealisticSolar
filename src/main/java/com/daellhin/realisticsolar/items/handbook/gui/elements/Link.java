@@ -1,7 +1,6 @@
 package com.daellhin.realisticsolar.items.handbook.gui.elements;
 
 import com.daellhin.realisticsolar.items.handbook.HandBookScreen;
-import com.daellhin.realisticsolar.items.handbook.gui.LinkButton;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -10,15 +9,28 @@ import net.minecraft.util.Util;
 
 public class Link extends Text {
 	protected String location;
-	protected LinkFunction linkFunction;
-	protected int hoveredColor;
-	// handles hovering and clicking (does not render)
+	protected LinkFunction linkFunction = LinkFunction.INTERNAL;
+	protected int hoveredColor = 43690;
+	/**
+	 * Handles hovering and clicking (does not render)
+	 */
 	protected transient LinkButton linkButton;
+	
+	public Link() {
+		System.out.println("default ctor used");
+	}
 
 	public Link(String text, String location, LinkFunction linkFunction, Alignement alignement, float size, int wrap, int color, int hoveredColor, int x, int y) {
+		System.out.println("parameterised ctor used");
+		this.text = text;
 		this.location = location;
-		this.hoveredColor = hoveredColor;
 		this.linkFunction = linkFunction;
+		this.size = size;
+		this.wrap = wrap;
+		this.color = color;
+		this.hoveredColor = hoveredColor;
+		this.x = x;
+		this.y = y;
 	}
 
 	public void initialize(HandBookScreen handBookScreen, FontRenderer font, int relX, int relY) {

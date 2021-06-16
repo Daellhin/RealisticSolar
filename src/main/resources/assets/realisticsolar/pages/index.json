@@ -3,14 +3,17 @@
 		{
 			"text": [
 				{
-					"text": "index",
-					"x": 140,
-					"y": 45
+					"text": "page_index_intro",
+					"wrap": 105,
+					"size": 0.7,
+					"x": 26,
+					"y": 60
 				},
 				{
-					"text": "index",
-					"x": 20,
-					"y": 65
+					"text": "page_index_chapters",
+					"size": 1,
+					"x": 152,
+					"y": 20
 				}
 			],
 			"images": [

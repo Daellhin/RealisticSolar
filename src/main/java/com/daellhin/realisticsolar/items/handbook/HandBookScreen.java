@@ -1,10 +1,11 @@
 package com.daellhin.realisticsolar.items.handbook;
 
 import com.daellhin.realisticsolar.RealisticSolar;
-import com.daellhin.realisticsolar.items.handbook.gui.Chapter;
 import com.daellhin.realisticsolar.items.handbook.gui.ChapterRegistry;
-import com.daellhin.realisticsolar.items.handbook.gui.PageButton;
+import com.daellhin.realisticsolar.items.handbook.gui.chapters.Chapter;
+import com.daellhin.realisticsolar.items.handbook.gui.chapters.IndexChapter;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Link;
+import com.daellhin.realisticsolar.items.handbook.gui.elements.PageButton;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
@@ -47,7 +48,7 @@ public class HandBookScreen extends Screen {
 			link.initialize(this, this.font, relX, relY);
 			addButton(link.getLinkButton());
 		}
-		
+
 	}
 
 	@Override
@@ -55,9 +56,21 @@ public class HandBookScreen extends Screen {
 		renderBackground();
 		buttonPreviousPage.visible = currentPage > 0;
 		buttonNextPage.visible = currentPage < (currentChapter.getPageAmount() - 1);
-		buttonChapters.visible = !(currentChapter.isIndexChapter());
+		buttonChapters.visible = !(currentChapter instanceof IndexChapter);
 
 		super.render(mouseX, mouseY, partialTicks);
+	}
+
+	@Override
+	public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+		System.out.println((char) p_keyPressed_1_);
+
+		if ((char) p_keyPressed_1_ == 'R') {
+			changeChapter(currentChapter.getName());
+			System.out.println("Reloaded chapter: " + currentChapter.getName());
+		}
+
+		return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
 	}
 
 	@Override

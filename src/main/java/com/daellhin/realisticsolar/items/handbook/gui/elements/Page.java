@@ -2,13 +2,19 @@ package com.daellhin.realisticsolar.items.handbook.gui.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Link.LinkFunction;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Text.Alignement;
 
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 
 public class Page {
 	protected Image[] images;
@@ -31,14 +37,28 @@ public class Page {
 		return links;
 	}
 
-	public void createIndexLinks(Set<String> set) {
-		List<Link> list = new ArrayList<Link>(Arrays.asList(links));
-		int x = 150;
-		int y = 30;
+	private int extractInt(String s) {
+		String num = s.replaceAll("\\D", "");
+		// return 0 if no digits found
+		return num.isEmpty() ? 0 : Integer.parseInt(num);
+	}
 
-		for (String e : set) {
-			list.add(new Link(e, e, LinkFunction.INTERNAL, Alignement.LEFT, 1, -1, 0, 10000, x, y));
-			y += 20;
+	public void createIndexLinks(Set<String> chapters) {
+		List<Link> list = new ArrayList<Link>(Arrays.asList(links));
+		int x = 155;
+		int y = 35;
+
+		Map<String, String> I18nChapters = chapters.stream()
+				.collect(Collectors.toMap(e -> I18n.format("chapter_" + e), e -> e));
+
+		List<Entry<String, String>> sortedChapters = I18nChapters.entrySet()
+				.stream()
+				.sorted(Comparator.comparingInt(e -> extractInt(e.getKey())))
+				.collect(Collectors.toList());
+
+		for (Entry<String, String> e : sortedChapters) {
+			list.add(new Link(e.getKey(), e.getValue(), LinkFunction.INTERNAL, Alignement.LEFT, 1, -1, 0, 43690, x, y));
+			y += 12;
 		}
 
 		links = list.toArray(new Link[0]);
