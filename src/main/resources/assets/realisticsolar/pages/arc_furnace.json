@@ -7,8 +7,8 @@
 					"alignement": "RIGHT",
 					"wrap": -1,
 					"color": 0,
-					"size": 0.4,
-					"x": 109,
+					"size": 0.5,
+					"x": 113,
 					"y": 69
 				},
 				{
@@ -45,18 +45,18 @@
 					"width": 1024,
 					"height": 512,
 					"desiredWidth": 71,
-					"desiredHeight": 34,
-					"x": 28,
-					"y": 28
+					"x": 70,
+					"y": 28,
+					"alignement": "CENTER"
 				},
 				{
 					"location": "textures/gui/page/arc_furnace_gui.png",
 					"width": 1024,
 					"height": 512,
 					"desiredWidth": 71,
-					"desiredHeight":34,
-					"x": 34,
-					"y": 90
+					"x": 70,
+					"y": 90,
+					"alignement": "CENTER"
 				}
 			],
 			"links": [

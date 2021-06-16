@@ -16,7 +16,6 @@ public class Link extends Text {
 	protected transient LinkButton linkButton;
 
 	public Link(String text, String location, LinkFunction linkFunction, Alignement alignement, float size, int wrap, int color, int hoveredColor, int x, int y) {
-		super(text, alignement, size, wrap, color, x, y);
 		this.location = location;
 		this.hoveredColor = hoveredColor;
 		this.linkFunction = linkFunction;

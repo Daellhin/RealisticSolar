@@ -4,23 +4,24 @@
 			"text": [
 				{
 					"text": "index",
-					"alignement": "LEFT",
-					"wrap": 110,
-					"color": 0,
-					"size": 0.7,
-					"x": 20,
+					"x": 140,
 					"y": 45
+				},
+				{
+					"text": "index",
+					"x": 20,
+					"y": 65
 				}
 			],
 			"images": [
 				{
 					"location": "textures/gui/page/logo_transparent.png",
-					"width": 128,
-					"height": 128,
-					"desiredWidth": 71,
-					"desiredHeight": 17,
-					"x": 28,
-					"y": 18
+					"width": 71,
+					"height": 17,
+					"desiredWidth": 105,
+					"x": 70,
+					"y": 20,
+					"alignement": "CENTER"
 				}
 			],
 			"links": [

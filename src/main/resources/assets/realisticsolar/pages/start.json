@@ -23,7 +23,7 @@
 			],
 			"images": [
 				{
-					"location": "textures/gui/page/logo_transparent.png",
+					"src": "textures/gui/page/logo_transparent.png",
 					"width": 128,
 					"height": 128,
 					"desiredWidth": 71,
@@ -34,7 +34,7 @@
 			],
 			"links": [
 				{
-					"location": "location",
+					"src": "location",
 					"linkfunction": "INTERNAL",
 					"text": "LinkText",
 					"alignement": "LEFT",
