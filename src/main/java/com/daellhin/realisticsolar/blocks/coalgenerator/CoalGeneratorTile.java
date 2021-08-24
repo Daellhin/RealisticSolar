@@ -34,7 +34,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 	public static final int INPUT_SLOTS = 3;
 	private Item[] validItems = { Items.COAL, Items.CHARCOAL, Items.COAL_BLOCK };
-	private int progress;
+	private int progress = 0;
 
 	private ItemStackHandler inputHandler = createInputHandler();
 	private CustomEnergyStorage energyStorage = createEnergy();

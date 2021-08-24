@@ -13,9 +13,13 @@ import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnacePortTile;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorBlock;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorContainer;
 import com.daellhin.realisticsolar.blocks.coalgenerator.CoalGeneratorTile;
+import com.daellhin.realisticsolar.blocks.fancy.FancyBlock;
+import com.daellhin.realisticsolar.blocks.fancy.FancyBlockTile;
 import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerContainer;
 import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerControllerBlock;
 import com.daellhin.realisticsolar.blocks.hclburner.HClBurnerTile;
+import com.daellhin.realisticsolar.blocks.magic.MagicBlock;
+import com.daellhin.realisticsolar.blocks.magic.MagicTile;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorContainer;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorControllerBlock;
 import com.daellhin.realisticsolar.blocks.siemensreactor.SiemensReactorPartBlock;
@@ -145,6 +149,16 @@ public class ModBlocks {
 			.register(HClBurnerControllerBlock.REGNAME, () -> IForgeContainerType.create((windowId, inv, data) -> {
 				return new HClBurnerContainer(windowId, inv.player.getEntityWorld(), data.readBlockPos(), inv, inv.player);
 			}));
+	
+	// fancyblock
+    public static final RegistryObject<FancyBlock> FANCYBLOCK = BLOCKS.register("fancyblock", FancyBlock::new);
+    //public static final RegistryObject<Item> FANCYBLOCK_ITEM = ITEMS.register("fancyblock", () -> new BlockItem(FANCYBLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<TileEntityType<FancyBlockTile>> FANCYBLOCK_TILE = TILES.register("fancyblock", () -> TileEntityType.Builder.create(FancyBlockTile::new, FANCYBLOCK.get()).build(null));
+
+    // magicblock
+    public static final RegistryObject<MagicBlock> MAGICBLOCK = BLOCKS.register("magicblock", MagicBlock::new);
+    //public static final RegistryObject<Item> MAGICBLOCK_ITEM = ITEMS.register("magicblock", () -> new BlockItem(MAGICBLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<TileEntityType<MagicTile>> MAGICBLOCK_TILE = TILES.register("magicblock", () -> TileEntityType.Builder.create(MagicTile::new, MAGICBLOCK.get()).build(null));
 	
 	// generate blockItems
 	@SubscribeEvent
