@@ -20,9 +20,13 @@ public class ModFluids {
 			.registerAcidFluid("hydrogen_chloride");
 
 	// hydrogen
-	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> HYDROGEN = FLUIDS.registerGas("hydrogen", 16777215);
+	// gas does not work, validator in tile entity is not used when checking if fluid can be placed in block
+	//public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> HYDROGEN = FLUIDS.registerGas("hydrogen", 16777215);
+	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> HYDROGEN = FLUIDS.registerDefaultFluid("hydrogen");
 
+	
 	// hydrogen chloride
-	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> CHLORIDE = FLUIDS.registerGas("chloride", 16777045);
+	//public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> CHLORIDE = FLUIDS.registerGas("chloride", 16777045);
+	public static final FluidRegistryObject<Source, Flowing, FlowingFluidBlock, BucketItem> CHLORIDE = FLUIDS.registerDefaultFluid("chloride");
 
 }
