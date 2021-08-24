@@ -31,6 +31,7 @@ import com.daellhin.realisticsolar.tools.enums.MultiblockPortType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.Properties;
+import net.minecraft.block.FallingBlock;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -65,7 +66,7 @@ public class ModBlocks {
 					.hardnessAndResistance(2.0f)
 					.harvestTool(ToolType.PICKAXE)));
 
-	public static final RegistryObject<Block> SILICASAND_BLOCK = BLOCKS.register("silica_sand_block", () -> new Block(Properties.create(Material.SAND)
+	public static final RegistryObject<Block> SILICASAND_BLOCK = BLOCKS.register("silica_sand_block", () -> new FallingBlock(Properties.create(Material.SAND)
 			.sound(SoundType.SAND)
 			.hardnessAndResistance(2.0f)
 			.harvestTool(ToolType.SHOVEL)));

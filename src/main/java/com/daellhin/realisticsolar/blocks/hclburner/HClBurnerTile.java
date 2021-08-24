@@ -81,31 +81,6 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 
 	@Override
 	public void tick() {
-		//yesss
-		ResourceLocation testLoc = new ResourceLocation(RealisticSolar.MODID, "test.json");
-		InputStreamReader reader;
-		try {
-			reader = new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(testLoc).getInputStream());
-			BufferedReader r = new BufferedReader(reader);
-			System.out.println(r.readLine());
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// testing
-//		try {
-//            getResource(new ResourceLocation(RealisticSolar.MODID, "recipes/test.json"));
-//            System.out.println("found");
-//		}catch(FileNotFoundException e) {
-//			System.out.println("fileNotFound");
-//        } catch (IOException e) {
-//            e.printStackTrace();	
-//        }
-		
-		//----------------
-		
 		if (!world.isRemote) {
 			if (progress > 0) {
 				progress--;
