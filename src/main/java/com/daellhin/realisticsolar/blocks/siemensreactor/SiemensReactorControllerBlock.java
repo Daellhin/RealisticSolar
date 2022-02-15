@@ -25,10 +25,10 @@ public class SiemensReactorControllerBlock extends MultiBlockControllerBlock {
 		super(new BlockBuilder().basicProperties()
 				.tileEntitySupplier(SiemensReactorTile::new)
 				.shape(Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)));
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.setValue(BlockStateProperties.POWERED, false)
-//				.with(SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(BlockStateProperties.POWERED, false)
+				.setValue(SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
 	}
 
 	@Override

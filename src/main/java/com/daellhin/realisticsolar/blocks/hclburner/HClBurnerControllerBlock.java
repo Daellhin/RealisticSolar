@@ -28,9 +28,9 @@ public class HClBurnerControllerBlock extends BaseBlock {
 	public HClBurnerControllerBlock() {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(HClBurnerTile::new));
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.setValue(BlockStateProperties.POWERED, false));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(BlockStateProperties.POWERED, false));
 	}
 
 	@Override

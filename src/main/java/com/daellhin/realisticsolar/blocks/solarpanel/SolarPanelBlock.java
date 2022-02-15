@@ -17,9 +17,9 @@ public class SolarPanelBlock extends BaseBlock {
 	public SolarPanelBlock() {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(SolarPanelTile::new));
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.setValue(BlockStateProperties.POWERED, false));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(BlockStateProperties.POWERED, false));
 
 	}
 

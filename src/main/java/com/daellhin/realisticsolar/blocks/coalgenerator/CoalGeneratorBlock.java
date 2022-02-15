@@ -30,9 +30,9 @@ public class CoalGeneratorBlock extends BaseBlock {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(CoalGeneratorTile::new)
 				.addShiftInformation());
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.setValue(BlockStateProperties.POWERED, false));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(BlockStateProperties.POWERED, false));
 	}
 
 	@Override

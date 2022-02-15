@@ -23,9 +23,9 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 	// Use when creating ArcFurnacePort blocks
 	public ArcFurnacePartBlock(BlockBuilder builder) {
 		super(builder);
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.with(ArcFurnaceControllerBlock.ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(ArcFurnaceControllerBlock.ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
 	}
 
 	@Override

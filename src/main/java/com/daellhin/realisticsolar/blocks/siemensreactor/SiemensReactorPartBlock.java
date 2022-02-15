@@ -18,9 +18,9 @@ public class SiemensReactorPartBlock extends MultiblockPartBlock {
 	public SiemensReactorPartBlock() {
 		super(new BlockBuilder().basicProperties()
 				.shape(Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)));
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.with(SiemensReactorControllerBlock.SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(SiemensReactorControllerBlock.SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
 	}
 
 	@Override

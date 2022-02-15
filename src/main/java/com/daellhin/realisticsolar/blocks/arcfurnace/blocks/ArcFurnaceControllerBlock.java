@@ -26,10 +26,10 @@ public class ArcFurnaceControllerBlock extends MultiBlockControllerBlock {
 	public ArcFurnaceControllerBlock() {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(ArcFurnaceControllerTile::new));
-//		setDefaultState(stateContainer.getBaseState()
-//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-//				.setValue(BlockStateProperties.POWERED, false)
-//				.with(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+				.setValue(BlockStateProperties.POWERED, false)
+				.setValue(ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
 	}
 
 	@Override
