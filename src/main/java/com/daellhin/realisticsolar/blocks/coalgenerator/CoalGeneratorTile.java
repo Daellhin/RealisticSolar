@@ -47,19 +47,19 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
-	public void remove() {
-		super.remove();
+	public void setRemoved() {
+		super.setRemoved();
 		inputSlotHolder.invalidate();
 		energy.invalidate();
 	}
 
 	@Override
 	public void tick() {
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (progress > 0) {
 				energyStorage.addEnergy(Config.COALGENERATOR_GENERATE.get());
 				progress--;
-				markDirty();
+				setChanged();
 			} else {
 				if (!energyStorage.isFull()) {
 					int index = findValidItem(inputHandler.getStackInSlot(0)
@@ -71,14 +71,14 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 							progress = 1000;
 						}
 						inputHandler.extractItem(0, 1, false);
-						markDirty();
+						setChanged();
 					}
 				}
 			}
 
-			BlockState blockState = world.getBlockState(pos);
-			if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
-				world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);
+			BlockState blockState = level.getBlockState(worldPosition);
+			if (blockState.getValue(BlockStateProperties.POWERED) != progress > 0) {
+				level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, progress > 0), 3);
 			}
 			sendOutPower(energy, Config.COALGENERATOR_SEND.get());
 		}
@@ -108,26 +108,26 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 
 			@Override
 			protected void onContentsChanged(int slot) {
-				markDirty();
+				setChanged();
 			}
 		};
 
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
+	public void load(BlockState state, CompoundNBT tag) {
 		inputHandler.deserializeNBT((CompoundNBT) tag.get("itemsIn"));
 		energyStorage.deserializeNBT(tag.getCompound("energy"));
 		progress = tag.getInt("progress");
-		super.read(tag);
+		super.load(state, tag);
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
+	public CompoundNBT save(CompoundNBT tag) {
 		tag.put("itemsIn", inputHandler.serializeNBT());
 		tag.put("energy", energyStorage.serializeNBT());
 		tag.putInt("progress", progress);
-		return super.write(tag);
+		return super.save(tag);
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 
 			@Override
 			protected void onEnergyChanged() {
-				markDirty();
+				setChanged();
 			}
 
 		};
@@ -156,7 +156,7 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 		AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
 		if (capacity.get() > 0) {
 			for (Direction direction : Direction.values()) {
-				TileEntity te = world.getTileEntity(pos.offset(direction));
+				TileEntity te = level.getBlockEntity(worldPosition.relative(direction));
 				if (te != null) {
 					boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction)
 							.map(handler -> {
@@ -164,7 +164,7 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 									int received = handler.receiveEnergy(Math.max(capacity.get(), send), false);
 									capacity.addAndGet(-received);
 									energyStorage.consumeEnergy(received);
-									markDirty();
+									setChanged();
 									return capacity.get() > 0;
 								} else {
 									return true;
@@ -188,7 +188,7 @@ public class CoalGeneratorTile extends TileEntity implements ITickableTileEntity
 
 	@Override
 	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new CoalGeneratorContainer(i, world, pos, playerInventory, playerEntity);
+		return new CoalGeneratorContainer(i, level, worldPosition, playerInventory, playerEntity);
 	}
 
 	// progress

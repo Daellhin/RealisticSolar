@@ -6,6 +6,7 @@ import com.daellhin.realisticsolar.items.handbook.gui.chapters.Chapter;
 import com.daellhin.realisticsolar.items.handbook.gui.chapters.IndexChapter;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Link;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.PageButton;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
@@ -52,13 +53,13 @@ public class HandBookScreen extends Screen {
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		renderBackground();
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(matrixStack);
 		buttonPreviousPage.visible = currentPage > 0;
 		buttonNextPage.visible = currentPage < (currentChapter.getPageAmount() - 1);
 		buttonChapters.visible = !(currentChapter instanceof IndexChapter);
 
-		super.render(mouseX, mouseY, partialTicks);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 
 	@Override
@@ -74,18 +75,18 @@ public class HandBookScreen extends Screen {
 	}
 
 	@Override
-	public void renderBackground(int value) {
-		super.renderBackground(0);
+	public void renderBackground(MatrixStack matrixStack) {
+		super.renderBackground(matrixStack);
 		int relX = (this.width - this.xSize) / 2;
 		int relY = (this.height - this.ySize) / 2;
 
 		// GUI background
 		this.minecraft.getTextureManager()
-				.bindTexture(GUI);
-		blit(relX, relY, 0, 0, this.xSize, this.ySize, 256 * 2, 256 * 2);
+				.bind(GUI);
+		blit(matrixStack, relX, relY, 0, 0, this.xSize, this.ySize, 256 * 2, 256 * 2);
 
 		// Chapter
-		currentChapter.draw(currentPage, font, relX, relY, 200);
+		currentChapter.draw(matrixStack, currentPage, font, relX, relY, 200);
 	}
 
 	public void changeChapter(String chapterName) {

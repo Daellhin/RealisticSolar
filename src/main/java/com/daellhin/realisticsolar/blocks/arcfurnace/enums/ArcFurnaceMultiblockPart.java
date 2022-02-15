@@ -81,7 +81,7 @@ public enum ArcFurnaceMultiblockPart implements IStringSerializable {
 
 	// getters
 	@Override
-	public String getName() {
+	public String getSerializedName() {
 		return name;
 	}
 
@@ -96,4 +96,5 @@ public enum ArcFurnaceMultiblockPart implements IStringSerializable {
 	public int getDz() {
 		return dz;
 	}
+
 }

@@ -3,6 +3,7 @@ package com.daellhin.realisticsolar.blocks.hclburner;
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.blocks.base.BaseContainerScreen;
 import com.daellhin.realisticsolar.fluids.handling.CustomFluidTank;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -18,31 +19,34 @@ public class HClBurnerScreen extends BaseContainerScreen<HClBurnerContainer> {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+	protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		this.minecraft.getTextureManager()
-				.bindTexture(backgroundTexture);
-		int relX = (this.width - this.xSize) / 2;
-		int relY = (this.height - this.ySize) / 2;
+				.bind(backgroundTexture);
+		int relX = (this.width - this.imageWidth) / 2;
+		int relY = (this.height - this.imageHeight) / 2;
 
 		// GUI background
-		this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
+		this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
 		// GUI elements
 		CustomFluidTank tank;
 		tank = tileEntity.getInputChlorideTank();
-		this.font.drawString(String.format("WEST|  Chloride: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 10, 000000);
+		drawString(matrixStack, font, String
+				.format("WEST|  Chloride: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 10, 000000);
 		tank = tileEntity.getInputHydrogenTank();
-		this.font.drawString(String.format("EAST|  Hydrogen: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 40, 000000);
+		drawString(matrixStack, font, String
+				.format("EAST|  Hydrogen: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 40, 000000);
 		tank = tileEntity.getInputWaterTank();
-		this.font.drawString(String.format("NORTH| Water: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 70, 000000);
+		drawString(matrixStack, font, String
+				.format("NORTH| Water: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 70, 000000);
 		tank = tileEntity.getOutputHClTank();
-		this.font.drawString(String.format("SOUTH| HCl: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 100, 000000);
+		drawString(matrixStack, font, String.format("SOUTH| HCl: %s / %s", tank.getFluidAmount(), tank.getCapacity()), relX + 10, relY + 100, 000000);
 
-		this.font.drawString("Progress: " + tileEntity.getProgress(), relX + 10, relY + 120, 000000);
+		drawString(matrixStack, font, "Progress: " + tileEntity.getProgress(), relX + 10, relY + 120, 000000);
 
 	}
 

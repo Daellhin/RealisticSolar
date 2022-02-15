@@ -41,7 +41,7 @@ public abstract class BaseBlock extends Block {
 	 * Adds tooltip to the item, shift to show, when present uses the registryName to search in lang file
 	 */
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> list, ITooltipFlag flags) {
+	public void appendHoverText(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> list, ITooltipFlag flags) {
 		if (shiftInformation) {
 			if (Screen.hasShiftDown()) {
 				list.add(new TranslationTextComponent("information." + this.getRegistryName()
@@ -57,10 +57,9 @@ public abstract class BaseBlock extends Block {
 		return tileEntitySupplier != null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public TileEntity createTileEntity(BlockState blockState, IBlockReader world) {
-		if (this.hasTileEntity()) {
+		if (this.hasTileEntity(blockState)) {
 			return tileEntitySupplier.get();
 		} else {
 			return null;
@@ -68,7 +67,7 @@ public abstract class BaseBlock extends Block {
 	}
 
 	// getters
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public VoxelShape getShape(BlockState blockState, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		if (shape != null) {
@@ -78,11 +77,11 @@ public abstract class BaseBlock extends Block {
 	}
 
 	// move to class
-//	@SuppressWarnings("deprecation")
+//	
 //	@Override
 //	public int getLightValue(BlockState state) {
 //		if(state.)
-//		return state.get(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
+//		return state.getValue(BlockStateProperties.POWERED) ? super.getLightValue(state) : 0;
 //	}
 
 }

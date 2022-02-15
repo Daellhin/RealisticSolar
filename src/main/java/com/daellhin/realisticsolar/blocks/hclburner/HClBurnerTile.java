@@ -81,7 +81,7 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 
 	@Override
 	public void tick() {
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (progress > 0) {
 				progress--;
 				if (progress == 0) {
@@ -98,9 +98,9 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 				}
 			}
 
-			BlockState blockState = world.getBlockState(pos);
-			if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
-				world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);
+			BlockState blockState = level.getBlockState(worldPosition);
+			if (blockState.getValue(BlockStateProperties.POWERED) != progress > 0) {
+				level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, progress > 0), 3);
 			}
 		}
 	}
@@ -116,31 +116,31 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 
 	@Override
 	public CompoundNBT getUpdateTag() {
-		return write(super.getUpdateTag());
+		return save(super.getUpdateTag());
 	}
 
 	@Nullable
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-		read(packet.getNbtCompound());
+		load(getBlockState(), packet.getTag());	
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
-		super.read(tag);
+	public void load(BlockState state, CompoundNBT tag) {
+		super.load(state, tag);
 		tankContainer.readFromNBT(tag);
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
-		tag = super.write(tag);
+	public CompoundNBT save(CompoundNBT tag) {
+		tag = super.save(tag);
 		tankContainer.writeToNBT(tag);
-		return super.write(tag);
+		return super.save(tag);
 	}
 
 	@Override
@@ -151,13 +151,13 @@ public class HClBurnerTile extends TileEntity implements ITickableTileEntity, IN
 
 	@Override
 	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new HClBurnerContainer(i, world, pos, playerInventory, playerEntity);
+		return new HClBurnerContainer(i, level, worldPosition, playerInventory, playerEntity);
 	}
 
 	private void onContentsChanged() {
-		BlockState state = world.getBlockState(pos);
-		world.notifyBlockUpdate(pos, state, state, 3);
-		markDirty();
+		BlockState state = level.getBlockState(worldPosition);
+		level.sendBlockUpdated(worldPosition, state, state, 3);
+		setChanged();
 	}
 
 	public int getProgress() {

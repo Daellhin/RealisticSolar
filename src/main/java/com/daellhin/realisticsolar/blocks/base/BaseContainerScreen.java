@@ -1,5 +1,7 @@
 package com.daellhin.realisticsolar.blocks.base;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -13,8 +15,8 @@ public abstract class BaseContainerScreen<T extends Container> extends Container
 	public BaseContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn, ResourceLocation backgroundTexture, int textureWidth, int textureHeight) {
 		super(screenContainer, inv, titleIn);
 		this.backgroundTexture = backgroundTexture;
-		this.xSize = textureWidth;
-		this.ySize = textureHeight;
+		this.imageWidth = textureWidth;
+		this.imageHeight = textureHeight;
 	}
 
 	public BaseContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -22,10 +24,10 @@ public abstract class BaseContainerScreen<T extends Container> extends Container
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(matrixStack);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		this.renderLabels(matrixStack, mouseX, mouseY);
 	}
 
 	/**

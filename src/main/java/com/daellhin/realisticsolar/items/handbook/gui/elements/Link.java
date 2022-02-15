@@ -1,11 +1,15 @@
 package com.daellhin.realisticsolar.items.handbook.gui.elements;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.daellhin.realisticsolar.items.handbook.HandBookScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.ConfirmOpenLinkScreen;
 import net.minecraft.util.Util;
+import net.minecraft.util.text.StringTextComponent;
 
 public class Link extends Text {
 	protected String location;
@@ -34,19 +38,23 @@ public class Link extends Text {
 	}
 
 	public void initialize(HandBookScreen handBookScreen, FontRenderer font, int relX, int relY) {
-		linkButton = new LinkButton(relX + x, relY + y, text, font, (button) -> {
+		linkButton = new LinkButton(relX + x, relY + y, new StringTextComponent(text), font, (button) -> {
 			if (linkFunction == LinkFunction.INTERNAL) {
 				handBookScreen.changeChapter(location);
 			} else {
 				Minecraft.getInstance()
-						.displayGuiScreen(new ConfirmOpenLinkScreen((p_213069_2_) -> {
+						.setScreen(new ConfirmOpenLinkScreen((p_213069_2_) -> {
 							if (p_213069_2_) {
-								Util.getOSType()
-										.openURI(location);
+								try {
+									Util.getPlatform()
+											.openUrl(new URL(location));
+								} catch (MalformedURLException e) {
+									e.printStackTrace();
+								}
 							}
 
 							Minecraft.getInstance()
-									.displayGuiScreen(handBookScreen);
+									.setScreen(handBookScreen);
 						}, location, true));
 			}
 		});
@@ -54,7 +62,7 @@ public class Link extends Text {
 
 	@Override
 	public void draw(FontRenderer font, int relX, int relY, int pageCenter) {
-		font.drawString(text, relX + x, relY + y, linkButton.isHovered() ? hoveredColor : color);
+		//font.drawString(text, relX + x, relY + y, linkButton.isHovered() ? hoveredColor : color);
 	}
 
 	public String getLocation() {

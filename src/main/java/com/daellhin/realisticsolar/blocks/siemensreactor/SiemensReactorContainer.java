@@ -19,15 +19,14 @@ public class SiemensReactorContainer extends PlayerInventoryContainer {
 
 	public SiemensReactorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		super(ModBlocks.SIEMENSREACTOR_CONTAINER.get(), windowId);
-		this.tileEntity = (SiemensReactorTile) world.getTileEntity(pos);
+		this.tileEntity = (SiemensReactorTile) world.getBlockEntity(pos);
 		this.playerEntity = playerEntity;
 		this.playerInventory = new InvWrapper(playerInventory);
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable
-				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
+	public boolean stillValid(PlayerEntity playerIn) {
+		return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.SIEMENSREACTOR_CONTROLLER_BLOCK.get());
 	}
 
 }

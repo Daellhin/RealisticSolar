@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Link.LinkFunction;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Text.Alignement;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
@@ -21,9 +22,9 @@ public class Page {
 	protected Text[] text;
 	protected Link[] links;
 
-	public void draw(FontRenderer font, int relX, int relY, int pageCenter) {
+	public void draw(FontRenderer font, MatrixStack matrixStack, int relX, int relY, int pageCenter) {
 		for (Image image : images) {
-			image.draw(relX, relY);
+			image.draw(matrixStack, relX, relY);
 		}
 		for (Text text : this.text) {
 			text.draw(font, relX, relY, pageCenter);
@@ -49,7 +50,7 @@ public class Page {
 		int y = 35;
 
 		Map<String, String> I18nChapters = chapters.stream()
-				.collect(Collectors.toMap(e -> I18n.format("chapter_" + e), e -> e));
+				.collect(Collectors.toMap(e -> I18n.get("chapter_" + e), e -> e));
 
 		List<Entry<String, String>> sortedChapters = I18nChapters.entrySet()
 				.stream()

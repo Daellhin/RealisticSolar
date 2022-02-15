@@ -15,7 +15,7 @@ public class ModSetup {
 	public static final ItemGroup ITEM_GROUP = new ItemGroup(RealisticSolar.MODID + ".itemgroup1") {
 
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(ModBlocks.ALUMINIUM_BLOCK.get());
 		}
 	};

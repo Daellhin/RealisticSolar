@@ -42,19 +42,19 @@ public class Text {
 
 	protected void drawCenteredString(FontRenderer font, String text, int x, int y, float size, int color) {
 		// TODO add loop to use \n nexline
-		drawStringInternal(font, text, x, y, size, color, font.getStringWidth(I18n.format(text)) / 2);
+		drawStringInternal(font, text, x, y, size, color, font.width(I18n.get(text)) / 2);
 	}
 
 	protected void drawRightAlignedString(FontRenderer font, String text, int x, int y, float size, int color) {
-		drawStringInternal(font, text, x, y, size, color, font.getStringWidth(I18n.format(text)));
+		drawStringInternal(font, text, x, y, size, color, font.width(I18n.get(text)));
 	}
 
 	protected void drawStringInternal(FontRenderer font, String text, int x, int y, float size, int color, int offset) {
 		GL11.glScalef(size, size, size);
 		if (wrap == -1) {
-			font.drawString(I18n.format(text), Math.round(x / size) - offset, Math.round(y / size), color);
+			//font.drawString(I18n.get(text), Math.round(x / size) - offset, Math.round(y / size), color);
 		} else {
-			font.drawSplitString(I18n.format(text), Math.round(x / size) - offset, Math.round(y / size), Math.round(wrap / size), color);
+			//font.drawSplitString(I18n.get(text), Math.round(x / size) - offset, Math.round(y / size), Math.round(wrap / size), color);
 		}
 		float mSize = (float) Math.pow(size, -1);
 		GL11.glScalef(mSize, mSize, mSize);

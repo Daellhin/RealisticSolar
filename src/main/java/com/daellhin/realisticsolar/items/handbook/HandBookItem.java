@@ -18,12 +18,12 @@ public class HandBookItem extends BaseItem {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		player.openBook(player.getHeldItem(hand), hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		//player.openBook(player.getItemInHand(hand), hand); TODO does this work when removed
 		Minecraft.getInstance()
-				.displayGuiScreen(new HandBookScreen(new StringTextComponent(this.getRegistryName()
+				.setScreen(new HandBookScreen(new StringTextComponent(this.getRegistryName()
 						.getPath())));
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 }

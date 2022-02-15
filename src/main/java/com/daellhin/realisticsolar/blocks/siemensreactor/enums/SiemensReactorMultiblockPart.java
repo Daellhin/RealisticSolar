@@ -29,7 +29,7 @@ public enum SiemensReactorMultiblockPart implements IStringSerializable {
 
 	// getters
 	@Override
-	public String getName() {
+	public String getSerializedName() {
 		return name;
 	}
 

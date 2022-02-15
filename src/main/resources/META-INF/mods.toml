@@ -1,5 +1,10 @@
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml"
-loaderVersion="[26,)"
+# A version range to match for said mod loader - for regular FML @Mod it will be the forge version (Forge for 1.16.5 is version 36)
+loaderVersion="[36,)"
+# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+license="All Rights Reserved"
+# A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/Daellhin/RealisticSolar"
 
 [[mods]]
@@ -20,13 +25,13 @@ This mod is still in the early stages of developement.
 [[dependencies.realisticsolar]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)" 
+    versionRange="[36,)" 
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.realisticsolar]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.5,]"
     ordering="NONE"
     side="BOTH"

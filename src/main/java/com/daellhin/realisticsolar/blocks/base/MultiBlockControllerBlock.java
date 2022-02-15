@@ -7,9 +7,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -28,35 +30,34 @@ public abstract class MultiBlockControllerBlock extends BaseBlock {
 	}
 
 	/**
-	 * When multiblock is unformed onBlockActivated behaves as regular, when formed onBlockActivated opens GUI. Block can be formed with
-	 * wrench(never opens GUI)
+	 * When multiblock is unformed use behaves as regular, when formed use opens GUI. Block can be formed with wrench(never opens GUI)
 	 */
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (world.isRemote) {
-			return (isMultiblockFormed(state) || player.getHeldItem(hand)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (world.isClientSide) {
+			return (isMultiblockFormed(state) || player.getItemInHand(hand)
 					.getItem() == ModItems.WRENCH_ITEM.get()) ? ActionResultType.SUCCESS : ActionResultType.PASS;
 		} else {
 			// forming
-			if (player.getHeldItem(hand)
+			if (player.getItemInHand(hand)
 					.getItem() == ModItems.WRENCH_ITEM.get()) {
 				if (isMultiblockFormed(state)) {
-					player.sendMessage(new TranslationTextComponent("multiblock.already_formed").applyTextStyle(TextFormatting.GREEN));
+					player.sendMessage(new TranslationTextComponent("multiblock.already_formed").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
 				} else {
 					if (isMultiblockValid(state, world, pos)) {
 						formMultiblock(state, world, pos);
-						player.sendMessage(new TranslationTextComponent("multiblock.formed").applyTextStyle(TextFormatting.GREEN));
+						player.sendMessage(new TranslationTextComponent("multiblock.formed").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
 					} else {
-						player.sendMessage(new TranslationTextComponent("multiblock.unable_to_form").applyTextStyle(TextFormatting.RED));
+						player.sendMessage(new TranslationTextComponent("multiblock.unable_to_form").withStyle(TextFormatting.RED), Util.NIL_UUID);
 					}
 				}
 				return ActionResultType.SUCCESS;
 			}
 			// open gui
 			if (isMultiblockFormed(state)) {
-				TileEntity tileEntity = world.getTileEntity(pos);
+				TileEntity tileEntity = world.getBlockEntity(pos);
 				if (tileEntity instanceof INamedContainerProvider) {
-					NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+					NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getBlockPos());
 					return ActionResultType.SUCCESS;
 				}
 			}
@@ -65,26 +66,25 @@ public abstract class MultiBlockControllerBlock extends BaseBlock {
 	}
 
 	/**
-	 * Sends message to the player that the multiblock is destroyed (destroying the multiblock is handled by onReplaced)
+	 * Sends message to the player that the multiblock is destroyed (destroying the multiblock is handled by onRemove)
 	 */
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!world.isRemote && isMultiblockFormed(state)) {
-			player.sendMessage(new TranslationTextComponent("multiblock.destroyed").applyTextStyle(TextFormatting.RED));
+	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity tile, ItemStack itemStack) {
+		if (!world.isClientSide && isMultiblockFormed(state)) {
+			player.sendMessage(new TranslationTextComponent("multiblock.destroyed").withStyle(TextFormatting.RED), Util.NIL_UUID);
 		}
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerDestroy(world, player, pos, state, tile, itemStack);
 	}
 
 	/**
 	 * Destroys the multiblock when block is broken(player, piston, explosion) and multiblock is formed
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!world.isRemote && (state.getBlock() != newState.getBlock()) && isMultiblockFormed(state)) {
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!world.isClientSide && (state.getBlock() != newState.getBlock()) && isMultiblockFormed(state)) {
 			destroyMultiblock(state, world, pos);
 		}
-		super.onReplaced(state, world, pos, newState, isMoving);
+		super.onRemove(state, world, pos, newState, isMoving);
 	}
 
 	public abstract boolean isMultiblockFormed(BlockState state);

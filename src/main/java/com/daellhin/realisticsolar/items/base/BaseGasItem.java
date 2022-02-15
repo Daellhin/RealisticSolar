@@ -24,7 +24,7 @@ public class BaseGasItem extends BucketItem {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		if (shiftInformation) {
 			if (Screen.hasShiftDown()) {
 				list.add(new TranslationTextComponent("information." + this.getRegistryName()

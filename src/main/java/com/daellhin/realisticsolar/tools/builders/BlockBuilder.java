@@ -2,7 +2,7 @@ package com.daellhin.realisticsolar.tools.builders;
 
 import java.util.function.Supplier;
 
-import net.minecraft.block.Block.Properties;
+import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -20,18 +20,18 @@ public class BlockBuilder {
 	}
 
 	public BlockBuilder basicProperties() {
-		this.properties = Properties.create(Material.IRON)
+		this.properties = Properties.of(Material.METAL)
 				.sound(SoundType.METAL)
-				.hardnessAndResistance(2.0f)
-				.lightValue(0);
+				.strength(2.0f)
+				.lightLevel(e -> 13);
 		return this;
 	}
 
 	public BlockBuilder basicMachineProperties() {
-		this.properties = Properties.create(Material.IRON)
+		this.properties = Properties.of(Material.METAL)
 				.sound(SoundType.METAL)
-				.hardnessAndResistance(2.0f)
-				.lightValue(13);
+				.strength(2.0f)
+				.lightLevel(e -> 13);
 		return this;
 	}
 

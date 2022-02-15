@@ -1,6 +1,7 @@
 package com.daellhin.realisticsolar.blocks.siemensreactor;
 
 import com.daellhin.realisticsolar.blocks.base.BaseContainerScreen;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,12 +14,11 @@ public class SiemensReactorScreen extends BaseContainerScreen<SiemensReactorCont
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		drawString(Minecraft.getInstance().fontRenderer, "DEV TEST", 10, 10, 0xffffff);
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+	protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
+		drawString(matrixStack, Minecraft.getInstance().font, "DEV TEST", 10, 10, 0xffffff);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 	}
 }

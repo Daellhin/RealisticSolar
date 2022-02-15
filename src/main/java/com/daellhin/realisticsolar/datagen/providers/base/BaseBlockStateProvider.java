@@ -7,7 +7,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 
@@ -89,7 +89,7 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 					.with(BlockStateProperties.HORIZONTAL_FACING, dir)
 					.modelForState()
 					.modelFile(model)
-					.rotationY((int) dir.getHorizontalAngle())
+					.rotationY((int) dir.toYRot()) // was .getHorizontalAngle()
 					.addModel();
 		}
 	}
@@ -102,14 +102,14 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 					.with(BlockStateProperties.POWERED, false)
 					.modelForState()
 					.modelFile(modelIdle)
-					.rotationY((int) dir.getHorizontalAngle())
+					.rotationY((int) dir.toYRot())
 					.addModel();
 			builder.partialState()
 					.with(BlockStateProperties.HORIZONTAL_FACING, dir)
 					.with(BlockStateProperties.POWERED, true)
 					.modelForState()
 					.modelFile(modelPowered)
-					.rotationY((int) dir.getHorizontalAngle())
+					.rotationY((int) dir.toYRot())
 					.addModel();
 		}
 	}

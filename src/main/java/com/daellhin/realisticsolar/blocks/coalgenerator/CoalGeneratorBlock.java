@@ -2,6 +2,7 @@ package com.daellhin.realisticsolar.blocks.coalgenerator;
 
 import com.daellhin.realisticsolar.blocks.base.BaseBlock;
 import com.daellhin.realisticsolar.tools.builders.BlockBuilder;
+import com.daellhin.realisticsolar.util.Utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,48 +30,48 @@ public class CoalGeneratorBlock extends BaseBlock {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(CoalGeneratorTile::new)
 				.addShiftInformation());
-		setDefaultState(stateContainer.getBaseState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-				.with(BlockStateProperties.POWERED, false));
+//		setDefaultState(stateContainer.getBaseState()
+//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+//				.setValue(BlockStateProperties.POWERED, false));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, context.getNearestLookingDirection());
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.POWERED);
 	}
-
-	@SuppressWarnings("deprecation")
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote) {
-			TileEntity tileEntity = world.getTileEntity(pos);
+	
+	@Override
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!world.isClientSide) {
+			TileEntity tileEntity = world.getBlockEntity(pos);
 			if (tileEntity instanceof INamedContainerProvider) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getBlockPos());
 				return ActionResultType.SUCCESS;
 			}
 		}
-		return super.onBlockActivated(state, world, pos, player, hand, hit);
+		return super.use(state, world, pos, player, hand, hit);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
 			// drops everything in the inventory
-			worldIn.getTileEntity(pos)
+			worldIn.getBlockEntity(pos)
 					.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 					.ifPresent(h -> {
 						for (int i = 0; i < h.getSlots(); i++) {
-							spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+							//spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+							Utils.dropItemIntoWorld(worldIn, pos, h.getStackInSlot(i));
 						}
 					});
 		}
-		super.onReplaced(state, worldIn, pos, newState, isMoving);
+		super.onRemove(state, worldIn, pos, newState, isMoving);
 	}
 
 }

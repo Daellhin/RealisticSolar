@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.IDynamicBakedModel;
@@ -32,16 +32,11 @@ public class FancyBakedModel implements IDynamicBakedModel {
 
 	private TextureAtlasSprite getTexture() {
 		return Minecraft.getInstance()
-				.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
+				.getTextureAtlas(AtlasTexture.LOCATION_BLOCKS)
 				.apply(TEXTURE);
 	}
 
-	@Override
-	public boolean func_230044_c_() {
-		return false;
-	}
-
-	private void putVertex(BakedQuadBuilder builder, Vec3d normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b) {
+	private void putVertex(BakedQuadBuilder builder, Vector3d normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b) {
 
 		ImmutableList<VertexFormatElement> elements = builder.getVertexFormat()
 				.getElements()
@@ -58,8 +53,8 @@ public class FancyBakedModel implements IDynamicBakedModel {
 			case UV:
 				switch (e.getIndex()) {
 				case 0:
-					float iu = sprite.getInterpolatedU(u);
-					float iv = sprite.getInterpolatedV(v);
+					float iu = sprite.getU(u);
+					float iv = sprite.getV(v);
 					builder.put(j, iu, iv);
 					break;
 				case 2:
@@ -80,15 +75,15 @@ public class FancyBakedModel implements IDynamicBakedModel {
 		}
 	}
 
-	private BakedQuad createQuad(Vec3d v1, Vec3d v2, Vec3d v3, Vec3d v4, TextureAtlasSprite sprite) {
-		Vec3d normal = v3.subtract(v2)
-				.crossProduct(v1.subtract(v2))
+	private BakedQuad createQuad(Vector3d v1, Vector3d v2, Vector3d v3, Vector3d v4, TextureAtlasSprite sprite) {
+		Vector3d normal = v3.subtract(v2)
+				.cross(v1.subtract(v2))
 				.normalize();
 		int tw = sprite.getWidth();
 		int th = sprite.getHeight();
 
 		BakedQuadBuilder builder = new BakedQuadBuilder(sprite);
-		builder.setQuadOrientation(Direction.getFacingFromVector(normal.x, normal.y, normal.z));
+		builder.setQuadOrientation(Direction.getNearest(normal.x, normal.y, normal.z));
 
 		putVertex(builder, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
 		putVertex(builder, normal, v2.x, v2.y, v2.z, 0, th, sprite, 1.0f, 1.0f, 1.0f);
@@ -101,8 +96,8 @@ public class FancyBakedModel implements IDynamicBakedModel {
 	/*
 	 * x: Red, goes to the east when facing north y: Green, goes up z: blue, goes to the south when facing north
 	 */
-	private static Vec3d v(double x, double y, double z) {
-		return new Vec3d(x, y, z);
+	private static Vector3d v(double x, double y, double z) {
+		return new Vector3d(x, y, z);
 	}
 
 	@Nonnull
@@ -192,7 +187,7 @@ public class FancyBakedModel implements IDynamicBakedModel {
 	}
 
 	@Override
-	public boolean isAmbientOcclusion() {
+	public boolean useAmbientOcclusion() {
 		return true;
 	}
 
@@ -202,12 +197,12 @@ public class FancyBakedModel implements IDynamicBakedModel {
 	}
 
 	@Override
-	public boolean isBuiltInRenderer() {
-		return false;
+	public boolean isCustomRenderer() {
+		return !false;
 	}
 
 	@Override
-	public TextureAtlasSprite getParticleTexture() {
+	public TextureAtlasSprite getParticleIcon() {
 		return getTexture();
 	}
 
@@ -217,7 +212,14 @@ public class FancyBakedModel implements IDynamicBakedModel {
 	}
 
 	@Override
-	public ItemCameraTransforms getItemCameraTransforms() {
-		return ItemCameraTransforms.DEFAULT;
+	public ItemCameraTransforms getTransforms() {
+		return ItemCameraTransforms.NO_TRANSFORMS;
 	}
+
+	@Override
+	public boolean usesBlockLight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

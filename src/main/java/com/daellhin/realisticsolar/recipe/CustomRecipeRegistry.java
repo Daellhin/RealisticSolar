@@ -33,7 +33,7 @@ public class CustomRecipeRegistry {
 			if (inputs.length == recipe.getInputLength()) {
 				boolean equal = true;
 				for (int i = 0; i < inputs.length && equal; i++) {
-					if (!ItemStack.areItemsEqual(inputs[i], recipe.getInput(i))) {
+					if (inputs[i].getItem() != recipe.getInput(i).getItem()) {
 						equal = false;
 					}
 				}
@@ -57,7 +57,9 @@ public class CustomRecipeRegistry {
 
 	public static boolean isItemValid(int slot, @Nonnull ItemStack stack) {
 		for (CustomRecipe recipe : getCustomRecipes()) {
-			if (ItemStack.areItemsEqual(stack, recipe.getInput(slot))) {
+			// TODO does this work 
+			// was ItemStack.areItemsEqual(stack, recipe.getInput(slot)
+			if (stack.getItem() == recipe.getInput(slot).getItem()) {
 				return true;
 			}
 		}

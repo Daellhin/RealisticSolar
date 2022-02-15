@@ -2,6 +2,7 @@ package com.daellhin.realisticsolar.items.handbook.gui.elements;
 
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Text.Alignement;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -20,10 +21,10 @@ public class Image {
 	public Image() {
 	}
 
-	public void draw(int relX, int relY) {
+	public void draw(MatrixStack matrixStack, int relX, int relY) {
 		Minecraft.getInstance()
 				.getTextureManager()
-				.bindTexture(new ResourceLocation(RealisticSolar.MODID, location));
+				.bind(new ResourceLocation(RealisticSolar.MODID, location));
 
 		int xOffset = 0;
 
@@ -37,11 +38,11 @@ public class Image {
 			desiredHeight = (int) (height * ((double) desiredWidth / width));
 		}
 
-		blit(relX + x + xOffset, relY + y, desiredWidth, (int) desiredHeight, 0, 0, width, height, width, height);
+		blit(matrixStack, relX + x + xOffset, relY + y, desiredWidth, (int) desiredHeight, 0, 0, width, height, width, height);
 	}
 
-	private void blit(int x, int y, int desiredWidth, int desiredHeight, int textureX, int textureY, int width, int height, int textureWidth, int textureHeight) {
-		AbstractGui.blit(x, y, desiredWidth, desiredHeight, textureX, textureY, width, height, textureWidth, textureHeight);
+	private void blit(MatrixStack matrixStack, int x, int y, int desiredWidth, int desiredHeight, int textureX, int textureY, int width, int height, int textureWidth, int textureHeight) {
+		AbstractGui.blit(matrixStack, x, y, desiredWidth, desiredHeight, textureX, textureY, width, height, textureWidth, textureHeight);
 	}
 
 }

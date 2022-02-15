@@ -23,7 +23,7 @@ public class SiemensReactorTile extends TileEntity implements ITickableTileEntit
 
 	@Override
 	public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new SiemensReactorContainer(i, world, pos, playerInventory, playerEntity);
+		return new SiemensReactorContainer(i, level, worldPosition, playerInventory, playerEntity);
 	}
 
 	@Override

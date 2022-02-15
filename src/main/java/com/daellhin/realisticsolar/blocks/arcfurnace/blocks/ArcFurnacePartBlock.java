@@ -23,19 +23,19 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 	// Use when creating ArcFurnacePort blocks
 	public ArcFurnacePartBlock(BlockBuilder builder) {
 		super(builder);
-		setDefaultState(stateContainer.getBaseState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-				.with(ArcFurnaceControllerBlock.ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
+//		setDefaultState(stateContainer.getBaseState()
+//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+//				.with(ArcFurnaceControllerBlock.ARCFURNACEPART, ArcFurnaceMultiblockPart.UNFORMED));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, context.getNearestLookingDirection());
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.HORIZONTAL_FACING, ArcFurnaceControllerBlock.ARCFURNACEPART);
 	}
 
@@ -52,11 +52,11 @@ public class ArcFurnacePartBlock extends MultiblockPartBlock {
 
 	@Override
 	public BlockPos getControllerBlockPos(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
-		ArcFurnaceMultiblockPart part = state.get(ArcFurnaceControllerBlock.ARCFURNACEPART);
-		return pos.offset(facing, part.getDx())
-				.up(-part.getDy())
-				.offset(facing.rotateY(), part.getDz());
+		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+		ArcFurnaceMultiblockPart part = state.getValue(ArcFurnaceControllerBlock.ARCFURNACEPART);
+		return pos.relative(facing, part.getDx())
+				.above(-part.getDy())
+				.relative(facing.getClockWise(), part.getDz());
 	}
 
 	@Override

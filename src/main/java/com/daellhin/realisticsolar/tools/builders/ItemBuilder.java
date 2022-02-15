@@ -11,20 +11,20 @@ public class ItemBuilder {
 	private boolean shiftInformation;
 
 	public ItemBuilder basicProperties() {
-		this.properties = new Item.Properties().group(ModSetup.ITEM_GROUP);
+		this.properties = new Item.Properties().tab(ModSetup.ITEM_GROUP);
 		return this;
 	}
 
 	public ItemBuilder unstackableItemProperties() {
-		this.properties = new Item.Properties().maxStackSize(1)
-				.group(ModSetup.ITEM_GROUP);
+		this.properties = new Item.Properties().stacksTo(1)
+				.tab(ModSetup.ITEM_GROUP);
 		return this;
 	}
 
 	public ItemBuilder bucketItemProperties() {
-		this.properties = new Item.Properties().maxStackSize(1)
-				.group(ModSetup.ITEM_GROUP)
-				.containerItem(Items.BUCKET);
+		this.properties = new Item.Properties().stacksTo(1)
+				.tab(ModSetup.ITEM_GROUP)
+				.craftRemainder(Items.BUCKET);
 		return this;
 	}
 

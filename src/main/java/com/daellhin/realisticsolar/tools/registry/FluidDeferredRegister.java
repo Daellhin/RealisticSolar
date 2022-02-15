@@ -82,9 +82,9 @@ public class FluidDeferredRegister {
 				.register(bucketName, () -> new BaseGasItem(fluidRegistryObject::getSource, new ItemBuilder().bucketItemProperties()
 						.addShiftInformation())));
 		fluidRegistryObject.updateBlock(blockRegister.register(blockName, () -> new FlowingFluidBlock(fluidRegistryObject::getSource,
-				Block.Properties.create(Material.AIR)
-						.doesNotBlockMovement()
-						.hardnessAndResistance(0F)
+				Block.Properties.of(Material.AIR)
+						.noCollission()
+						.strength(0F)
 						.noDrops())));
 
 		allFluids.add(fluidRegistryObject);
@@ -114,13 +114,13 @@ public class FluidDeferredRegister {
 		fluidRegistryObject.updateSource(fluidRegister.register(sourceName, () -> new Source(properties)));
 		fluidRegistryObject.updateFlowing(fluidRegister.register(flowingName, () -> new Flowing(properties)));
 		fluidRegistryObject.updateBucket(itemRegister.register(bucketName, () -> new BucketItem(fluidRegistryObject::getSource,
-				new Item.Properties().maxStackSize(1)
-						.group(ModSetup.ITEM_GROUP)
-						.containerItem(Items.BUCKET))));
+				new Item.Properties().stacksTo(1)
+						.tab(ModSetup.ITEM_GROUP)
+						.craftRemainder(Items.BUCKET))));
 		fluidRegistryObject.updateBlock(blockRegister.register(blockName, () -> new FlowingFluidBlock(fluidRegistryObject::getSource,
-				Block.Properties.create(Material.WATER)
-						.doesNotBlockMovement()
-						.hardnessAndResistance(100.0F)
+				Block.Properties.of(Material.WATER)
+						.noCollission()
+						.strength(100.0F)
 						.noDrops())));
 
 		allFluids.add(fluidRegistryObject);
@@ -151,9 +151,9 @@ public class FluidDeferredRegister {
 		fluidRegistryObject.updateSource(fluidRegister.register(sourceName, () -> new Source(properties)));
 		fluidRegistryObject.updateFlowing(fluidRegister.register(flowingName, () -> new Flowing(properties)));
 		fluidRegistryObject.updateBucket(itemRegister.register(bucketName, () -> new BucketItem(fluidRegistryObject::getSource,
-				new Item.Properties().maxStackSize(1)
-						.group(ModSetup.ITEM_GROUP)
-						.containerItem(Items.BUCKET))));
+				new Item.Properties().stacksTo(1)
+						.tab(ModSetup.ITEM_GROUP)
+						.craftRemainder(Items.BUCKET))));
 		fluidRegistryObject.updateBlock(blockRegister.register(blockName, () -> new AcidBlock(fluidRegistryObject::getSource)));
 
 		allFluids.add(fluidRegistryObject);

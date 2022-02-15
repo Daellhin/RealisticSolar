@@ -17,20 +17,20 @@ public class SolarPanelBlock extends BaseBlock {
 	public SolarPanelBlock() {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(SolarPanelTile::new));
-		setDefaultState(stateContainer.getBaseState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-				.with(BlockStateProperties.POWERED, false));
+//		setDefaultState(stateContainer.getBaseState()
+//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+//				.setValue(BlockStateProperties.POWERED, false));
 
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, context.getNearestLookingDirection());
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.POWERED);
 	}
 }

@@ -32,7 +32,7 @@ public abstract class PlayerInventoryContainer extends Container {
 		return index;
 	}
 
-	public void layoutPlayerInventorySlots(IItemHandler playerInventory, int x, int y) {
+	public void layoutPlayerslots(IItemHandler playerInventory, int x, int y) {
 		// Player inventory
 		addSlotBox(playerInventory, 9, x, y, 9, 3, 18, 18);
 

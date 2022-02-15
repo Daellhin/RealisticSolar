@@ -13,7 +13,7 @@ public class Recipes extends RecipeProvider {
 	}
 
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 //        ShapedRecipeBuilder.shapedRecipe(ModBlocks.ALUMINIUMORE_BLOCK_ITEM.get())
 //                .patternLine("xxx")
 //                .patternLine("x#x")

@@ -25,16 +25,16 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 
 	public CoalGeneratorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
 		super(ModBlocks.COALGENERATOR_CONTAINER.get(), windowId);
-		tileEntity = (CoalGeneratorTile) world.getTileEntity(pos);
+		tileEntity = (CoalGeneratorTile) world.getBlockEntity(pos);
 		this.playerEntity = player;
 		this.playerInventory = new InvWrapper(playerInventory);
-		layoutPlayerInventorySlots(this.playerInventory, 8, 84);
-		layoutMachineInventorySlots();
+		layoutPlayerslots(this.playerInventory, 8, 84);
+		layoutMachineslots();
 		syncEnergy();
 		syncProgress();
 	}
 
-	private void layoutMachineInventorySlots() {
+	private void layoutMachineslots() {
 		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 				.ifPresent(h -> {
 					addSlot(new SlotItemHandler(h, 0, 80, 20));
@@ -42,7 +42,7 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 	}
 
 	private void syncEnergy() {
-		trackInt(new IntReferenceHolder() {
+		addDataSlot(new IntReferenceHolder() {
 
 			@Override
 			public int get() {
@@ -57,7 +57,7 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 	}
 
 	private void syncProgress() {
-		trackInt(new IntReferenceHolder() {
+		addDataSlot(new IntReferenceHolder() {
 
 			@Override
 			public int get() {
@@ -72,34 +72,34 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stack = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack stack = slot.getItem();
 			itemstack = stack.copy();
 			if (index == 0) {
-				if (!this.mergeItemStack(stack, 1, 37, true)) {
+				if (!this.moveItemStackTo(stack, 1, 37, true)) {
 					return ItemStack.EMPTY;
 				}
-				slot.onSlotChange(stack, itemstack);
+				slot.onQuickCraft(stack, itemstack);
 			} else {
 				if (stack.getItem() == Items.COAL || stack.getItem() == Items.COAL_BLOCK) {
-					if (!this.mergeItemStack(stack, 0, 1, false)) {
+					if (!this.moveItemStackTo(stack, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if (index < 28) {
-					if (!this.mergeItemStack(stack, 28, 37, false)) {
+					if (!this.moveItemStackTo(stack, 28, 37, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index < 37 && !this.mergeItemStack(stack, 1, 28, false)) {
+				} else if (index < 37 && !this.moveItemStackTo(stack, 1, 28, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (stack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 			if (stack.getCount() == itemstack.getCount()) {
 				return ItemStack.EMPTY;
@@ -110,8 +110,8 @@ public class CoalGeneratorContainer extends PlayerInventoryContainer {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.COALGENERATOR_BLOCK
+	public boolean stillValid(PlayerEntity playerIn) {
+		return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.COALGENERATOR_BLOCK
 				.get());
 	}
 

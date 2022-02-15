@@ -6,10 +6,13 @@ import java.util.List;
 import com.daellhin.realisticsolar.RealisticSolar;
 import com.daellhin.realisticsolar.blocks.arcfurnace.tiles.ArcFurnaceControllerTile;
 import com.daellhin.realisticsolar.blocks.base.BaseContainerScreen;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class ArcFurnaceScreen extends BaseContainerScreen<ArcFurnaceContainer> {
@@ -38,29 +41,29 @@ public class ArcFurnaceScreen extends BaseContainerScreen<ArcFurnaceContainer> {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		List<String> s = new ArrayList<>();
-		s.add("Power: ");
-		s.add(">  " + tileEntity.getEnergy());
-		if (isInRect(guiLeft + ENERGY_GUI_X - 1, guiTop + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
-			GuiUtils.drawHoveringText(s, mouseX - guiLeft, mouseY - guiTop, width, height, -1, font);
+	protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
+		List<ITextProperties> s = new ArrayList<>();
+		s.add(new StringTextComponent("Power: "));
+		s.add(new StringTextComponent(">  " + tileEntity.getEnergy()));
+		if (isInRect(leftPos + ENERGY_GUI_X - 1, topPos + ENERGY_GUI_Y, ENERGY_WIDTH - 1, ENERGY_HEIGHT, mouseX, mouseY)) {
+			GuiUtils.drawHoveringText(matrixStack, s, mouseX - leftPos, mouseY - topPos, width, height, -1, font);
 		}
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		this.minecraft.getTextureManager()
-				.bindTexture(backgroundTexture);
-		int relX = (this.width - this.xSize) / 2;
-		int relY = (this.height - this.ySize) / 2;
+				.bind(backgroundTexture);
+		int relX = (this.width - this.imageWidth) / 2;
+		int relY = (this.height - this.imageHeight) / 2;
 
 		// GUI background
-		this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
+		this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 		// progress arrow
-		this.blit(relX + ARROW_GUI_X, relY + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfProgress() * ARROW_WIDTH), ARROW_HEIGHT);
+		this.blit(matrixStack, relX + ARROW_GUI_X, relY + ARROW_GUI_Y, ARROW_X, ARROW_Y, (int) (tileEntity.fractionOfProgress() * ARROW_WIDTH), ARROW_HEIGHT);
 		// energy bar
 		int height = (int) (tileEntity.getFractionOfEnergy() * ENERGY_HEIGHT);
-		this.blit(relX + ENERGY_GUI_X, (relY + ENERGY_GUI_Y) + (ENERGY_HEIGHT - height), ENERGY_X, (ENERGY_Y + ENERGY_HEIGHT) - height, ENERGY_WIDTH, height);
+		this.blit(matrixStack, relX + ENERGY_GUI_X, (relY + ENERGY_GUI_Y) + (ENERGY_HEIGHT - height), ENERGY_X, (ENERGY_Y + ENERGY_HEIGHT) - height, ENERGY_WIDTH, height);
 	}
 
 }

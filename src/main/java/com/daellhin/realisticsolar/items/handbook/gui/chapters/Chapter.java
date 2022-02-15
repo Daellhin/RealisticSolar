@@ -2,6 +2,7 @@ package com.daellhin.realisticsolar.items.handbook.gui.chapters;
 
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Link;
 import com.daellhin.realisticsolar.items.handbook.gui.elements.Page;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.FontRenderer;
 
@@ -16,8 +17,8 @@ public class Chapter {
 	public void initialize() {
 	}
 
-	public void draw(int page, FontRenderer font, int relX, int relY, int pageCenter) {
-		pages[page].draw(font, relX, relY, pageCenter);
+	public void draw(MatrixStack matrixStack, int page, FontRenderer font, int relX, int relY, int pageCenter) {
+		pages[page].draw(font, matrixStack, relX, relY, pageCenter);
 	}
 
 	public int getPageAmount() {

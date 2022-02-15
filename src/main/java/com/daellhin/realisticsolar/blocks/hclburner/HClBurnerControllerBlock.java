@@ -28,19 +28,19 @@ public class HClBurnerControllerBlock extends BaseBlock {
 	public HClBurnerControllerBlock() {
 		super(new BlockBuilder().basicMachineProperties()
 				.tileEntitySupplier(HClBurnerTile::new));
-		setDefaultState(stateContainer.getBaseState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-				.with(BlockStateProperties.POWERED, false));
+//		setDefaultState(stateContainer.getBaseState()
+//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+//				.setValue(BlockStateProperties.POWERED, false));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote) {
-			boolean succes = FluidUtil.interactWithFluidHandler(player, hand, world, pos, hit.getFace());
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!world.isClientSide) {
+			boolean succes = FluidUtil.interactWithFluidHandler(player, hand, world, pos, hit.getDirection());
 			if (!succes) {
-				TileEntity tileEntity = world.getTileEntity(pos);
+				TileEntity tileEntity = world.getBlockEntity(pos);
 				if (tileEntity instanceof INamedContainerProvider) {
-					NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+					NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getBlockPos());
 					return ActionResultType.SUCCESS;
 				}
 			}
@@ -51,12 +51,12 @@ public class HClBurnerControllerBlock extends BaseBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, context.getNearestLookingDirection());
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.POWERED);
 	}
 

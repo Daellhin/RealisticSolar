@@ -24,38 +24,38 @@ public class SiemensReactorControllerBlock extends MultiBlockControllerBlock {
 	public SiemensReactorControllerBlock() {
 		super(new BlockBuilder().basicProperties()
 				.tileEntitySupplier(SiemensReactorTile::new)
-				.shape(Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)));
-		setDefaultState(stateContainer.getBaseState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-				.with(BlockStateProperties.POWERED, false)
-				.with(SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
+				.shape(Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)));
+//		setDefaultState(stateContainer.getBaseState()
+//				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+//				.setValue(BlockStateProperties.POWERED, false)
+//				.with(SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState()
-				.with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState()
+				.setValue(BlockStateProperties.HORIZONTAL_FACING, context.getNearestLookingDirection());
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.POWERED, SIEMENSREACTORPART);
 	}
 
 	@Override
 	public boolean isMultiblockFormed(BlockState state) {
-		return state.get(SIEMENSREACTORPART) != SiemensReactorMultiblockPart.UNFORMED;
+		return state.getValue(SIEMENSREACTORPART) != SiemensReactorMultiblockPart.UNFORMED;
 	}
 
 	@Override
 	public boolean isMultiblockValid(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
+		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
 				.getOpposite();
 
 		for (SiemensReactorMultiblockPattern part : SiemensReactorMultiblockPattern.values()) {
-			BlockPos currentPos = pos.offset(facing, part.getDx())
-					.up(part.getDy())
-					.offset(facing.rotateY(), part.getDz());
+			BlockPos currentPos = pos.relative(facing, part.getDx())
+					.above(part.getDy())
+					.relative(facing.getClockWise(), part.getDz());
 			if (part.getBlock() != world.getBlockState(currentPos)
 					.getBlock()) {
 				return false;
@@ -66,35 +66,35 @@ public class SiemensReactorControllerBlock extends MultiBlockControllerBlock {
 
 	@Override
 	public void formMultiblock(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
+		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
 				.getOpposite();
 
 		for (SiemensReactorMultiblockPattern part : SiemensReactorMultiblockPattern.values()) {
-			BlockPos currentPos = pos.offset(facing, part.getDx())
-					.up(part.getDy())
-					.offset(facing.rotateY(), part.getDz());
-			world.setBlockState(currentPos, world.getBlockState(currentPos)
-					.with(SIEMENSREACTORPART, SiemensReactorMultiblockPart.valueOf(part.name()))
-					.with(BlockStateProperties.HORIZONTAL_FACING, state.get(BlockStateProperties.HORIZONTAL_FACING)), 3);
+			BlockPos currentPos = pos.relative(facing, part.getDx())
+					.above(part.getDy())
+					.relative(facing.getClockWise(), part.getDz());
+			world.setBlock(currentPos, world.getBlockState(currentPos)
+					.setValue(SIEMENSREACTORPART, SiemensReactorMultiblockPart.valueOf(part.name()))
+					.setValue(BlockStateProperties.HORIZONTAL_FACING, state.getValue(BlockStateProperties.HORIZONTAL_FACING)), 3);
 		}
 	}
 
 	@Override
 	public void destroyMultiblock(BlockState state, World world, BlockPos pos) {
-		Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING)
+		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
 				.getOpposite();
 
 		for (SiemensReactorMultiblockPattern part : SiemensReactorMultiblockPattern.values()) {
-			BlockPos currentPos = pos.offset(facing, part.getDx())
-					.up(part.getDy())
-					.offset(facing.rotateY(), part.getDz());
+			BlockPos currentPos = pos.relative(facing, part.getDx())
+					.above(part.getDy())
+					.relative(facing.getClockWise(), part.getDz());
 			BlockState currentState = world.getBlockState(currentPos);
 
 			// check if block has not been removed
 			if (currentState.getProperties()
 					.contains(SIEMENSREACTORPART)) {
-				world.setBlockState(currentPos, world.getBlockState(currentPos)
-						.with(SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED), 3);
+				world.setBlock(currentPos, world.getBlockState(currentPos)
+						.setValue(SIEMENSREACTORPART, SiemensReactorMultiblockPart.UNFORMED), 3);
 			}
 		}
 

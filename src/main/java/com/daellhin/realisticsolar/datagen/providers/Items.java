@@ -5,11 +5,12 @@ import com.daellhin.realisticsolar.fluids.ModFluids;
 import com.daellhin.realisticsolar.items.ModItems;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class ItemModels extends BaseItemModelProvider {
 
-	public ItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+public class Items extends BaseItemModelProvider  {
+
+	public Items(DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator, existingFileHelper);
 	}
 
@@ -25,5 +26,7 @@ public class ItemModels extends BaseItemModelProvider {
 		itemGeneratedDefaultModel(ModFluids.HYDROGEN.getBucket());
 		itemGeneratedDefaultModel(ModFluids.CHLORIDE.getBucket());
 	}
+
+
 
 }

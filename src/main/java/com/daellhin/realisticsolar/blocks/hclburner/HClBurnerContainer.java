@@ -20,14 +20,14 @@ public class HClBurnerContainer extends Container {
 
 	public HClBurnerContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
 		super(ModBlocks.HCL_BURNER_CONTAINER.get(), windowId);
-		tileEntity = (HClBurnerTile) world.getTileEntity(pos);
+		tileEntity = (HClBurnerTile) world.getBlockEntity(pos);
 		this.playerEntity = player;
 		this.playerInventory = new InvWrapper(playerInventory);
 		syncProgress();
 	}
 
 	private void syncProgress() {
-		trackInt(new IntReferenceHolder() {
+		addDataSlot(new IntReferenceHolder() {
 
 			@Override
 			public int get() {
@@ -42,9 +42,8 @@ public class HClBurnerContainer extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable
-				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
+	public boolean stillValid(PlayerEntity playerIn) {
+		return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.HCL_BURNER_CONTROLLER_BLOCK.get());
 	}
 
 	public HClBurnerTile getTileEntity() {

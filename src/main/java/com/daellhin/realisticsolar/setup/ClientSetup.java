@@ -22,10 +22,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientSetup {
 
 	public static void init(final FMLClientSetupEvent event) {
-		ScreenManager.registerFactory(ModBlocks.COALGENERATOR_CONTAINER.get(), CoalGeneratorScreen::new);
-		ScreenManager.registerFactory(ModBlocks.ARCFURNACE_CONTAINER.get(), ArcFurnaceScreen::new);
-		ScreenManager.registerFactory(ModBlocks.SIEMENSREACTOR_CONTAINER.get(), SiemensReactorScreen::new);
-		ScreenManager.registerFactory(ModBlocks.HCL_BURNER_CONTAINER.get(), HClBurnerScreen::new);
+		ScreenManager.register(ModBlocks.COALGENERATOR_CONTAINER.get(), CoalGeneratorScreen::new);
+		ScreenManager.register(ModBlocks.ARCFURNACE_CONTAINER.get(), ArcFurnaceScreen::new);
+		ScreenManager.register(ModBlocks.SIEMENSREACTOR_CONTAINER.get(), SiemensReactorScreen::new);
+		ScreenManager.register(ModBlocks.HCL_BURNER_CONTAINER.get(), HClBurnerScreen::new);
 		
         MagicRenderer.register();
 	}

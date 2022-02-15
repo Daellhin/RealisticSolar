@@ -58,8 +58,8 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 	}
 
 	@Override
-	public void remove() {
-		super.remove();
+	public void setRemoved() {
+		super.setRemoved();
 		inputSlotHolder.invalidate();
 		combinedSlotHolder.invalidate();
 		outputSlotWrapperHolder.invalidate();
@@ -68,7 +68,7 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 	@Override
 	public void tick() {
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			energy.ifPresent(energy -> {
 				if (!isInputEmpty()) {
 					AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
@@ -89,11 +89,11 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 							if (canProcess(currentRecipe)) {
 								doProcess(currentRecipe);
 								progress = 0;
-								markDirty();
+								setChanged();
 							}
 						} else {
 							progress--;
-							markDirty();
+							setChanged();
 						}
 					}
 				} else {
@@ -101,9 +101,9 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 				}
 			});
 
-			BlockState blockState = world.getBlockState(pos);
-			if (blockState.get(BlockStateProperties.POWERED) != progress > 0) {
-				world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, progress > 0), 3);
+			BlockState blockState = level.getBlockState(worldPosition);
+			if (blockState.getValue(BlockStateProperties.POWERED) != progress > 0) {
+				level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, progress > 0), 3);
 			}
 		}
 	}
@@ -137,7 +137,7 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 		ItemStack output = recipe.getOutput(0);
 		if (insertOutput(output.copy(), true)) {
 			progress = Config.ARCFURNACE_TICKS.get();
-			markDirty();
+			setChanged();
 			return;
 		}
 	}
@@ -171,7 +171,7 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 			@Override
 			protected void onContentsChanged(int slot) {
-				markDirty();
+				setChanged();
 			}
 
 		};
@@ -182,7 +182,7 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 			@Override
 			protected void onContentsChanged(int slot) {
-				markDirty();
+				setChanged();
 			}
 
 		};
@@ -193,28 +193,28 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 			@Override
 			protected void onEnergyChanged() {
-				markDirty();
+				setChanged();
 			}
 
 		};
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
+	public void load(BlockState state, CompoundNBT tag) {
 		inputHandler.deserializeNBT((CompoundNBT) tag.get("itemsIn"));
 		outputHandler.deserializeNBT((CompoundNBT) tag.get("itemsOut"));
 		energyStorage.deserializeNBT(tag.getCompound("energy"));
 		progress = tag.getInt("progress");
-		super.read(tag);
+		super.load(state, tag);
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
+	public CompoundNBT save(CompoundNBT tag) {
 		tag.put("itemsIn", inputHandler.serializeNBT());
 		tag.put("itemsOut", outputHandler.serializeNBT());
 		tag.put("energy", energyStorage.serializeNBT());
 		tag.putInt("progress", progress);
-		return super.write(tag);
+		return super.save(tag);
 	}
 
 	@Override
@@ -258,7 +258,7 @@ public class ArcFurnaceControllerTile extends TileEntity implements ITickableTil
 
 	@Override
 	public Container createMenu(int windowID, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new ArcFurnaceContainer(windowID, world, pos, playerInventory, playerEntity);
+		return new ArcFurnaceContainer(windowID, level, worldPosition, playerInventory, playerEntity);
 	}
 
 	// progress

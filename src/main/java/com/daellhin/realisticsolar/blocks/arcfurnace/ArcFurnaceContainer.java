@@ -26,18 +26,18 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 
 	public ArcFurnaceContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		super(ModBlocks.ARCFURNACE_CONTAINER.get(), windowId);
-		this.tileEntity = (ArcFurnaceControllerTile) world.getTileEntity(pos);
+		this.tileEntity = (ArcFurnaceControllerTile) world.getBlockEntity(pos);
 		this.playerEntity = playerEntity;
 		this.playerInventory = new InvWrapper(playerInventory);
 		this.inventorySize = ArcFurnaceControllerTile.INPUT_SLOTS;
 
-		layoutPlayerInventorySlots(this.playerInventory, 8, 99);
-		layoutMachineInventorySlots();
+		layoutPlayerslots(this.playerInventory, 8, 99);
+		layoutMachineslots();
 		syncEnergy();
 		syncProgress();
 	}
 
-	private void layoutMachineInventorySlots() {
+	private void layoutMachineslots() {
 		this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 				.ifPresent(itemHandler -> {
 					// Input
@@ -50,7 +50,7 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	}
 
 	private void syncEnergy() {
-		trackInt(new IntReferenceHolder() {
+		addDataSlot(new IntReferenceHolder() {
 
 			@Override
 			public int get() {
@@ -65,7 +65,7 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	}
 
 	private void syncProgress() {
-		trackInt(new IntReferenceHolder() {
+		addDataSlot(new IntReferenceHolder() {
 
 			@Override
 			public int get() {
@@ -82,25 +82,25 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	// Doesn't work yet
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
 		ItemStack transferStack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
+		if (slot != null && slot.hasItem()) {
 			// Stack already in slot
-			ItemStack currentHeldStack = slot.getStack();
+			ItemStack currentHeldStack = slot.getItem();
 			transferStack = currentHeldStack.copy();
 
 			if (index < inventorySize) {
-				if (!this.mergeItemStack(currentHeldStack, inventorySize, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(currentHeldStack, inventorySize, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(currentHeldStack, 0, inventorySize, false)) {
+			} else if (!this.moveItemStackTo(currentHeldStack, 0, inventorySize, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (currentHeldStack.getCount() == 0) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 
@@ -108,9 +108,8 @@ public class ArcFurnaceContainer extends PlayerInventoryContainer {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(IWorldPosCallable
-				.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
+	public boolean stillValid(PlayerEntity playerIn) {
+		return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.ARCFURNACE_CONTROLLER_BLOCK.get());
 	}
 
 	public ArcFurnaceControllerTile getTileEntity() {

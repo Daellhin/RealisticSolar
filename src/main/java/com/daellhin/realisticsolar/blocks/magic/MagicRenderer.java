@@ -23,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.pipeline.BakedQuadBuilder;
@@ -45,11 +45,11 @@ public class MagicRenderer extends TileEntityRenderer<MagicTile> {
 	/*
 	 * x: Red, goes to the east when facing north y: Green, goes up z: blue, goes to the south when facing north
 	 */
-	private static Vec3d v(double x, double y, double z) {
-		return new Vec3d(x, y, z);
+	private static Vector3d v(double x, double y, double z) {
+		return new Vector3d(x, y, z);
 	}
 
-	private void putVertex(BakedQuadBuilder builder, Vec3d normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b) {
+	private void putVertex(BakedQuadBuilder builder, Vector3d normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b) {
 
 		ImmutableList<VertexFormatElement> elements = builder.getVertexFormat()
 				.getElements()
@@ -66,8 +66,8 @@ public class MagicRenderer extends TileEntityRenderer<MagicTile> {
 			case UV:
 				switch (e.getIndex()) {
 				case 0:
-					float iu = sprite.getInterpolatedU(u);
-					float iv = sprite.getInterpolatedV(v);
+					float iu = sprite.getU(u);
+					float iv = sprite.getV(v);
 					builder.put(j, iu, iv);
 					break;
 				case 2:
@@ -88,15 +88,15 @@ public class MagicRenderer extends TileEntityRenderer<MagicTile> {
 		}
 	}
 
-	private BakedQuad createQuad(Vec3d v1, Vec3d v2, Vec3d v3, Vec3d v4, TextureAtlasSprite sprite) {
-		Vec3d normal = v3.subtract(v2)
-				.crossProduct(v1.subtract(v2))
+	private BakedQuad createQuad(Vector3d v1, Vector3d v2, Vector3d v3, Vector3d v4, TextureAtlasSprite sprite) {
+		Vector3d normal = v3.subtract(v2)
+				.cross(v1.subtract(v2))
 				.normalize();
 		int tw = sprite.getWidth();
 		int th = sprite.getHeight();
 
 		BakedQuadBuilder builder = new BakedQuadBuilder(sprite);
-		builder.setQuadOrientation(Direction.getFacingFromVector(normal.x, normal.y, normal.z));
+		builder.setQuadOrientation(Direction.getNearest(normal.x, normal.y, normal.z)); // correct? was fromNormal
 
 		putVertex(builder, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
 		putVertex(builder, normal, v2.x, v2.y, v2.z, 0, th, sprite, 1.0f, 1.0f, 1.0f);
@@ -111,31 +111,31 @@ public class MagicRenderer extends TileEntityRenderer<MagicTile> {
 		double zw = w + z;
 		double yw = w + y;
 
-		builder.addQuad(stack
-				.getLast(), createQuad(v(x, yw, z), v(x, yw, zw), v(xw, yw, zw), v(xw, yw, z), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
-		builder.addQuad(stack
-				.getLast(), createQuad(v(x, y, z), v(xw, y, z), v(xw, y, zw), v(x, y, zw), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
+		builder.putBulkData(stack
+				.last(), createQuad(v(x, yw, z), v(x, yw, zw), v(xw, yw, zw), v(xw, yw, z), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
+		builder.putBulkData(stack
+				.last(), createQuad(v(x, y, z), v(xw, y, z), v(xw, y, zw), v(x, y, zw), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
 
-		builder.addQuad(stack
-				.getLast(), createQuad(v(xw, yw, z), v(xw, y, z), v(x, y, z), v(x, yw, z), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
-		builder.addQuad(stack
-				.getLast(), createQuad(v(x, yw, zw), v(x, y, zw), v(xw, y, zw), v(xw, yw, zw), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
+		builder.putBulkData(stack
+				.last(), createQuad(v(xw, yw, z), v(xw, y, z), v(x, y, z), v(x, yw, z), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
+		builder.putBulkData(stack
+				.last(), createQuad(v(x, yw, zw), v(x, y, zw), v(xw, y, zw), v(xw, yw, zw), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
 
-		builder.addQuad(stack
-				.getLast(), createQuad(v(xw, yw, zw), v(xw, y, zw), v(xw, y, z), v(xw, yw, z), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
-		builder.addQuad(stack
-				.getLast(), createQuad(v(x, yw, z), v(x, y, z), v(x, y, zw), v(x, yw, zw), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
+		builder.putBulkData(stack
+				.last(), createQuad(v(xw, yw, zw), v(xw, y, zw), v(xw, y, z), v(xw, yw, z), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
+		builder.putBulkData(stack
+				.last(), createQuad(v(x, yw, z), v(x, y, z), v(x, y, zw), v(x, yw, zw), texture), 1.0f, 1.0f, 1.0f, combinedLight, combinedOverlay);
 	}
 
 	@Override
 	public void render(MagicTile tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 
 		TextureAtlasSprite texture = Minecraft.getInstance()
-				.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
+				.getTextureAtlas(AtlasTexture.LOCATION_BLOCKS)
 				.apply(TEXTURE);
-		IVertexBuilder builder = buffer.getBuffer(RenderType.getSolid());
+		IVertexBuilder builder = buffer.getBuffer(RenderType.solid());
 
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		int x = 0;
 		int y = 0;
@@ -152,7 +152,7 @@ public class MagicRenderer extends TileEntityRenderer<MagicTile> {
 		}
 
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 
 	public static void register() {
